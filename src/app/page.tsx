@@ -1,69 +1,45 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useContent } from "@/lib/content-context";
+import { Hero } from "@/components/sections/hero";
+import { VisionStatement } from "@/components/sections/vision-statement";
+import { SelectedWorks } from "@/components/sections/selected-works";
+import { Services } from "@/components/sections/services";
+import { Methodology } from "@/components/sections/methodology";
+import { About } from "@/components/sections/about";
+import { Contact } from "@/components/sections/contact";
+import { Footer } from "@/components/layout/footer";
+import { Partners } from "@/components/sections/partners";
+import { ImageCarousel } from "@/components/sections/image-carousel";
+import { Training } from "@/components/sections/training";
+import { HomemadeValueCarousel } from "@/components/sections/homemade-value-carousel";
 
 export default function Home() {
+  const { content } = useContent();
+  const sectionsOrder = content.sectionsOrder || ["hero", "vision", "works", "homemadeValues", "services", "methodology", "about", "contact"];
+
+  const SectionMap: Record<string, React.ComponentType> = {
+    hero: Hero,
+    vision: VisionStatement,
+    works: SelectedWorks,
+    homemadeValues: HomemadeValueCarousel,
+    services: Services,
+    methodology: Methodology,
+    about: About,
+    contact: Contact,
+    partners: Partners,
+    imageCarousel: ImageCarousel,
+    training: Training
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-white">
+      {sectionsOrder.map((sectionKey) => {
+        const Component = SectionMap[sectionKey];
+        if (!Component) return null;
+        return <Component key={sectionKey} />;
+      })}
+      <Footer />
+    </main>
   );
 }

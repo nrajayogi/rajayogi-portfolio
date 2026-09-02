@@ -1,0 +1,45 @@
+// Downgrading prisma instead
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Content {
+  id        Int      @id @default(1) // Singleton row, always ID 1
+  data      String
+  updatedAt DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  firstName String
+  lastName  String
+  email     String
+  message   String
+  status    String   @default("unread") // unread, read
+}
+
+model PageView {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  path      String
+  userAgent String?
+  ipHash    String?  // Anonymized unique visitor ID
+  country   String?  // Two-letter country code (e.g., US, GB)
+  city      String?
+}
+
+model Image {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  data      Bytes
+  mimeType  String
+  filename  String
+}
