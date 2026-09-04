@@ -40,7 +40,8 @@ export function AdminSidebar({ activeSection, onSelectSection }: AdminSidebarPro
     };
 
     const sections: SidebarItem[] = [
-        { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+        { id: "analytics", label: "Live Visitor Tracker", icon: BarChart },
+        { id: "dashboard", label: "Dashboard Overview", icon: LayoutDashboard },
         { id: "presentation", label: "Presentation", icon: MonitorPlay },
         {
             id: "home-page",
@@ -118,7 +119,6 @@ export function AdminSidebar({ activeSection, onSelectSection }: AdminSidebarPro
         { id: "inbox", label: "Inbox", icon: MessageSquare },
         { id: "pages", label: "Pages Manager", icon: Type },
         { id: "navigation", label: "Navigation Menu", icon: Menu },
-        { id: "analytics", label: "Analytics", icon: BarChart },
     ];
 
     // We need a sub-component to handle the toggle state of groups independently if we want accordions

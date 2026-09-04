@@ -8,24 +8,30 @@ export function AnalyticsTracker() {
     const initialized = useRef(false);
 
     useEffect(() => {
-        // Prevent double tracking in React Strict Mode dev
-        if (initialized.current) {
-            // in dev mode strict mode mounts twice, but for route change we want to track
+        // Skip tracking if visiting admin dashboard
+        if (!pathname || pathname.startsWith("/admin")) {
+            return;
         }
 
         const trackPage = async () => {
             try {
+                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const referrer = document.referrer ? new URL(document.referrer).hostname : "Direct";
+
                 await fetch("/api/analytics/track", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         path: pathname,
                         userAgent: navigator.userAgent,
-                        country: "Unknown" // Placeholder until IP geo is added
+                        referrer,
+                        timeZone,
+                        language: navigator.language,
+                        screen: `${window.innerWidth}x${window.innerHeight}`
                     }),
                 });
             } catch (error) {
-                console.error("Analytics error", error);
+                console.error("Analytics tracking error", error);
             }
         };
 

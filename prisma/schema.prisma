@@ -32,8 +32,15 @@ model PageView {
   path      String
   userAgent String?
   ipHash    String?  // Anonymized unique visitor ID
-  country   String?  // Two-letter country code (e.g., US, GB)
+  country   String?  // Two-letter country code (e.g., US, GB, IN, NL)
   city      String?
+  region    String?
+  latitude  Float?
+  longitude Float?
+  device    String?
+  browser   String?
+  os        String?
+  referrer  String?
 }
 
 model Image {

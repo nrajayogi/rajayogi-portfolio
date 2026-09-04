@@ -120,15 +120,25 @@ export function Footer() {
             </div>
 
             {/* Bottom Legal & Back to Top Bar */}
-            <div className="border-t border-border px-8 md:px-12 py-6 flex flex-col md:flex-row justify-between items-center text-[11px] uppercase tracking-widest text-muted-foreground font-sans">
+            <div className="border-t border-border px-8 md:px-12 py-6 flex flex-col md:flex-row justify-between items-center text-[11px] uppercase tracking-widest text-muted-foreground font-sans gap-3 md:gap-0">
                 <p>© 2026 Rajayogi Nandina. Crafted with precision.</p>
-                <button
-                    onClick={scrollToTop}
-                    className="mt-4 md:mt-0 flex items-center gap-1.5 hover:text-foreground transition-colors cursor-pointer"
-                >
-                    <span>Back to Top</span>
-                    <ArrowUp className="w-3.5 h-3.5" />
-                </button>
+                <div className="flex items-center gap-6">
+                    <Link 
+                        href="/admin" 
+                        className="flex items-center gap-1 text-muted-foreground/60 hover:text-primary transition-colors"
+                        title="Open Visitor Tracker & Admin Portal"
+                    >
+                        <span>Admin Tracker</span>
+                        <ArrowUpRight className="w-3 h-3" />
+                    </Link>
+                    <button
+                        onClick={scrollToTop}
+                        className="flex items-center gap-1.5 hover:text-foreground transition-colors cursor-pointer"
+                    >
+                        <span>Back to Top</span>
+                        <ArrowUp className="w-3.5 h-3.5" />
+                    </button>
+                </div>
             </div>
         </footer>
     );

@@ -79,7 +79,7 @@ const PreviewComponents: Record<string, React.ComponentType<unknown>> = {
 };
 
 export default function AdminPage() {
-    const [activeSection, setActiveSection] = useState("dashboard");
+    const [activeSection, setActiveSection] = useState("analytics");
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [previewMode, setPreviewMode] = useState<'desktop' | 'large' | 'tablet' | 'mobile' | 'custom'>('desktop');
     const { content, isEditing, toggleEditing, updateContent } = useContent();
