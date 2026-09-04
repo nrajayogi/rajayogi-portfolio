@@ -2,29 +2,19 @@
 
 import React, { useEffect, useState, useCallback, useTransition } from "react";
 import { 
+    MapPin, 
     Globe, 
+    ExternalLink, 
+    RefreshCw, 
+    Radio, 
     Smartphone, 
     Monitor, 
-    Tablet, 
-    ArrowUpRight, 
-    RefreshCw, 
-    Compass, 
-    Calendar,
-    Activity,
-    Layers,
-    Clock,
-    FileText,
-    Download,
-    Eye,
-    MapPin,
-    ExternalLink,
-    Zap,
-    X,
-    Filter,
-    Shield,
-    Radio
+    Clock, 
+    ArrowUpRight,
+    Search,
+    Navigation,
+    Compass
 } from "lucide-react";
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 
 interface VisitorLog {
     id: string;
@@ -37,20 +27,16 @@ interface VisitorLog {
     region: string | null;
     latitude?: number | null;
     longitude?: number | null;
-    isp?: string | null;
     flag: string;
     countryName: string;
     cityDisplay: string;
     regionDisplay: string;
     fullLocationDisplay: string;
     humanTitle: string;
-    humanCategory: string;
-    humanDetails: string;
     deviceDisplay: string;
     browserDisplay: string;
     osDisplay: string;
-    referrer: string | null;
-    maskedIp: string;
+    isp?: string | null;
 }
 
 interface CountryStat {
@@ -68,36 +54,14 @@ interface CityStat {
     count: number;
 }
 
-interface DeviceStat {
-    device: string;
-    count: number;
-    percentage: number;
-}
-
-interface PageStat {
-    path: string;
-    count: number;
-    percentage: number;
-}
-
-interface TimelinePoint {
-    day: string;
-    views: number;
-}
-
 interface AnalyticsPayload {
     totalViews: number;
     uniqueVisitors: number;
     activeNow: number;
     viewsToday: number;
-    viewsLast7Days: number;
-    viewsLast30Days: number;
     topCountries: CountryStat[];
     topCities: CityStat[];
-    devices: DeviceStat[];
-    topPages: PageStat[];
     recentVisitors: VisitorLog[];
-    timeline: TimelinePoint[];
 }
 
 function timeAgo(dateString: string): string {
@@ -114,8 +78,7 @@ export function Analytics() {
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
-    const [selectedVisitor, setSelectedVisitor] = useState<VisitorLog | null>(null);
-    const [filterCategory, setFilterCategory] = useState<string>("all");
+    const [searchQuery, setSearchQuery] = useState("");
     const [autoSync, setAutoSync] = useState(true);
     const [, startTransition] = useTransition();
 
@@ -130,38 +93,36 @@ export function Analytics() {
                 setLastUpdated(new Date());
             });
         } catch (err) {
-            console.error("Telemetry fetch error:", err);
+            console.error("Location fetch error:", err);
         } finally {
             setLoading(false);
             setRefreshing(false);
         }
     }, []);
 
-    // REAL-TIME ENGINE: High-frequency 3-second live polling
+    // 3-second real-time location sync
     useEffect(() => {
         fetchData();
         if (!autoSync) return;
-
         const interval = setInterval(() => {
             fetchData();
-        }, 3000); // 3-second real-time pulse
-
+        }, 3000);
         return () => clearInterval(interval);
     }, [fetchData, autoSync]);
 
     if (loading) {
         return (
-            <div className="min-h-full bg-slate-950 p-8 flex flex-col items-center justify-center text-slate-400 gap-3">
+            <div className="min-h-full bg-slate-950 p-12 flex flex-col items-center justify-center text-slate-400 gap-3">
                 <RefreshCw size={26} className="animate-spin text-blue-500" />
-                <p className="text-sm font-mono tracking-widest uppercase">Connecting to live visitor telemetry...</p>
+                <p className="text-sm font-mono tracking-widest uppercase">Connecting to live location stream...</p>
             </div>
         );
     }
 
     if (!data) {
         return (
-            <div className="min-h-full bg-slate-950 p-8 flex flex-col items-center justify-center text-slate-400 gap-4">
-                <p className="text-rose-400">Failed to establish connection to tracking stream.</p>
+            <div className="min-h-full bg-slate-950 p-12 flex flex-col items-center justify-center text-slate-400 gap-4">
+                <p className="text-rose-400">Failed to load location data.</p>
                 <button
                     onClick={() => fetchData(true)}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold uppercase tracking-wider hover:bg-blue-500 cursor-pointer"
@@ -172,24 +133,27 @@ export function Analytics() {
         );
     }
 
+    const latest = data.recentVisitors?.[0];
     const topCountry = data.topCountries?.[0];
-    const mobileShare = data.devices?.find(d => d.device === "Mobile")?.percentage || 0;
-    const desktopShare = data.devices?.find(d => d.device === "Desktop")?.percentage || 0;
+    const topCity = data.topCities?.[0];
 
-    // Filter visitors based on category
-    const filteredVisitors = data.recentVisitors.filter(v => {
-        if (filterCategory === "all") return true;
-        if (filterCategory === "cases") return v.path.startsWith("/works/");
-        if (filterCategory === "cv") return v.action?.includes("RESUME");
-        if (filterCategory === "mobile") return v.deviceDisplay === "Mobile";
-        return true;
+    // Filter by city or country search query
+    const filteredVisitors = (data.recentVisitors || []).filter(v => {
+        if (!searchQuery.trim()) return true;
+        const q = searchQuery.toLowerCase();
+        return (
+            v.fullLocationDisplay.toLowerCase().includes(q) ||
+            v.countryName.toLowerCase().includes(q) ||
+            v.cityDisplay.toLowerCase().includes(q) ||
+            (v.regionDisplay && v.regionDisplay.toLowerCase().includes(q))
+        );
     });
 
     return (
-        <div className="h-full bg-slate-950 text-slate-100 overflow-y-auto p-6 sm:p-8 selection:bg-blue-600 selection:text-white relative font-sans">
+        <div className="h-full bg-slate-950 text-slate-100 overflow-y-auto p-6 sm:p-10 selection:bg-blue-600 selection:text-white font-sans">
             
-            {/* Header: Title & Real-Time Sync Bar */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-800/80">
+            {/* Header: Title & Auto-Sync Pulse */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-800/80">
                 <div>
                     <div className="flex items-center gap-3">
                         <span className="relative flex h-3.5 w-3.5">
@@ -197,263 +161,233 @@ export function Analytics() {
                             <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
                         </span>
                         <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-2">
-                            <span>Live Visitor Radar & Telemetry</span>
+                            <span>Portfolio Access Location Tracker</span>
                         </h1>
                         <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-bold flex items-center gap-1">
                             <Radio size={12} className="animate-pulse" />
-                            <span>REAL-TIME 3s</span>
+                            <span>LIVE 3s</span>
                         </span>
                     </div>
                     <p className="text-slate-400 text-xs sm:text-sm mt-1">
-                        Tracking exact global locations, accessed case studies, CV downloads, and device intelligence as they happen.
+                        Real-time tracking of every global city, region, and country where your portfolio is opened.
                     </p>
                 </div>
 
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setAutoSync(!autoSync)}
-                        className={`px-3 py-1.5 rounded-xl border text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer ${
+                        className={`px-3.5 py-1.5 rounded-xl border text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer ${
                             autoSync 
                                 ? "bg-emerald-950/40 text-emerald-300 border-emerald-800/60" 
                                 : "bg-slate-900 text-slate-400 border-slate-800"
                         }`}
-                        title="Toggle live 3-second polling"
+                        title="Toggle live 3-second location polling"
                     >
                         <span className={`w-2 h-2 rounded-full ${autoSync ? "bg-emerald-400 animate-pulse" : "bg-slate-600"}`} />
-                        <span>Live Sync: {autoSync ? "ON (3s)" : "PAUSED"}</span>
+                        <span>Live Sync: {autoSync ? "ON" : "PAUSED"}</span>
                     </button>
 
                     <button
                         onClick={() => fetchData(true)}
                         disabled={refreshing}
                         className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition-all text-xs font-semibold flex items-center gap-2 cursor-pointer disabled:opacity-50 shadow-md shadow-blue-600/20"
-                        title="Force sync now"
                     >
                         <RefreshCw size={13} className={refreshing ? "animate-spin" : ""} />
-                        <span>Sync Now</span>
+                        <span>Refresh</span>
                     </button>
                 </div>
             </div>
 
-            {/* 1. Core KPIs: Active Now, Total Views, Top Origin, Device Share */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+            {/* 1. LATEST LOCATION HERO CARD (Most Recent Access) */}
+            {latest && (
+                <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-950/40 via-slate-900 to-slate-900 border border-blue-500/30 mb-8 shadow-2xl relative overflow-hidden">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+                        <div className="flex items-start gap-4">
+                            <span className="text-4xl sm:text-5xl select-none leading-none">{latest.flag}</span>
+                            <div>
+                                <div className="flex items-center gap-2 text-blue-400 text-xs font-mono uppercase tracking-wider font-semibold">
+                                    <MapPin size={14} className="text-rose-400" />
+                                    <span>Most Recent Portfolio Access</span>
+                                    <span className="text-slate-500">·</span>
+                                    <span className="text-emerald-400 font-bold">{timeAgo(latest.createdAt)}</span>
+                                </div>
+                                <h2 className="text-xl sm:text-2xl font-black text-white mt-1">
+                                    {latest.fullLocationDisplay}
+                                </h2>
+                                <div className="text-xs text-slate-400 mt-1 flex flex-wrap items-center gap-3">
+                                    <span>Route: <strong className="text-slate-200 font-mono">{latest.path}</strong></span>
+                                    <span>Device: <strong className="text-slate-200">{latest.deviceDisplay}</strong> ({latest.browserDisplay})</span>
+                                    {latest.isp && <span>Network: <strong className="text-slate-200">{latest.isp}</strong></span>}
+                                </div>
+                            </div>
+                        </div>
+
+                        {latest.latitude && latest.longitude && (
+                            <a
+                                href={`https://www.google.com/maps?q=${latest.latitude},${latest.longitude}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shrink-0 self-start md:self-center shadow-lg shadow-blue-600/30 cursor-pointer"
+                            >
+                                <Navigation size={14} />
+                                <span>Open Pin in Google Maps</span>
+                                <ExternalLink size={12} />
+                            </a>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* 2. THREE LOCATION SUMMARY PILLS */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
                 
-                {/* Active Right Now */}
-                <div className="p-5 rounded-2xl bg-gradient-to-b from-emerald-950/30 to-slate-900 border border-emerald-500/30 hover:border-emerald-500/60 transition-all shadow-lg shadow-emerald-950/20">
-                    <div className="flex items-center justify-between text-emerald-400 text-xs font-mono uppercase tracking-wider mb-2">
-                        <span className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                            Active Now
-                        </span>
-                        <Activity size={16} />
+                {/* Active Browsing Locations */}
+                <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800">
+                    <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+                        <span>Active Locations (5m)</span>
+                        <Radio size={14} className="text-emerald-400 animate-pulse" />
                     </div>
-                    <div className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-                        {data.activeNow || (data.viewsToday > 0 ? 1 : 0)}
+                    <div className="text-3xl font-black text-white">
+                        {data.activeNow || 1}
                     </div>
-                    <div className="mt-2 text-xs text-emerald-300/80 font-medium">
-                        Browsing in last 5 minutes
-                    </div>
+                    <p className="text-xs text-emerald-400/90 mt-1 font-medium">
+                        Opening portfolio right now
+                    </p>
                 </div>
 
-                {/* Total Views */}
-                <div className="p-5 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-900/60 border border-slate-800 hover:border-blue-500/30 transition-all">
-                    <div className="flex items-center justify-between text-slate-400 text-xs font-mono uppercase tracking-wider mb-2">
-                        <span>Total Views</span>
-                        <Layers size={16} className="text-blue-400" />
+                {/* Top Origin Country */}
+                <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800">
+                    <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+                        <span>Top Country</span>
+                        <Globe size={14} className="text-blue-400" />
                     </div>
-                    <div className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-                        {data.totalViews.toLocaleString()}
-                    </div>
-                    <div className="mt-2 text-xs text-slate-400 flex items-center gap-1.5">
-                        <span className="text-blue-400 font-bold">{data.uniqueVisitors.toLocaleString()}</span>
-                        <span>unique individuals</span>
-                    </div>
-                </div>
-
-                {/* Top Origin Location */}
-                <div className="p-5 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-900/60 border border-slate-800 hover:border-amber-500/30 transition-all">
-                    <div className="flex items-center justify-between text-slate-400 text-xs font-mono uppercase tracking-wider mb-2">
-                        <span>Primary Origin</span>
-                        <Globe size={16} className="text-amber-400" />
-                    </div>
-                    <div className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2 truncate">
+                    <div className="text-2xl font-black text-white flex items-center gap-2 truncate">
                         <span>{topCountry?.flag || "🌐"}</span>
-                        <span className="truncate">{topCountry?.countryName || "Worldwide"}</span>
+                        <span className="truncate">{topCountry?.countryName || "Unknown"}</span>
                     </div>
-                    <div className="mt-2 text-xs text-slate-400 flex items-center gap-1.5">
-                        <span className="text-amber-400 font-bold">{topCountry?.percentage || 0}%</span>
-                        <span>of global visitor footprint</span>
-                    </div>
+                    <p className="text-xs text-slate-400 mt-1">
+                        <strong className="text-blue-400">{topCountry?.count || 0} accesses</strong> ({topCountry?.percentage || 0}% of all visits)
+                    </p>
                 </div>
 
-                {/* Device Split */}
-                <div className="p-5 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-900/60 border border-slate-800 hover:border-purple-500/30 transition-all">
-                    <div className="flex items-center justify-between text-slate-400 text-xs font-mono uppercase tracking-wider mb-2">
-                        <span>Hardware Split</span>
-                        <Smartphone size={16} className="text-purple-400" />
+                {/* Top Origin City */}
+                <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800">
+                    <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+                        <span>Top City</span>
+                        <MapPin size={14} className="text-amber-400" />
                     </div>
-                    <div className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
-                        <span>{desktopShare}% <span className="text-xs font-normal text-slate-400">Desk</span></span>
-                        <span className="text-slate-600">/</span>
-                        <span className="text-purple-400">{mobileShare}% <span className="text-xs font-normal text-slate-400">Mob</span></span>
+                    <div className="text-2xl font-black text-white flex items-center gap-2 truncate">
+                        <span>{topCity?.flag || "📍"}</span>
+                        <span className="truncate">{topCity?.city || "Enschede"}</span>
                     </div>
-                    <div className="mt-2 text-xs text-slate-400">
-                        Spatial desktop & responsive touch
-                    </div>
+                    <p className="text-xs text-slate-400 mt-1">
+                        <strong className="text-amber-400">{topCity?.count || 0} accesses</strong> ({topCity?.countryName || "Netherlands"})
+                    </p>
                 </div>
 
             </div>
 
-            {/* 2. REAL-TIME ACTIVITY FEED: WHAT WAS ACCESSED & EXACT LOCATION */}
+            {/* 3. LIVE LOCATION ACCESS FEED (Chronological Where Website Was Opened) */}
             <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 mb-8 shadow-xl">
                 
-                {/* Section Header & Interactive Filter Tabs */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 mb-5 border-b border-slate-800/80">
+                {/* Search / Filter Bar */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-5 border-b border-slate-800/80">
                     <div>
-                        <div className="flex items-center gap-2">
-                            <Zap size={18} className="text-amber-400 fill-amber-400/20" />
-                            <h2 className="text-lg font-bold text-white">
-                                Live Session Log: Location & Content Accessed
-                            </h2>
-                        </div>
+                        <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                            <MapPin size={18} className="text-rose-400" />
+                            <span>Location Access Log</span>
+                        </h2>
                         <p className="text-xs text-slate-400 mt-0.5">
-                            Click on any session row to inspect exact coordinates, full address, and telemetry details.
+                            Every location that opened your portfolio, sorted in real-time.
                         </p>
                     </div>
 
-                    {/* Filter Pills */}
-                    <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-950 border border-slate-800 text-xs">
-                        {[
-                            { id: "all", label: "All Events" },
-                            { id: "cases", label: "Case Studies" },
-                            { id: "cv", label: "CV Dossier" },
-                            { id: "mobile", label: "Mobile" }
-                        ].map((btn) => (
-                            <button
-                                key={btn.id}
-                                onClick={() => setFilterCategory(btn.id)}
-                                className={`px-3 py-1 rounded-lg uppercase tracking-wider font-semibold text-[10px] transition-all cursor-pointer ${
-                                    filterCategory === btn.id
-                                        ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                                        : "text-slate-400 hover:text-white"
-                                }`}
-                            >
-                                {btn.label}
-                            </button>
-                        ))}
+                    <div className="relative w-full sm:w-72">
+                        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                        <input
+                            type="text"
+                            placeholder="Filter by city, region, or country..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
+                        />
                     </div>
                 </div>
 
-                {/* Table of Live Visits */}
+                {/* Locations Table */}
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs text-slate-300">
                         <thead>
                             <tr className="border-b border-slate-800/80 text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                                <th className="pb-3 pl-2">Proper Location</th>
-                                <th className="pb-3">What Was Accessed</th>
-                                <th className="pb-3">Device / Platform</th>
-                                <th className="pb-3">Referrer</th>
-                                <th className="pb-3 text-right pr-2">When</th>
+                                <th className="pb-3 pl-2">Location (City, State, Country)</th>
+                                <th className="pb-3">Map Pin</th>
+                                <th className="pb-3">Page Opened</th>
+                                <th className="pb-3">Device</th>
+                                <th className="pb-3 text-right pr-2">When Opened</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-800/50">
                             {filteredVisitors.length > 0 ? (
-                                filteredVisitors.map((visit) => {
-                                    const isRecent = Math.floor((Date.now() - new Date(visit.createdAt).getTime()) / 1000) < 60;
+                                filteredVisitors.map((v) => {
+                                    const isRecent = Math.floor((Date.now() - new Date(v.createdAt).getTime()) / 1000) < 60;
                                     return (
-                                        <tr 
-                                            key={visit.id} 
-                                            onClick={() => setSelectedVisitor(visit)}
-                                            className={`hover:bg-slate-800/60 transition-colors group cursor-pointer ${
-                                                isRecent ? "bg-emerald-950/15" : ""
-                                            }`}
-                                        >
+                                        <tr key={v.id} className={`hover:bg-slate-800/50 transition-colors ${isRecent ? "bg-emerald-950/15" : ""}`}>
                                             
-                                            {/* PROPER LOCATION */}
+                                            {/* Flag + Location */}
                                             <td className="py-3.5 pl-2">
                                                 <div className="flex items-center gap-3">
-                                                    <span className="text-2xl select-none">{visit.flag}</span>
+                                                    <span className="text-2xl select-none">{v.flag}</span>
                                                     <div>
-                                                        <div className="font-bold text-white group-hover:text-blue-400 transition-colors flex items-center gap-1.5">
-                                                            <span>{visit.fullLocationDisplay}</span>
-                                                            {visit.latitude && visit.longitude && (
-                                                                <span className="p-0.5 rounded bg-blue-500/10 text-blue-400" title="GPS Pin Available">
-                                                                    <MapPin size={10} />
-                                                                </span>
-                                                            )}
+                                                        <div className="font-bold text-white text-sm">
+                                                            {v.fullLocationDisplay}
                                                         </div>
                                                         <div className="text-[10px] text-slate-500 font-mono">
-                                                            {visit.isp ? `${visit.isp} · ` : ""}{visit.maskedIp}
+                                                            {v.cityDisplay} · {v.countryName}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
 
-                                            {/* WHAT WAS ACCESSED */}
+                                            {/* Map Link */}
                                             <td className="py-3.5">
-                                                <div className="space-y-1">
-                                                    <div className="font-semibold text-white flex items-center gap-1.5">
-                                                        {visit.action?.includes("RESUME") ? (
-                                                            <span className="p-1 rounded bg-emerald-500/10 text-emerald-400">
-                                                                <FileText size={12} />
-                                                            </span>
-                                                        ) : visit.action?.includes("DOWNLOAD") ? (
-                                                            <span className="p-1 rounded bg-amber-500/10 text-amber-400">
-                                                                <Download size={12} />
-                                                            </span>
-                                                        ) : (
-                                                            <span className="p-1 rounded bg-blue-500/10 text-blue-400">
-                                                                <Eye size={12} />
-                                                            </span>
-                                                        )}
-                                                        <span className="truncate max-w-[280px] sm:max-w-[340px]">
-                                                            {visit.humanTitle}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-[10px]">
-                                                        <span className="px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 font-mono">
-                                                            {visit.humanCategory}
-                                                        </span>
-                                                        <span className="text-slate-500 font-mono">
-                                                            {visit.path}
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                                {v.latitude && v.longitude ? (
+                                                    <a
+                                                        href={`https://www.google.com/maps?q=${v.latitude},${v.longitude}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 text-[11px] font-mono transition-colors"
+                                                    >
+                                                        <MapPin size={11} className="text-rose-400" />
+                                                        <span>{v.latitude.toFixed(2)}, {v.longitude.toFixed(2)}</span>
+                                                        <ExternalLink size={10} />
+                                                    </a>
+                                                ) : (
+                                                    <span className="text-slate-600 text-[11px] font-mono">Edge Header</span>
+                                                )}
                                             </td>
 
-                                            {/* DEVICE & BROWSER */}
+                                            {/* Page Opened */}
                                             <td className="py-3.5">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="p-1.5 rounded-lg bg-slate-800 text-slate-300">
-                                                        {visit.deviceDisplay === "Mobile" ? (
-                                                            <Smartphone size={13} />
-                                                        ) : visit.deviceDisplay === "Tablet" ? (
-                                                            <Tablet size={13} />
-                                                        ) : (
-                                                            <Monitor size={13} />
-                                                        )}
-                                                    </span>
-                                                    <div className="text-[11px]">
-                                                        <span className="font-medium text-slate-200">{visit.browserDisplay}</span>
-                                                        <span className="text-slate-500"> · {visit.osDisplay}</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            {/* REFERRER */}
-                                            <td className="py-3.5">
-                                                <span className="text-[11px] font-mono text-slate-400">
-                                                    {visit.referrer || "Direct"}
+                                                <span className="font-mono text-[11px] text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
+                                                    {v.path}
                                                 </span>
                                             </td>
 
-                                            {/* TIMESTAMP */}
-                                            <td className="py-3.5 text-right pr-2">
-                                                <div className={`text-xs font-mono font-medium ${isRecent ? "text-emerald-400 font-bold" : "text-slate-300"}`}>
-                                                    {timeAgo(visit.createdAt)}
+                                            {/* Device */}
+                                            <td className="py-3.5">
+                                                <div className="flex items-center gap-1.5 text-slate-300">
+                                                    {v.deviceDisplay === "Mobile" ? <Smartphone size={13} /> : <Monitor size={13} />}
+                                                    <span>{v.deviceDisplay}</span>
                                                 </div>
-                                                <div className="text-[10px] text-slate-500 font-mono">
-                                                    {new Date(visit.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                                            </td>
+
+                                            {/* Timestamp */}
+                                            <td className="py-3.5 text-right pr-2 font-mono">
+                                                <div className={`font-semibold ${isRecent ? "text-emerald-400" : "text-slate-300"}`}>
+                                                    {timeAgo(v.createdAt)}
+                                                </div>
+                                                <div className="text-[10px] text-slate-500">
+                                                    {new Date(v.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                 </div>
                                             </td>
 
@@ -462,8 +396,8 @@ export function Analytics() {
                                 })
                             ) : (
                                 <tr>
-                                    <td colSpan={5} className="py-12 text-center text-slate-500 italic">
-                                        No visitor sessions matching filter. Real-time events will stream in automatically.
+                                    <td colSpan={5} className="py-10 text-center text-slate-500 italic">
+                                        No locations found matching &quot;{searchQuery}&quot;.
                                     </td>
                                 </tr>
                             )}
@@ -473,245 +407,75 @@ export function Analytics() {
 
             </div>
 
-            {/* 3. 7-Day Velocity & Top Geographies */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            {/* 4. CITIES & COUNTRIES BREAKDOWN (Side by Side) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8">
                 
-                {/* 7-Day Velocity Chart */}
-                <div className="lg:col-span-2 p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
-                    <div className="flex items-center justify-between mb-4">
-                        <div>
-                            <h2 className="text-base font-bold text-white flex items-center gap-2">
-                                <Calendar size={16} className="text-blue-400" />
-                                <span>7-Day Visitor Velocity</span>
-                            </h2>
-                            <p className="text-xs text-slate-400 mt-0.5">Daily pageviews across your portfolio</p>
-                        </div>
-                        <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                            30-Day Volume: {data.viewsLast30Days}
-                        </span>
-                    </div>
+                {/* Top Cities */}
+                <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+                    <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                        <MapPin size={15} className="text-rose-400" />
+                        <span>Cities Opening Your Portfolio</span>
+                    </h3>
 
-                    <div className="h-[220px] w-full mt-4">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={data.timeline}>
-                                <defs>
-                                    <linearGradient id="velocityGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.4}/>
-                                        <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.0}/>
-                                    </linearGradient>
-                                </defs>
-                                <XAxis 
-                                    dataKey="day" 
-                                    stroke="#64748b" 
-                                    fontSize={11} 
-                                    tickLine={false} 
-                                    axisLine={false} 
-                                />
-                                <YAxis 
-                                    stroke="#64748b" 
-                                    fontSize={11} 
-                                    tickLine={false} 
-                                    axisLine={false} 
-                                    allowDecimals={false}
-                                />
-                                <Tooltip 
-                                    contentStyle={{ 
-                                        backgroundColor: '#0F172A', 
-                                        borderColor: '#334155', 
-                                        borderRadius: '12px',
-                                        fontSize: '12px'
-                                    }}
-                                    itemStyle={{ color: '#93C5FD' }}
-                                />
-                                <Area 
-                                    type="monotone" 
-                                    dataKey="views" 
-                                    name="Views"
-                                    stroke="#3B82F6" 
-                                    strokeWidth={3}
-                                    fillOpacity={1} 
-                                    fill="url(#velocityGradient)" 
-                                />
-                            </AreaChart>
-                        </ResponsiveContainer>
+                    <div className="space-y-2.5">
+                        {data.topCities && data.topCities.length > 0 ? (
+                            data.topCities.map((c, i) => (
+                                <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800/80">
+                                    <div className="flex items-center gap-2.5 text-xs font-semibold text-white">
+                                        <span className="text-lg">{c.flag}</span>
+                                        <span>{c.city}</span>
+                                        <span className="text-slate-500 font-normal text-[11px]">({c.countryName})</span>
+                                    </div>
+                                    <span className="text-xs font-mono text-emerald-400 font-bold">
+                                        {c.count} {c.count === 1 ? 'access' : 'accesses'}
+                                    </span>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="py-6 text-center text-xs text-slate-500 italic">
+                                City breakdown will populate as visitors arrive.
+                            </div>
+                        )}
                     </div>
                 </div>
 
-                {/* Top Countries Ranking */}
-                <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-base font-bold text-white flex items-center gap-2">
-                            <Compass size={16} className="text-amber-400" />
-                            <span>Top Countries</span>
-                        </h2>
-                        <span className="text-[10px] uppercase font-mono tracking-wider text-slate-500">
-                            Ranked
-                        </span>
-                    </div>
+                {/* Top Countries */}
+                <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+                    <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                        <Globe size={15} className="text-blue-400" />
+                        <span>Countries Opening Your Portfolio</span>
+                    </h3>
 
-                    <div className="space-y-3.5 my-auto">
+                    <div className="space-y-3">
                         {data.topCountries && data.topCountries.length > 0 ? (
-                            data.topCountries.slice(0, 5).map((c, idx) => (
-                                <div key={idx} className="space-y-1">
+                            data.topCountries.map((c, i) => (
+                                <div key={i} className="space-y-1">
                                     <div className="flex items-center justify-between text-xs">
                                         <span className="flex items-center gap-2 font-medium text-slate-200">
                                             <span>{c.flag}</span>
                                             <span>{c.countryName}</span>
                                         </span>
-                                        <span className="font-mono text-slate-400">
-                                            {c.count} <span className="text-[10px] text-slate-500">({c.percentage}%)</span>
+                                        <span className="font-mono text-slate-400 text-xs">
+                                            {c.count} accesses ({c.percentage}%)
                                         </span>
                                     </div>
                                     <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
                                         <div 
-                                            className="h-full rounded-full bg-gradient-to-r from-blue-500 to-emerald-400"
-                                            style={{ width: `${Math.max(c.percentage, 4)}%` }}
+                                            className="h-full rounded-full bg-blue-500"
+                                            style={{ width: `${Math.max(c.percentage, 5)}%` }}
                                         />
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <div className="py-8 text-center text-xs text-slate-500 italic">
-                                Waiting for incoming visits...
+                            <div className="py-6 text-center text-xs text-slate-500 italic">
+                                Country breakdown will populate as visitors arrive.
                             </div>
                         )}
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
-                        <span>Total Countries: {data.topCountries?.length || 0}</span>
-                        <span className="text-emerald-400 font-semibold">Live GPS Mapping</span>
                     </div>
                 </div>
 
             </div>
-
-            {/* 4. VISITOR DEEP DIVE MODAL / INSPECTOR */}
-            {selectedVisitor && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-                    <div className="w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-2xl relative">
-                        
-                        {/* Modal Header */}
-                        <div className="flex items-start justify-between pb-4 mb-4 border-b border-slate-800">
-                            <div className="flex items-center gap-3">
-                                <span className="text-3xl">{selectedVisitor.flag}</span>
-                                <div>
-                                    <h3 className="font-bold text-white text-base">
-                                        {selectedVisitor.fullLocationDisplay}
-                                    </h3>
-                                    <p className="text-xs text-slate-400 font-mono">
-                                        {selectedVisitor.cityDisplay} · {selectedVisitor.countryName}
-                                    </p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => setSelectedVisitor(null)}
-                                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors cursor-pointer"
-                            >
-                                <X size={16} />
-                            </button>
-                        </div>
-
-                        {/* Modal Body */}
-                        <div className="space-y-4 text-xs">
-                            
-                            {/* What was accessed */}
-                            <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
-                                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">
-                                    Content Accessed
-                                </div>
-                                <div className="font-bold text-white text-sm">
-                                    {selectedVisitor.humanTitle}
-                                </div>
-                                <div className="text-slate-400 mt-0.5">
-                                    {selectedVisitor.humanDetails}
-                                </div>
-                                <div className="mt-2 text-[11px] font-mono text-blue-400">
-                                    Path: {selectedVisitor.path}
-                                </div>
-                            </div>
-
-                            {/* Location & GPS */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                                    <span className="text-[10px] text-slate-500 uppercase font-mono block mb-1">
-                                        Region / State
-                                    </span>
-                                    <span className="font-semibold text-white">
-                                        {selectedVisitor.regionDisplay || selectedVisitor.countryName}
-                                    </span>
-                                </div>
-
-                                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                                    <span className="text-[10px] text-slate-500 uppercase font-mono block mb-1">
-                                        Map Coordinates
-                                    </span>
-                                    {selectedVisitor.latitude && selectedVisitor.longitude ? (
-                                        <a
-                                            href={`https://www.google.com/maps?q=${selectedVisitor.latitude},${selectedVisitor.longitude}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="font-semibold text-blue-400 hover:underline flex items-center gap-1"
-                                        >
-                                            <span>{selectedVisitor.latitude.toFixed(2)}, {selectedVisitor.longitude.toFixed(2)}</span>
-                                            <ExternalLink size={11} />
-                                        </a>
-                                    ) : (
-                                        <span className="text-slate-500">Country Edge Header</span>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Telemetry Hardware */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                                    <span className="text-[10px] text-slate-500 uppercase font-mono block mb-1">
-                                        Device & OS
-                                    </span>
-                                    <span className="font-semibold text-white">
-                                        {selectedVisitor.deviceDisplay} · {selectedVisitor.osDisplay}
-                                    </span>
-                                </div>
-
-                                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                                    <span className="text-[10px] text-slate-500 uppercase font-mono block mb-1">
-                                        Browser Engine
-                                    </span>
-                                    <span className="font-semibold text-white">
-                                        {selectedVisitor.browserDisplay}
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Timestamp & ISP */}
-                            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center font-mono">
-                                <div>
-                                    <span className="text-[10px] text-slate-500 uppercase block mb-0.5">
-                                        Timestamp
-                                    </span>
-                                    <span className="text-white text-[11px]">
-                                        {new Date(selectedVisitor.createdAt).toLocaleString()}
-                                    </span>
-                                </div>
-                                <span className="text-emerald-400 text-xs font-semibold">
-                                    {timeAgo(selectedVisitor.createdAt)}
-                                </span>
-                            </div>
-
-                        </div>
-
-                        {/* Modal Footer */}
-                        <div className="mt-5 pt-3 border-t border-slate-800 flex justify-end">
-                            <button
-                                onClick={() => setSelectedVisitor(null)}
-                                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold transition-colors cursor-pointer"
-                            >
-                                Close Inspector
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-            )}
 
         </div>
     );

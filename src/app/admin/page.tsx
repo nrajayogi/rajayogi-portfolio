@@ -1,15 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AdminSidebar } from "@/components/admin/sidebar";
 import { Analytics } from "@/components/admin/analytics";
-import { Inbox } from "@/components/admin/inbox";
 import { ThemeProvider } from "@/components/theme-provider";
-import { LogOut, ArrowUpRight, ShieldCheck, Radio } from "lucide-react";
+import { LogOut, ArrowUpRight, MapPin, Radio } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminPage() {
-    const [activeSection, setActiveSection] = useState<"analytics" | "inbox">("analytics");
     const [isAuthorized, setIsAuthorized] = useState(false);
 
     useEffect(() => {
@@ -30,66 +27,50 @@ export default function AdminPage() {
 
     return (
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-            <div className="flex flex-col md:flex-row h-screen bg-slate-950 text-slate-100 font-sans overflow-hidden">
+            <div className="flex flex-col h-screen bg-slate-950 text-slate-100 font-sans overflow-hidden">
                 
-                {/* Clean, Focused Sidebar */}
-                <AdminSidebar 
-                    activeSection={activeSection} 
-                    onSelectSection={(sec) => setActiveSection(sec as "analytics" | "inbox")} 
-                    onLogout={handleLogout}
-                />
-
-                {/* Main Content Area */}
-                <div className="flex-1 flex flex-col overflow-hidden bg-slate-950">
-                    
-                    {/* Top Bar */}
-                    <header className="h-14 border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md flex items-center justify-between px-6 shrink-0">
-                        <div className="flex items-center gap-3">
-                            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-semibold">
-                                <Radio size={12} className="animate-pulse" />
-                                <span>TELEMETRY ACTIVE</span>
-                            </span>
-                            <span className="hidden sm:inline text-xs text-slate-400">
-                                Portfolio Command & Analytics Engine
-                            </span>
+                {/* Clean Top Navigation Bar */}
+                <header className="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-6 sm:px-10 shrink-0 z-20">
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                            <MapPin size={18} className="text-rose-400" />
                         </div>
-
-                        <div className="flex items-center gap-3">
-                            <Link
-                                href="/"
-                                target="_blank"
-                                className="hidden sm:flex items-center gap-1 text-xs text-slate-400 hover:text-white px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800/60 transition-colors"
-                            >
-                                <span>Public Site</span>
-                                <ArrowUpRight size={13} />
-                            </Link>
-
-                            <button
-                                onClick={handleLogout}
-                                className="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 px-3 py-1.5 rounded-lg border border-rose-500/20 hover:bg-rose-500/10 transition-colors cursor-pointer"
-                            >
-                                <LogOut size={13} />
-                                <span>Logout</span>
-                            </button>
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <h1 className="font-black text-sm text-white tracking-tight">RAJAYOGI NANDINA</h1>
+                                <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-mono font-bold flex items-center gap-1">
+                                    <Radio size={10} className="animate-pulse" />
+                                    <span>LIVE GPS RADAR</span>
+                                </span>
+                            </div>
+                            <p className="text-[10px] text-slate-400 font-mono uppercase tracking-wider">Portfolio Access Location Portal</p>
                         </div>
-                    </header>
+                    </div>
 
-                    {/* Section Content */}
-                    <main className="flex-1 overflow-hidden relative">
-                        {activeSection === "analytics" && (
-                            <div className="h-full overflow-hidden">
-                                <Analytics />
-                            </div>
-                        )}
+                    <div className="flex items-center gap-3">
+                        <Link
+                            href="/"
+                            target="_blank"
+                            className="hidden sm:flex items-center gap-1 text-xs text-slate-400 hover:text-white px-3.5 py-1.5 rounded-xl border border-slate-800 hover:bg-slate-800/60 transition-colors"
+                        >
+                            <span>Open Portfolio</span>
+                            <ArrowUpRight size={13} />
+                        </Link>
 
-                        {activeSection === "inbox" && (
-                            <div className="h-full overflow-hidden">
-                                <Inbox />
-                            </div>
-                        )}
-                    </main>
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 px-3.5 py-1.5 rounded-xl border border-rose-500/20 hover:bg-rose-500/10 transition-colors cursor-pointer"
+                        >
+                            <LogOut size={13} />
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </header>
 
-                </div>
+                {/* Pure Location Tracker Main View (Full-Width, Zero Clutter) */}
+                <main className="flex-1 overflow-hidden relative">
+                    <Analytics />
+                </main>
 
             </div>
         </ThemeProvider>
