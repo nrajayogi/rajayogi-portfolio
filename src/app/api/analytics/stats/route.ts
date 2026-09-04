@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCountryFlag, getCountryName } from "@/lib/geo-utils";
+import { getCountryFlag, getCountryName, humanReadableAccess } from "@/lib/geo-utils";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +14,12 @@ export async function GET() {
             by: ['ipHash'],
         });
         const uniqueVisitors = uniqueVisitorsGroup.length;
+
+        // Active right now (within last 5 minutes)
+        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+        const activeNow = await prisma.pageView.count({
+            where: { createdAt: { gte: fiveMinutesAgo } }
+        });
 
         // Today's views
         const startOfToday = new Date();
@@ -36,14 +42,16 @@ export async function GET() {
             where: { createdAt: { gte: thirtyDaysAgo } }
         });
 
-        // 2. Recent Live Visitors Log (latest 35 visits)
+        // 2. Recent Live Visitors Log (latest 40 visits)
         const recentRaw = await prisma.pageView.findMany({
-            take: 35,
+            take: 40,
             orderBy: { createdAt: "desc" },
             select: {
                 id: true,
                 createdAt: true,
                 path: true,
+                action: true,
+                pageTitle: true,
                 country: true,
                 city: true,
                 region: true,
@@ -53,20 +61,40 @@ export async function GET() {
                 browser: true,
                 os: true,
                 referrer: true,
-                ipHash: true
+                ipHash: true,
+                isp: true
             }
         });
 
-        const recentVisitors = recentRaw.map(v => ({
-            ...v,
-            flag: getCountryFlag(v.country),
-            countryName: getCountryName(v.country),
-            cityDisplay: v.city ? `${v.city}${v.region ? `, ${v.region}` : ''}` : "Unknown City",
-            deviceDisplay: v.device || "Desktop",
-            browserDisplay: v.browser || "Unknown",
-            osDisplay: v.os || "Unknown",
-            maskedIp: v.ipHash ? `id_${v.ipHash.slice(0, 6)}` : "anonymous"
-        }));
+        const recentVisitors = recentRaw.map(v => {
+            const human = humanReadableAccess(v.path, v.action, v.pageTitle);
+            const cityText = v.city && v.city !== "Unknown" ? v.city : "";
+            const regionText = v.region && v.region !== "Unknown" ? v.region : "";
+            const countryText = getCountryName(v.country);
+            
+            let fullLocation = countryText;
+            if (cityText && regionText) {
+                fullLocation = `${cityText}, ${regionText}, ${countryText}`;
+            } else if (cityText) {
+                fullLocation = `${cityText}, ${countryText}`;
+            }
+
+            return {
+                ...v,
+                flag: getCountryFlag(v.country),
+                countryName: countryText,
+                cityDisplay: cityText || "Unknown City",
+                regionDisplay: regionText || "",
+                fullLocationDisplay: fullLocation,
+                humanTitle: human.title,
+                humanCategory: human.category,
+                humanDetails: human.details,
+                deviceDisplay: v.device || "Desktop",
+                browserDisplay: v.browser || "Unknown",
+                osDisplay: v.os || "Unknown",
+                maskedIp: v.ipHash ? `v_${v.ipHash.slice(0, 8)}` : "anonymous"
+            };
+        });
 
         // 3. Top Countries
         const topCountriesRaw = await prisma.pageView.groupBy({
@@ -159,6 +187,7 @@ export async function GET() {
         return NextResponse.json({
             totalViews,
             uniqueVisitors,
+            activeNow,
             viewsToday,
             viewsLast7Days,
             viewsLast30Days,

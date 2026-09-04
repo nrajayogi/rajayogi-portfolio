@@ -370,6 +370,9 @@ export function Hero() {
                             onClick={() => {
                                 setIsResumeOpen(true);
                                 playSound("chime", audioEnabled);
+                                if (typeof window !== "undefined" && (window as any).trackPortfolioAction) {
+                                    (window as any).trackPortfolioAction("OPEN_RESUME_MODAL", { pageTitle: "CV Dossier // Declassified" });
+                                }
                             }}
                             onDragStart={() => playSound("pop", audioEnabled)}
                             className="relative lg:absolute lg:bottom-12 lg:left-1/2 lg:-translate-x-1/2 cursor-pointer active:cursor-grabbing p-4 rounded-xl bg-gradient-to-br from-emerald-500/20 via-[#0E0E14] to-cyan-500/20 text-white border-2 border-emerald-400 shadow-[0_20px_45px_rgba(16,185,129,0.35)] -rotate-5 lg:-rotate-2 select-none w-64 sm:w-72 group shrink-0 z-20"

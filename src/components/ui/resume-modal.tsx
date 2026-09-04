@@ -188,6 +188,8 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                             <a
                                 href="/Rajayogi_Nandina_Resume.pdf"
                                 download="Rajayogi_Nandina_Resume.pdf"
+                                data-track-action="DOWNLOAD_RESUME"
+                                data-track-title="Rajayogi_Nandina_Resume.pdf"
                                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-black hover:bg-[#CCFF00] text-xs font-sans font-bold tracking-wider transition-all shadow-md"
                             >
                                 <Download size={13} />
@@ -199,6 +201,8 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                 href="https://www.figma.com/design/ojbXGMlyGZzwofQsCp651d/Portfolio?m=auto&t=nVbnyyDjAJzu5tzD-6"
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                data-track-action="CLICK_EXTERNAL_FIGMA"
+                                data-track-title="Figma Master Design System Canvas"
                                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-sans transition-all"
                                 title="Open Figma Source Portfolio"
                             >

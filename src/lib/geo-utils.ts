@@ -109,3 +109,119 @@ export function parseDevice(userAgent?: string | null): { device: string; browse
 
     return { device, browser, os };
 }
+
+export function humanReadableAccess(path: string, action?: string | null, pageTitle?: string | null): {
+    title: string;
+    category: string;
+    iconType: string;
+    details: string;
+} {
+    if (action === "OPEN_RESUME_MODAL" || action === "VIEW_RESUME") {
+        return {
+            title: "Declassified CV Dossier",
+            category: "Resume Inspection",
+            iconType: "file-text",
+            details: "Opened interactive CV & Master Thesis credentials dossier"
+        };
+    }
+
+    if (action === "DOWNLOAD_RESUME") {
+        return {
+            title: "Downloaded Resume PDF",
+            category: "Asset Download",
+            iconType: "download",
+            details: "Downloaded Rajayogi_Nandina_Resume.pdf"
+        };
+    }
+
+    if (action === "CLICK_EXTERNAL_FIGMA") {
+        return {
+            title: "Figma Master Design System",
+            category: "External Artifact",
+            iconType: "figma",
+            details: "Opened public Figma design canvas"
+        };
+    }
+
+    if (action === "CLICK_LINKEDIN") {
+        return {
+            title: "LinkedIn Profile Outreach",
+            category: "Contact Action",
+            iconType: "linkedin",
+            details: "Navigated to linkedin.com/in/rajayogi-nandina"
+        };
+    }
+
+    const cleanPath = path ? path.split("?")[0].split("#")[0] : "/";
+
+    if (cleanPath === "/" || cleanPath === "") {
+        return {
+            title: "Portfolio Command Center",
+            category: "Hero & Carousel",
+            iconType: "home",
+            details: "Explored 3D Coverflow carousel & tactile stickers"
+        };
+    }
+
+    if (cleanPath.includes("industrial-xr-thesis")) {
+        return {
+            title: "Industrial XR Assembly Thesis",
+            category: "Master's Research",
+            iconType: "glasses",
+            details: "University of Twente · Cargo Bike Hoist & Spatial Tracking"
+        };
+    }
+
+    if (cleanPath.includes("homemade-chefs")) {
+        return {
+            title: "Homemade Chefs Platform",
+            category: "B2B SaaS Platform",
+            iconType: "utensils",
+            details: "Culinary Kitchens Enterprise Management & Real-time Orders"
+        };
+    }
+
+    if (cleanPath.includes("homemade-app")) {
+        return {
+            title: "Homemade Food Consumer App",
+            category: "Consumer Mobile UX",
+            iconType: "smartphone",
+            details: "End-to-end consumer mobile ordering experience"
+        };
+    }
+
+    if (cleanPath.includes("axal-power")) {
+        return {
+            title: "AXAL Power CleanTech EV CPMS",
+            category: "Industrial IoT",
+            iconType: "zap",
+            details: "Charge Point Management System & Fast Charger Telemetry"
+        };
+    }
+
+    if (cleanPath.includes("nadi-pulse")) {
+        return {
+            title: "Nadi Pulse Cardiovascular Telemetry",
+            category: "HealthTech Telehealth",
+            iconType: "activity",
+            details: "Doctor Portal & Patient Pulse Sensor Stream"
+        };
+    }
+
+    if (pageTitle) {
+        return {
+            title: pageTitle,
+            category: "Page View",
+            iconType: "globe",
+            details: `Accessed: ${cleanPath}`
+        };
+    }
+
+    const formatted = cleanPath.replace(/^\/works\//, "").replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+    return {
+        title: formatted || "Portfolio Route",
+        category: "Case Study",
+        iconType: "compass",
+        details: `Route: ${cleanPath}`
+    };
+}

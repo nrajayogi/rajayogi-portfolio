@@ -41,6 +41,9 @@ model PageView {
   browser   String?
   os        String?
   referrer  String?
+  action    String?  // e.g. "Viewed Case Study", "Opened CV Dossier", "Downloaded PDF"
+  pageTitle String?  // Human readable title of accessed content
+  isp       String?  // Network / Organization / ISP
 }
 
 model Image {
