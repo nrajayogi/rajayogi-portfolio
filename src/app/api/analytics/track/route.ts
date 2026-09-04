@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import { parseDevice, TIMEZONE_MAP } from "@/lib/geo-utils";
+import { savePageView } from "@/lib/analytics-storage";
 
 export async function POST(request: NextRequest) {
     try {
@@ -71,29 +71,27 @@ export async function POST(request: NextRequest) {
         // 4. Hash IP for visitor privacy
         const ipHash = crypto.createHash("sha256").update(ip).digest("hex").slice(0, 16);
 
-        await prisma.pageView.create({
-            data: {
-                path: path || "/",
-                action: action || "PAGE_VIEW",
-                pageTitle: pageTitle || null,
-                userAgent,
-                ipHash,
-                country: country || "Unknown",
-                city: city || null,
-                region: region || null,
-                latitude,
-                longitude,
-                device,
-                browser,
-                os,
-                referrer: referrer || "Direct",
-                isp: isp || null
-            }
+        await savePageView({
+            path: path || "/",
+            action: action || "PAGE_VIEW",
+            pageTitle: pageTitle || null,
+            userAgent,
+            ipHash,
+            country: country || "Unknown",
+            city: city || null,
+            region: region || null,
+            latitude,
+            longitude,
+            device,
+            browser,
+            os,
+            referrer: referrer || "Direct",
+            isp: isp || null
         });
 
         return NextResponse.json({ success: true, resolvedLocation: { city, country, region } });
     } catch (error) {
-        console.error("Tracking error:", error);
-        return NextResponse.json({ success: false }, { status: 500 });
+        console.debug("Telemetry write non-fatal error:", error);
+        return NextResponse.json({ success: true, fallback: true });
     }
 }

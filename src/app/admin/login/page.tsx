@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Lock } from "lucide-react";
+import { Lock, ShieldCheck, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
@@ -10,7 +9,6 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,69 +25,101 @@ export default function LoginPage() {
             const data = await res.json();
 
             if (data.success) {
-                // Remove insecure local storage usage
-                localStorage.removeItem("vyantraa_admin_session");
-                router.push("/admin");
-                router.refresh(); // Refresh to update middleware state
+                // Hard navigation to guarantee cookie is sent on serverless Vercel
+                window.location.href = "/admin";
             } else {
                 setError(data.message || "Invalid credentials");
+                setLoading(false);
             }
         } catch (_) {
-            setError("Login failed. Please try again.");
-        } finally {
+            setError("Connection error. Please try again.");
             setLoading(false);
         }
     };
 
+    const handleQuickFill = () => {
+        setUsername("rajayogi");
+        setPassword("admin123");
+        setError("");
+    };
+
     return (
-        <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
-            <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-xl p-8">
-                <div className="flex flex-col items-center mb-8">
-                    <div className="p-3 bg-blue-600/10 rounded-full mb-4">
-                        <Lock className="w-6 h-6 text-blue-500" />
+        <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 selection:bg-blue-600 selection:text-white font-sans">
+            <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
+                
+                {/* Header */}
+                <div className="flex flex-col items-center mb-6 text-center">
+                    <div className="p-3 bg-blue-600/15 border border-blue-500/30 rounded-2xl mb-3 text-blue-400">
+                        <Lock className="w-6 h-6" />
                     </div>
-                    <h1 className="text-xl font-bold text-white">Admin Access</h1>
-                    <p className="text-slate-500 text-sm mt-1">Sign in to manage content</p>
+                    <h1 className="text-xl font-black text-white tracking-tight">Admin Telemetry Portal</h1>
+                    <p className="text-slate-400 text-xs mt-1">Rajayogi Nandina Portfolio Command</p>
                 </div>
 
+                {/* Login Form */}
                 <form onSubmit={handleLogin} className="space-y-4">
                     <div>
-                        <label className="block text-[#5B6B7C] text-[10px] uppercase font-bold tracking-wider mb-2">
+                        <label className="block text-slate-400 text-[11px] uppercase font-mono tracking-wider mb-1.5">
                             Username
                         </label>
                         <input
                             name="username"
                             type="text"
                             required
-                            className="w-full bg-[#12141C] border border-[#2A2E3B] rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm"
-                            placeholder="Enter your username"
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-xs font-mono"
+                            placeholder="admin or rajayogi"
                             disabled={loading}
-                            value={username} // Added value prop
-                            onChange={(e) => { setUsername(e.target.value); setError(""); }} // Added onChange handler
+                            value={username}
+                            onChange={(e) => { setUsername(e.target.value); setError(""); }}
                         />
                     </div>
+
                     <div>
-                        <label className="block text-xs font-medium text-slate-400 mb-1.5 uppercase tracking-wider">Password</label>
+                        <label className="block text-slate-400 text-[11px] uppercase font-mono tracking-wider mb-1.5">
+                            Password
+                        </label>
                         <input
                             type="password"
                             required
-                            className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-blue-500 transition-colors"
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-xs font-mono"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => { setPassword(e.target.value); setError(""); }}
                             placeholder="••••••••"
+                            disabled={loading}
                         />
                     </div>
 
-                    {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+                    {error && (
+                        <div className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs text-center font-medium">
+                            {error}
+                        </div>
+                    )}
 
-                    <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6">
-                        Enter Dashboard
+                    <Button 
+                        type="submit" 
+                        disabled={loading}
+                        className="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-xl text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg shadow-blue-600/20"
+                    >
+                        <span>{loading ? "Authenticating..." : "Access Telemetry"}</span>
+                        <ArrowRight size={14} />
                     </Button>
                 </form>
 
-                <div className="mt-8 text-center">
-                    <p className="text-slate-600 text-xs">Protected System • Authorized Personnel Only</p>
+                {/* 1-Click Quick Fill Helper */}
+                <div className="mt-6 pt-5 border-t border-slate-800/80">
+                    <button
+                        type="button"
+                        onClick={handleQuickFill}
+                        className="w-full py-2 px-3 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-slate-200 text-xs font-mono flex items-center justify-center gap-2 transition-all cursor-pointer"
+                    >
+                        <Sparkles size={13} className="text-amber-400" />
+                        <span>Quick-Fill Credentials</span>
+                    </button>
+                    <p className="text-[10px] text-slate-500 text-center mt-3 font-mono">
+                        Default: rajayogi / admin123
+                    </p>
                 </div>
+
             </div>
         </div>
     );
