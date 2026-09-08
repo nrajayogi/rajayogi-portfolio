@@ -239,8 +239,8 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                 <div>
                     <div className="flex items-center gap-3">
                         <span className="relative flex h-3.5 w-3.5">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80"></span>
-                            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-[4px] bg-emerald-400 opacity-80"></span>
+                            <span className="relative inline-flex rounded-[4px] h-3.5 w-3.5 bg-emerald-500"></span>
                         </span>
                         <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-2">
                             <span>Portfolio Command & Location Radar</span>
@@ -319,7 +319,7 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                             </span>
                             <span className="text-slate-700">|</span>
                             <span className="text-xs text-emerald-400 font-mono flex items-center gap-1">
-                                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                                <span className="w-2 h-2 rounded-[4px] bg-emerald-400 animate-pulse" />
                                 <span>Edge Gateway: Active</span>
                             </span>
                         </div>
@@ -333,7 +333,7 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                                         : "bg-slate-950 text-slate-400 border-slate-800"
                                 }`}
                             >
-                                <span className={`w-2 h-2 rounded-full ${autoSync ? "bg-emerald-400 animate-pulse" : "bg-slate-600"}`} />
+                                <span className={`w-2 h-2 rounded-[4px] ${autoSync ? "bg-emerald-400 animate-pulse" : "bg-slate-600"}`} />
                                 <span>Live 3s Polling: {autoSync ? "ON" : "PAUSED"}</span>
                             </button>
 
@@ -402,10 +402,10 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                                         onMouseLeave={() => setHoveredPin(null)}
                                     >
                                         {/* Outer Radar Pulse Ring */}
-                                        <span className={`absolute -inset-2 rounded-full opacity-75 animate-ping ${isLatest ? "bg-rose-500" : "bg-blue-400"}`} />
+                                        <span className={`absolute -inset-2 rounded-[4px] opacity-75 animate-ping ${isLatest ? "bg-rose-500" : "bg-blue-400"}`} />
                                         
                                         {/* Inner Hotspot Marker */}
-                                        <div className={`relative flex items-center justify-center w-5 h-5 rounded-full border shadow-lg transition-transform group-hover:scale-150 ${
+                                        <div className={`relative flex items-center justify-center w-5 h-5 rounded-[4px] border shadow-lg transition-transform group-hover:scale-150 ${
                                             isLatest 
                                                 ? "bg-rose-500 border-white text-white" 
                                                 : "bg-blue-500 border-cyan-300 text-white"
@@ -513,10 +513,12 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                                 <Radio size={14} className="text-emerald-400 animate-pulse" />
                             </div>
                             <div className="text-3xl font-black text-white">
-                                {data.activeNow || 1}
+                                {data.activeNow ?? 0}
                             </div>
-                            <p className="text-xs text-emerald-400/90 mt-1 font-medium">
-                                Active visitor session right now
+                            <p className={`text-xs mt-1 font-medium ${data.activeNow > 0 ? "text-emerald-400" : "text-slate-500"}`}>
+                                {data.activeNow > 0 
+                                    ? `${data.activeNow} active visitor session${data.activeNow > 1 ? "s" : ""} right now` 
+                                    : "No active sessions within last 5m"}
                             </p>
                         </div>
 

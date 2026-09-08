@@ -48,9 +48,9 @@ export async function GET(request: NextRequest) {
         }
     }
 
-    const countryCode = country || "NL";
-    const countryName = getCountryName(countryCode);
-    const flag = getCountryFlag(countryCode);
+    const countryCode = country || null;
+    const countryName = countryCode ? getCountryName(countryCode) : "Unresolved Location";
+    const flag = countryCode ? getCountryFlag(countryCode) : "🌐";
 
     return NextResponse.json({
         success: true,
@@ -58,11 +58,11 @@ export async function GET(request: NextRequest) {
         country: countryCode,
         countryName,
         flag,
-        city: city || "Enschede",
-        region: region || "Overijssel",
-        latitude: latitude || 52.2404,
-        longitude: longitude || 6.8559,
-        isp: isp || "Vercel Anycast Edge",
+        city: city || null,
+        region: region || null,
+        latitude: latitude || null,
+        longitude: longitude || null,
+        isp: isp || (country ? "Anycast Edge Network" : null),
         edgeNode: vercelId,
         tier,
         timestamp: new Date().toISOString(),
