@@ -111,19 +111,23 @@ export const CAPABILITIES = [
 
 export const WORK_CASE_STUDIES: CaseStudy[] = [
   {
-    id: "industrial-xr-thesis",
+    id: "lift-me-up",
     number: "01",
-    title: "Worker-Centered Industrial XR Assembly",
-    category: "XR · Human-Robot Collaboration",
+    title: "Lift Me Up: Autonomous Hoist & XR Ergonomics",
+    category: "XR · Human Autonomy · Ergonomics",
     year: "2025",
-    tagline: "Master's Thesis: Voice-controlled, suggested, and semi-automatic spatial hoist assistance for cargo bike assembly.",
+    tagline: "Master's Thesis: Designing autonomous hoist behaviour that helps bicycle assembly workers stay closer to the ergonomic golden zone, prototyped safely in XR.",
     role: "XR & Interaction Design Researcher",
-    domain: "University of Twente (Enschede, NL)",
-    duration: "M.Sc. Thesis Project",
-    coverImage: "/images/xr-assembly-simulation.png",
-    annotation: "Unity simulation & user study at UTwente",
+    domain: "University of Twente × Van Raam",
+    duration: "M.Sc. Thesis Project (2025)",
+    coverImage: "/images/lift-me-up/hero-xr.webp",
+    annotation: "Unity XR simulation & Wizard of Oz study at UTwente Interaction Technology Lab",
     galleryImages: [
-      "/images/xr-assembly-simulation.png"
+      "/images/lift-me-up/hero-xr.webp",
+      "/images/lift-me-up/golden-zone.webp",
+      "/images/lift-me-up/system-architecture.webp",
+      "/images/lift-me-up/prototype-evolution.webp",
+      "/images/lift-me-up/study-setup.webp"
     ],
     techStack: [
       {
@@ -132,39 +136,40 @@ export const WORK_CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: "Human-Robot Interaction Rig",
-        items: ["Head-Mounted Eye Tracking (1.2s Gaze Dwell)", "Low-Latency Speech Intent Engine", "Spatial Collision Envelopes (±2.0mm)", "Motorized Industrial Hoist Simulation"]
+        items: ["Head-Mounted Eye Tracking (Gaze Dwell)", "Low-Latency Speech Intent Engine", "Autonomous Kinematic Hoist Model", "Wizard of Oz Experiment Control"]
       },
       {
         title: "Empirical Psychometrics",
-        items: ["NASA-TLX 6-Dimension Scales", "Within-Subject Operator Study (N=15)", "Physical Dwell Posture Metrics", "Perceived Worker Agency Framework"]
+        items: ["NASA-TLX Workload Scales", "Within-Subject Operator Study (N=15)", "Ergonomic Golden Zone Reach Sphere", "Perceived Worker Agency Framework"]
       }
     ],
-    architectureOverview: "Worker-centered spatial XR architecture for heavy industrial assembly. Decouples physical hand pendants via multimodal gaze-dwell coordinate locking, hands-free low-latency voice triggers, and predictable semi-autonomous trajectory suggestions.",
+    architectureOverview: "Worker-centered spatial XR architecture for heavy industrial assembly. Decouples physical hand pendants via hands-free voice triggers, collaborative nudge suggestions, and proactive semi-automatic trajectories converging on the ergonomic golden zone.",
     specMetrics: [
-      { label: "NASA-TLX Load", value: "-38%", detail: "Statistically significant reduction in ergonomic strain" },
-      { label: "Operator Cohort", value: "N = 15", detail: "Within-subject empirical evaluation at UTwente" },
-      { label: "Dwell Threshold", value: "1.2s", detail: "Gaze lock duration preventing accidental voice execution" },
-      { label: "Spatial Margin", value: "±2.0mm", detail: "Assembly cell precision collision boundary" }
+      { label: "Voice Preference", value: "13 / 14", detail: "Ranked Voice first overall across study cohort" },
+      { label: "Voice Ease", value: "6.2 / 7", detail: "Compared to 4.4 Nudge & 4.0 Semi-Automatic" },
+      { label: "Operator Cohort", value: "N = 15", detail: "Within-subject Wizard of Oz evaluation at UTwente" },
+      { label: "Golden Zone", value: "3 Modes", detail: "Voice ('I decide'), Nudge ('We decide'), Semi-Auto ('It decides')" }
     ],
-    context: "In industrial assembly environments, operators handle heavy mechanical sub-assemblies (such as cargo bike frames) requiring motorized hoist assistance. Conventional physical pendant controllers require continuous two-handed engagement, forcing operators to look away from alignment points to check controller buttons.",
-    problem: "Divided visual attention between manual hand pendants and precision assembly points increases physical fatigue, disrupts natural workflow cadence, and introduces ergonomic strain during heavy alignment tasks.",
-    observation: "During pilot assembly observations, operators frequently held components with one hand while stretching awkwardly to manipulate pendant pushbuttons with the other, compromising posture and precision.",
-    designQuestion: "How can multimodal spatial XR interaction (voice commands, gaze targeting, and semi-automated suggestions) support hoist positioning without compromising operator agency or safety?",
+    context: "At Van Raam, workers assemble larger, highly customised bicycle frames using a ceiling mounted hoist. The hoist reduces physical lifting effort, but workers still have to decide where the frame should be held while simultaneously carrying out precision mechanical assembly.",
+    problem: "A bicycle frame held too high, too low, or at the wrong orientation repeatedly pulls the worker outside the ergonomic golden zone. Awkward reaching accumulates across hundreds of micro-adjustments into long-term musculoskeletal fatigue.",
+    observation: "The hoist lifted the frame. The worker still carried the decision burden. Workers frequently held heavy sub-assemblies with one hand while stretching awkwardly to press pendant buttons with the other.",
+    designQuestion: "How can an autonomous hoist help workers work in the golden zone without stripping them of authority or causing divided attention?",
     exploration: [
-      "Gaze-directed target alignment for hands-free 3D coordinate selection",
-      "Low-latency voice commands for elevation adjustments ('lower 5cm', 'hold', 'raise')",
-      "Semi-autonomous positioning suggestions with explicit spatial safety confirmations"
+      "Worker-initiated Voice model ('I decide') providing hands-free direct elevation control",
+      "Shared-initiative Nudge model ('We decide') where the system proposes adjustments for worker approval",
+      "System-initiated Semi-Automatic model ('It decides') proactively moving while worker retains override"
     ],
-    prototypeDescription: "Developed a functional Unity XR industrial simulation environment replicating a cargo bike assembly cell, integrating head-mounted gaze tracking, voice intent recognition, and real-time collision boundaries.",
-    testing: "Designed and conducted a within-subject empirical user study with 15 participants evaluating manual pendant control against multimodal XR assistance, measuring NASA-TLX workload subscales, task completion duration, and perceived agency.",
+    prototypeDescription: "Engineered an immersive 1:1 scale digital twin in Unity XR simulating an industrial cargo bike workstation, synchronizing 6DoF head/hand tracking, posture estimation, and simulated hoist mechanics.",
+    testing: "Designed and conducted a within-subject empirical study with 15 participants (~45 minute Wizard of Oz sessions) performing standardized bicycle assembly tasks across all three initiative conditions.",
     results: [
-      "Demonstrated measurable reductions across NASA-TLX physical and mental workload subscales (-38% strain)",
-      "Observed smoother assembly handoffs with fewer interruptions during component positioning",
-      "Formulated 6 worker-centered design guidelines for spatial interaction in industrial human-robot collaboration"
+      "13 of 14 participants placed Voice first overall (6.2/7 ease of use vs. 4.4 Nudge and 4.0 Semi-Auto)",
+      "11 of 14 felt most in control with Voice; 10 of 14 felt least in control with Semi-Automatic",
+      "Autonomy acceptability rebounded sharply in high-reach tasks (Cage Access preference rose to 5/14)",
+      "Formulated 5 core design heuristics highlighting that 'Detection is not permission'"
     ],
     whatFailed: "Early voice recognition prototypes occasionally misidentified ambient speech during active collaboration.",
     iterations: "Implemented a two-factor interaction pattern requiring brief gaze dwell on the active target before voice triggers are processed, preventing accidental commands.",
-    learnings: "Automation in high-consequence industrial tasks is only effective when operators retain clear, predictable oversight. Interfaces must transparently communicate system intent at all times."
+    learnings: "The best autonomous behaviour is not the one that acts most. It is the one that knows when to ask. Keep worker agency as the default and make autonomy situational."
   },
   {
     id: "homemade-app",

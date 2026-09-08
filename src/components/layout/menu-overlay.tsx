@@ -38,11 +38,11 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
 
     const caseStudies = [
         {
-            title: "Worker-Centered Industrial XR",
-            category: "M.Sc. Thesis · UTwente",
-            href: "#work",
+            title: "Lift Me Up (M.Sc. Thesis)",
+            category: "Autonomous Hoist & XR Ergonomics",
+            href: "/works/lift-me-up",
             icon: Glasses,
-            color: "text-blue-400"
+            color: "text-[#b8ff73]"
         },
         {
             title: "Homemade Consumer App",

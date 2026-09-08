@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 
 export function SelectedWorks() {
-    const [selectedStudyId, setSelectedStudyId] = useState<string>("industrial-xr-thesis");
+    const [selectedStudyId, setSelectedStudyId] = useState<string>("lift-me-up");
     const [overlayStudy, setOverlayStudy] = useState<CaseStudy | null>(null);
     const containerRef = useRef<HTMLElement>(null);
     const device = useResponsive(containerRef);

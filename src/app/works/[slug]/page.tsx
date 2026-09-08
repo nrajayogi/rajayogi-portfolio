@@ -5,6 +5,7 @@ import Image from "next/image";
 import { WORK_CASE_STUDIES } from "@/data/portfolioData";
 import { ProjectInteractiveViewer } from "@/components/sections/project-interactive-viewer";
 import { CaseStudyGallery } from "@/components/ui/case-study-gallery";
+import { LiftMeUpCaseStudy } from "@/components/case-studies/lift-me-up/LiftMeUpCaseStudy";
 import { ArrowLeft, ExternalLink, Github, Globe, CheckCircle2, Layers, Compass, Sparkles, Figma } from "lucide-react";
 
 interface PageProps {
@@ -21,6 +22,12 @@ export async function generateStaticParams() {
 
 export default async function WorkPage({ params }: PageProps) {
     const { slug } = await params;
+
+    // Use bespoke editorial experience for Lift Me Up
+    if (slug === "lift-me-up" || slug === "industrial-xr-thesis") {
+        return <LiftMeUpCaseStudy />;
+    }
+
     const study = WORK_CASE_STUDIES.find((s) => s.id === slug);
 
     if (!study) {
