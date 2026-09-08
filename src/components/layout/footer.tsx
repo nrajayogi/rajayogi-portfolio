@@ -38,7 +38,7 @@ export function Footer() {
                                     href="https://linkedin.com/in/rajayogi-nandina"
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="p-2.5 rounded-xl border border-border bg-foreground/5 hover:bg-primary hover:text-white transition-all"
+                                    className="p-2.5 rounded-[4px] border border-border bg-foreground/5 hover:bg-primary hover:text-white transition-all"
                                     aria-label="LinkedIn"
                                 >
                                     <Linkedin size={18} strokeWidth={1.5} />
@@ -47,7 +47,7 @@ export function Footer() {
                                     href="https://instagram.com/rajayogi_nandina"
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="p-2.5 rounded-xl border border-border bg-foreground/5 hover:bg-primary hover:text-white transition-all"
+                                    className="p-2.5 rounded-[4px] border border-border bg-foreground/5 hover:bg-primary hover:text-white transition-all"
                                     aria-label="Instagram"
                                 >
                                     <Instagram size={18} strokeWidth={1.5} />
@@ -56,7 +56,7 @@ export function Footer() {
                                     href="https://www.figma.com/design/ojbXGMlyGZzwofQsCp651d/Portfolio?m=auto&t=nVbnyyDjAJzu5tzD-6"
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="p-2.5 rounded-xl border border-border bg-foreground/5 hover:bg-primary hover:text-white transition-all flex items-center gap-1.5 text-xs font-sans"
+                                    className="p-2.5 rounded-[4px] border border-border bg-foreground/5 hover:bg-primary hover:text-white transition-all flex items-center gap-1.5 text-xs font-sans"
                                     aria-label="Figma Portfolio"
                                 >
                                     <span>Figma</span>
@@ -110,7 +110,7 @@ export function Footer() {
                     <div className="mt-8">
                         <a
                             href="mailto:rajayogi2000@gmail.com"
-                            className="inline-flex items-center justify-between w-full p-4 rounded-xl bg-primary text-primary-foreground font-semibold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity"
+                            className="inline-flex items-center justify-between w-full p-4 rounded-[4px] bg-primary text-primary-foreground font-semibold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity"
                         >
                             <span>rajayogi2000@gmail.com</span>
                             <ArrowUpRight className="w-4 h-4" />

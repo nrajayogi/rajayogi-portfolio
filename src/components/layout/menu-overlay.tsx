@@ -133,7 +133,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                         className="fixed z-[55] top-[84px] left-1/2 -translate-x-1/2 w-[440px] max-w-[92vw] outline-none"
                     >
                         {/* Main Content Box */}
-                        <div className="bg-[#141414]/95 backdrop-blur-2xl rounded-2xl border border-white/10 p-6 shadow-2xl overflow-y-auto max-h-[82vh] relative no-scrollbar">
+                        <div className="bg-[#141414]/95 backdrop-blur-2xl rounded-[4px] border border-white/10 p-6 shadow-2xl overflow-y-auto max-h-[82vh] relative no-scrollbar">
 
                             {/* Bio Header Badge */}
                             <div className="mb-5 pb-4 border-b border-white/10 flex items-center justify-between">
@@ -141,7 +141,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                                     <h2 className="text-white font-semibold text-sm tracking-wide">Rajayogi Nandina</h2>
                                     <p className="text-[11px] text-white/50 tracking-normal">Product Designer & XR Researcher · Enschede, NL</p>
                                 </div>
-                                <span className="text-[10px] uppercase font-sans px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                <span className="text-[10px] uppercase font-sans px-2 py-0.5 rounded-[4px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                                     UTwente M.Sc.
                                 </span>
                             </div>
@@ -182,10 +182,10 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                                                             href={study.href}
                                                             {...(study.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                                                             onClick={onClose}
-                                                            className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.09] border border-white/5 hover:border-white/20 transition-all group"
+                                                            className="flex items-center justify-between p-2.5 rounded-[4px] bg-white/[0.04] hover:bg-white/[0.09] border border-white/5 hover:border-white/20 transition-all group"
                                                         >
                                                             <div className="flex items-center gap-3">
-                                                                <div className={cn("p-2 rounded-lg bg-white/5 group-hover:scale-105 transition-transform", study.color)}>
+                                                                <div className={cn("p-2 rounded-[4px] bg-white/5 group-hover:scale-105 transition-transform", study.color)}>
                                                                     <Icon className="w-4 h-4" />
                                                                 </div>
                                                                 <div className="text-left">
@@ -244,7 +244,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                                                             key={idx}
                                                             href={area.href}
                                                             onClick={onClose}
-                                                            className="flex flex-col p-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.09] border border-white/5 hover:border-white/20 transition-all group"
+                                                            className="flex flex-col p-2.5 rounded-[4px] bg-white/[0.04] hover:bg-white/[0.09] border border-white/5 hover:border-white/20 transition-all group"
                                                         >
                                                             <Icon className="w-4 h-4 text-blue-400 mb-1.5 group-hover:text-cyan-300 transition-colors" />
                                                             <span className="text-xs font-medium text-white/90 group-hover:text-white leading-tight">
@@ -318,7 +318,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                                     href="/Rajayogi_Nandina_Resume.pdf"
                                     download="Rajayogi_Nandina_Resume.pdf"
                                     onClick={onClose}
-                                    className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 via-[#CCFF00]/10 to-cyan-500/10 border border-emerald-500/20 hover:border-emerald-500/40 transition-all text-xs font-sans group"
+                                    className="flex items-center justify-between p-3 rounded-[4px] bg-gradient-to-r from-emerald-500/10 via-[#CCFF00]/10 to-cyan-500/10 border border-emerald-500/20 hover:border-emerald-500/40 transition-all text-xs font-sans group"
                                 >
                                     <div className="flex items-center gap-2.5">
                                         <FileText size={15} className="text-[#CCFF00]" />
@@ -338,7 +338,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                             <div className="flex gap-2.5 pt-2">
                                 <Button
                                     variant="ghost"
-                                    className="flex-grow h-11 bg-white/10 border border-white/10 text-white hover:bg-white hover:text-black transition-all duration-300 uppercase tracking-widest text-[10px] font-medium rounded-xl"
+                                    className="flex-grow h-11 bg-white/10 border border-white/10 text-white hover:bg-white hover:text-black transition-all duration-300 uppercase tracking-widest text-[10px] font-medium rounded-[4px]"
                                     asChild
                                     onClick={onClose}
                                 >
@@ -349,7 +349,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
 
                                 <button
                                     onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                                    className="h-11 w-11 flex items-center justify-center bg-white/10 border border-white/10 rounded-xl hover:bg-white/20 transition-all text-white/70 hover:text-white shrink-0"
+                                    className="h-11 w-11 flex items-center justify-center bg-white/10 border border-white/10 rounded-[4px] hover:bg-white/20 transition-all text-white/70 hover:text-white shrink-0"
                                     title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
                                 >
                                     {mounted ? (

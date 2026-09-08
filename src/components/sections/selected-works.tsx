@@ -50,7 +50,7 @@ export function SelectedWorks() {
                         <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                             Industrial XR prototypes, multimodal human-robot collaboration systems, and behavioral production platforms tested with real users.
                         </p>
-                        <div className="w-12 h-1 bg-primary mt-4 rounded-full" />
+                        <div className="w-12 h-1 bg-primary mt-4 rounded-[4px]" />
                     </div>
                 </div>
 
@@ -117,20 +117,20 @@ export function SelectedWorks() {
                             </div>
 
                             {/* In-Situ Quote / Highlight */}
-                            <div className="p-4 rounded-xl bg-card border border-border text-xs text-muted-foreground">
+                            <div className="p-4 rounded-[4px] bg-card border border-border text-xs text-muted-foreground">
                                 <span className="text-foreground font-semibold block mb-1">Field Observation:</span>
                                 <span className="italic">&quot;{activeStudy.observation}&quot;</span>
                             </div>
 
                             {/* Meta Badges */}
                             <div className="flex flex-wrap items-center gap-3">
-                                <div className="px-3 py-1.5 rounded-lg bg-foreground/5 border border-border text-xs text-muted-foreground">
+                                <div className="px-3 py-1.5 rounded-[4px] bg-foreground/5 border border-border text-xs text-muted-foreground">
                                     Role: <strong className="text-foreground font-medium">{activeStudy.role}</strong>
                                 </div>
-                                <div className="px-3 py-1.5 rounded-lg bg-foreground/5 border border-border text-xs text-muted-foreground">
+                                <div className="px-3 py-1.5 rounded-[4px] bg-foreground/5 border border-border text-xs text-muted-foreground">
                                     Context: <strong className="text-foreground font-medium">{activeStudy.domain}</strong>
                                 </div>
-                                <div className="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-500 font-semibold">
+                                <div className="px-3 py-1.5 rounded-[4px] bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-500 font-semibold">
                                     {activeStudy.results[0]}
                                 </div>
                             </div>
@@ -140,7 +140,7 @@ export function SelectedWorks() {
                                 {/* Primary: Launch Interactive Overlay */}
                                 <button
                                     onClick={() => openOverlay(activeStudy)}
-                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground text-xs font-semibold tracking-wider uppercase hover:opacity-90 transition-all cursor-pointer shadow-lg shadow-primary/20 group"
+                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-[4px] bg-primary text-primary-foreground text-xs font-semibold tracking-wider uppercase hover:opacity-90 transition-all cursor-pointer shadow-lg shadow-primary/20 group"
                                 >
                                     <Sparkles size={14} className="group-hover:rotate-12 transition-transform" />
                                     <span>Launch Interactive Case Study</span>
@@ -149,7 +149,7 @@ export function SelectedWorks() {
                                 {/* Secondary: Open Dedicated Page */}
                                 <Link
                                     href={`/works/${activeStudy.id}`}
-                                    className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all"
+                                    className="inline-flex items-center gap-1.5 px-4 py-3 rounded-[4px] border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all"
                                 >
                                     <span>Dedicated Page</span>
                                     <ArrowUpRight size={13} className="text-muted-foreground" />
@@ -161,7 +161,7 @@ export function SelectedWorks() {
                                         href={activeStudy.liveUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all"
+                                        className="inline-flex items-center gap-1.5 px-4 py-3 rounded-[4px] border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all"
                                     >
                                         <Globe size={13} className="text-primary" />
                                         <span>Live Site</span>
@@ -175,7 +175,7 @@ export function SelectedWorks() {
                                         href={activeStudy.githubUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all"
+                                        className="inline-flex items-center gap-1.5 px-4 py-3 rounded-[4px] border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all"
                                     >
                                         <Github size={13} />
                                         <span>Code</span>
@@ -189,7 +189,7 @@ export function SelectedWorks() {
                         <div className="lg:col-span-5">
                             <div
                                 onClick={() => openOverlay(activeStudy)}
-                                className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden border border-border bg-black group cursor-pointer shadow-2xl"
+                                className="relative aspect-[16/11] w-full rounded-[4px] overflow-hidden border border-border bg-black group cursor-pointer shadow-2xl"
                             >
                                 <Image
                                     src={activeStudy.coverImage}
@@ -201,7 +201,7 @@ export function SelectedWorks() {
 
                                 {/* Interactive Launch Overlay Prompt */}
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
-                                    <span className="px-4 py-2 rounded-xl bg-primary text-primary-foreground font-semibold text-xs uppercase tracking-wider shadow-2xl flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                                    <span className="px-4 py-2 rounded-[4px] bg-primary text-primary-foreground font-semibold text-xs uppercase tracking-wider shadow-2xl flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform">
                                         <Play size={12} fill="currentColor" />
                                         <span>Open Interactive Demo & Specs</span>
                                     </span>
@@ -209,10 +209,10 @@ export function SelectedWorks() {
 
                                 {/* Annotation Bottom Pill */}
                                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                                    <span className="text-xs text-foreground font-medium bg-background/80 backdrop-blur-md px-3 py-1 rounded-md border border-border shadow-sm">
+                                    <span className="text-xs text-foreground font-medium bg-background/80 backdrop-blur-md px-3 py-1 rounded-[4px] border border-border shadow-sm">
                                         {activeStudy.annotation}
                                     </span>
-                                    <span className="text-xs text-primary font-medium bg-background/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-border flex items-center gap-1">
+                                    <span className="text-xs text-primary font-medium bg-background/80 backdrop-blur-md px-2.5 py-1 rounded-[4px] border border-border flex items-center gap-1">
                                         <Maximize2 size={11} />
                                         <span>Expand</span>
                                     </span>

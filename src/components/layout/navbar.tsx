@@ -37,7 +37,7 @@ export function Navbar() {
             {/* Menu Pill - Centered exactly */}
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="fixed top-6 left-1/2 -translate-x-1/2 z-[60] h-12 bg-[#1A1A1A]/80 backdrop-blur-xl border border-white/10 hover:bg-[#1A1A1A] transition-all rounded-xl px-6 w-[90%] md:w-[400px] flex items-center justify-between shadow-2xl"
+                className="fixed top-6 left-1/2 -translate-x-1/2 z-[60] h-12 bg-[#1A1A1A]/80 backdrop-blur-xl border border-white/10 hover:bg-[#1A1A1A] transition-all rounded-[4px] px-6 w-[90%] md:w-[400px] flex items-center justify-between shadow-2xl"
             >
                 <span className="text-[10px] text-white/90 font-medium tracking-widest uppercase pl-1">Menu</span>
                 <div className="flex items-center justify-center w-6 h-6">

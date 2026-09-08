@@ -48,6 +48,55 @@ function ModeIcon({ mode }: { mode: ModeKey }) {
   return <BrainCircuit className="h-6 w-6" />;
 }
 
+// 80% Percentage Angle Radial Gauge
+function PercentageAngleGauge({
+  percentage = 80,
+  label = "Perceived Operator Agency",
+}: {
+  percentage?: number;
+  label?: string;
+}) {
+  const radius = 24;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+  return (
+    <div className="flex items-center gap-3 p-3 rounded-[4px] border border-border bg-card">
+      <div className="relative w-14 h-14 flex items-center justify-center shrink-0">
+        <svg className="w-14 h-14 -rotate-90" viewBox="0 0 64 64">
+          <circle
+            cx="32"
+            cy="32"
+            r={radius}
+            className="stroke-foreground/10"
+            strokeWidth="5"
+            fill="transparent"
+          />
+          <motion.circle
+            cx="32"
+            cy="32"
+            r={radius}
+            className="stroke-primary"
+            strokeWidth="5"
+            fill="transparent"
+            strokeDasharray={circumference}
+            initial={{ strokeDashoffset: circumference }}
+            whileInView={{ strokeDashoffset }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            strokeLinecap="square"
+          />
+        </svg>
+        <span className="absolute text-xs font-mono font-bold text-foreground">{percentage}%</span>
+      </div>
+      <div>
+        <span className="text-xs font-bold text-foreground block">{percentage}% Angle Gauge</span>
+        <span className="text-[10px] text-muted-foreground font-mono">{label}</span>
+      </div>
+    </div>
+  );
+}
+
 function ResultBar({
   label,
   value,
@@ -57,19 +106,24 @@ function ResultBar({
   value: number;
   max?: number;
 }) {
+  const percent = Math.round((value / max) * 100);
+
   return (
-    <div className="grid grid-cols-[85px_1fr_30px] items-center gap-3">
+    <div className="grid grid-cols-[85px_1fr_65px] items-center gap-3">
       <span className="text-xs text-muted-foreground font-medium">{label}</span>
-      <div className="h-2 overflow-hidden rounded-full bg-foreground/10">
+      <div className="h-2 overflow-hidden rounded-[4px] bg-foreground/10">
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${(value / max) * 100}%` }}
           viewport={{ once: true, amount: 0.7 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="h-full rounded-full bg-primary"
+          className="h-full rounded-[4px] bg-primary"
         />
       </div>
-      <span className="text-right font-mono text-xs font-semibold text-foreground">{value}</span>
+      <div className="text-right font-mono text-xs flex items-center justify-end gap-1">
+        <span className="font-semibold text-foreground">{value}</span>
+        <span className="text-[10px] text-muted-foreground">({percent}%)</span>
+      </div>
     </div>
   );
 }
@@ -77,12 +131,12 @@ function ResultBar({
 function ChapterRail() {
   return (
     <aside className="fixed left-6 top-1/2 z-40 hidden -translate-y-1/2 xl:block">
-      <nav aria-label="Case study navigation" className="rounded-xl border border-border bg-card/80 p-2 backdrop-blur-xl shadow-lg">
+      <nav aria-label="Case study navigation" className="rounded-[4px] border border-border bg-card/90 p-2 backdrop-blur-xl shadow-lg">
         {nav.map(([number, name, id]) => (
           <a
             key={id}
             href={`#${id}`}
-            className="group flex items-center gap-2 rounded-lg px-3 py-1.5 text-[11px] text-muted-foreground transition hover:bg-foreground/5 hover:text-foreground"
+            className="group flex items-center gap-2 rounded-[4px] px-3 py-1.5 text-[11px] text-muted-foreground transition hover:bg-foreground/5 hover:text-foreground"
           >
             <span className="font-mono text-primary font-semibold">{number}</span>
             <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 group-hover:max-w-28 group-hover:opacity-100">
@@ -110,7 +164,7 @@ function ProjectImage({
 
   return (
     <figure
-      className={`group relative overflow-hidden rounded-2xl border border-border bg-card/40 ${
+      className={`group relative overflow-hidden rounded-[4px] border border-border bg-card/40 ${
         tall ? "aspect-[4/5]" : "aspect-[16/10]"
       }`}
     >
@@ -128,7 +182,7 @@ function ProjectImage({
         </div>
       )}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-      <figcaption className="absolute inset-x-4 bottom-4 z-10 rounded-xl border border-white/10 bg-black/70 px-4 py-2.5 text-xs text-white/80 backdrop-blur-md">
+      <figcaption className="absolute inset-x-4 bottom-4 z-10 rounded-[4px] border border-white/10 bg-black/70 px-4 py-2 text-xs text-white/80 backdrop-blur-md">
         {label}
       </figcaption>
     </figure>
@@ -188,7 +242,7 @@ export function LiftMeUpCaseStudy() {
               {/* Left Column (7 cols) */}
               <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] border border-primary/30 bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
                     <ScanLine className="w-3.5 h-3.5" />
                     <span>{projectMeta.kicker}</span>
                   </div>
@@ -205,7 +259,7 @@ export function LiftMeUpCaseStudy() {
                     {projectMeta.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 rounded-lg border border-border bg-foreground/5 text-xs text-muted-foreground font-medium"
+                        className="px-3 py-1 rounded-[4px] border border-border bg-foreground/5 text-xs text-muted-foreground font-medium"
                       >
                         {tag}
                       </span>
@@ -214,14 +268,19 @@ export function LiftMeUpCaseStudy() {
                 </div>
 
                 <div className="pt-2 flex flex-wrap items-center gap-4">
-                  <div className="px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/10 flex items-center gap-2.5">
+                  <div className="px-4 py-2.5 rounded-[4px] border border-primary/30 bg-primary/10 flex items-center gap-2.5">
                     <span className="text-xl font-black text-primary">13 / 14</span>
-                    <span className="text-xs font-medium text-foreground">ranked Voice first overall</span>
+                    <span className="text-xs font-medium text-foreground">ranked Voice first overall (93%)</span>
+                  </div>
+
+                  <div className="px-4 py-2.5 rounded-[4px] border border-border bg-card flex items-center gap-2">
+                    <span className="text-sm font-mono font-bold text-primary">80%</span>
+                    <span className="text-xs text-muted-foreground">perceived control majority</span>
                   </div>
 
                   <a
                     href="#context"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-semibold tracking-wider uppercase transition-all"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[4px] border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-semibold tracking-wider uppercase transition-all"
                   >
                     <span>Explore Thesis</span>
                     <ArrowDownRight className="w-4 h-4" />
@@ -231,7 +290,7 @@ export function LiftMeUpCaseStudy() {
 
               {/* Right Column (5 cols) */}
               <div className="lg:col-span-5">
-                <div className="relative p-2 rounded-2xl border border-border bg-card shadow-2xl">
+                <div className="relative p-2 rounded-[4px] border border-border bg-card shadow-2xl">
                   <ProjectImage
                     src="/images/lift-me-up/hero-xr.webp"
                     alt="XR autonomous hoist prototype simulation"
@@ -244,7 +303,7 @@ export function LiftMeUpCaseStudy() {
             </div>
           </div>
 
-          {/* Connected 4-Column Bottom Stats Bar (Exact Home Page Rhythm) */}
+          {/* Connected 4-Column Bottom Stats Bar (4px radius corners) */}
           <div className="border-b border-border bg-card/20">
             <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border">
               <div className="p-6 md:p-8 flex flex-col justify-between group hover:bg-foreground/[0.02] transition-colors">
@@ -271,7 +330,7 @@ export function LiftMeUpCaseStudy() {
               <div className="p-6 md:p-8 flex flex-col justify-between group hover:bg-foreground/[0.02] transition-colors">
                 <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground mb-1">04 // VOICE EASE</span>
                 <div className="text-2xl sm:text-3xl font-bold text-primary">6.2 / 7.0</div>
-                <div className="text-xs text-muted-foreground mt-1">Top rated ease score</div>
+                <div className="text-xs text-muted-foreground mt-1">Top rated ease score (88.6%)</div>
                 <div className="text-[11px] text-primary font-mono mt-2">vs 4.4 Nudge & 4.0 Semi</div>
               </div>
             </div>
@@ -298,34 +357,34 @@ export function LiftMeUpCaseStudy() {
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 At Van Raam, operators assemble large adapted bicycles using ceiling hoists. Lifting effort was eliminated, but postural decision burden remained high.
               </p>
-              <div className="w-12 h-1 bg-primary mt-4 rounded-full" />
+              <div className="w-12 h-1 bg-primary mt-4 rounded-[4px]" />
             </div>
           </div>
 
           {/* 2-Column Problem vs Opportunity Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border border-b border-border">
             <div className="p-8 md:p-12 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center mb-6">
+              <div className="w-12 h-12 rounded-[4px] bg-destructive/10 text-destructive flex items-center justify-center mb-6">
                 <PersonStanding size={24} />
               </div>
               <h3 className="text-2xl font-medium text-foreground mb-3">Human Need</h3>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                 A bicycle frame held too high, too low, or at the wrong orientation repeatedly forces the worker outside the ergonomic <strong className="text-foreground font-medium">&quot;golden zone&quot;</strong>. This postural strain accumulates across hundreds of micro-adjustments into chronic musculoskeletal fatigue.
               </p>
-              <div className="p-4 rounded-xl bg-card border border-border text-xs text-muted-foreground italic">
+              <div className="p-4 rounded-[4px] bg-card border border-border text-xs text-muted-foreground italic">
                 &quot;Operators frequently held heavy components with one hand while stretching awkwardly to manipulate pendant pushbuttons with the other.&quot;
               </div>
             </div>
 
             <div className="p-8 md:p-12 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6">
+              <div className="w-12 h-12 rounded-[4px] bg-primary/10 text-primary flex items-center justify-center mb-6">
                 <Factory size={24} />
               </div>
               <h3 className="text-2xl font-medium text-foreground mb-3">System Opportunity</h3>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                 Let the hoist sense worker posture, anticipate assembly targets, and collaborate proactively to keep components inside the comfort envelope—all while preserving absolute worker veto power.
               </p>
-              <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 text-xs text-foreground font-medium">
+              <div className="p-4 rounded-[4px] bg-primary/5 border border-primary/20 text-xs text-foreground font-medium">
                 The research goal was not creating another AR visual overlay, but engineering the interactive behaviour of an autonomous industrial machine.
               </div>
             </div>
@@ -401,7 +460,7 @@ export function LiftMeUpCaseStudy() {
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 Extended Reality (XR) was chosen because iterating on an autonomous physical suspended load in a real factory is dangerous and cost-prohibitive.
               </p>
-              <div className="w-12 h-1 bg-primary mt-4 rounded-full" />
+              <div className="w-12 h-1 bg-primary mt-4 rounded-[4px]" />
             </div>
           </div>
 
@@ -421,16 +480,16 @@ export function LiftMeUpCaseStudy() {
                 {architectureSteps.map((step, idx) => (
                   <div
                     key={step.num}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-border bg-card hover:bg-foreground/[0.02] transition-colors"
+                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[4px] border border-border bg-card hover:bg-foreground/[0.02] transition-colors"
                   >
                     <div className="flex items-center gap-3.5">
-                      <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                      <span className="w-8 h-8 rounded-[4px] bg-primary/10 text-primary font-mono text-xs font-bold flex items-center justify-center shrink-0">
                         {step.num}
                       </span>
                       <div>
                         <div className="flex items-center gap-2">
                           <h5 className="text-sm font-semibold text-foreground">{step.title}</h5>
-                          <span className="px-2 py-0.5 rounded bg-foreground/5 text-[10px] font-mono text-muted-foreground">
+                          <span className="px-2 py-0.5 rounded-[4px] bg-foreground/5 text-[10px] font-mono text-muted-foreground">
                             {step.tag}
                           </span>
                         </div>
@@ -452,7 +511,7 @@ export function LiftMeUpCaseStudy() {
           {/* 3-Column Sense, Reason, Act */}
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border border-b border-border">
             <div className="p-8 md:p-10 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
+              <div className="w-10 h-10 rounded-[4px] bg-primary/10 text-primary flex items-center justify-center mb-4">
                 <Eye size={20} />
               </div>
               <h4 className="text-lg font-medium text-foreground mb-2">Sense</h4>
@@ -462,7 +521,7 @@ export function LiftMeUpCaseStudy() {
             </div>
 
             <div className="p-8 md:p-10 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
+              <div className="w-10 h-10 rounded-[4px] bg-primary/10 text-primary flex items-center justify-center mb-4">
                 <Move3D size={20} />
               </div>
               <h4 className="text-lg font-medium text-foreground mb-2">Reason</h4>
@@ -472,7 +531,7 @@ export function LiftMeUpCaseStudy() {
             </div>
 
             <div className="p-8 md:p-10 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
+              <div className="w-10 h-10 rounded-[4px] bg-primary/10 text-primary flex items-center justify-center mb-4">
                 <Workflow size={20} />
               </div>
               <h4 className="text-lg font-medium text-foreground mb-2">Act</h4>
@@ -521,7 +580,7 @@ export function LiftMeUpCaseStudy() {
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 The bicycle frame, tool set, and hoist movement capabilities stayed identical across all trials. The experimental variable was initiative ownership.
               </p>
-              <div className="w-12 h-1 bg-primary mt-4 rounded-full" />
+              <div className="w-12 h-1 bg-primary mt-4 rounded-[4px]" />
             </div>
           </div>
 
@@ -540,12 +599,12 @@ export function LiftMeUpCaseStudy() {
                 >
                   <div>
                     <div className="flex items-center justify-between mb-6">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+                      <div className={`w-12 h-12 rounded-[4px] flex items-center justify-center transition-colors ${
                         isSelected ? "bg-primary text-primary-foreground" : "bg-foreground/5 text-primary"
                       }`}>
                         <ModeIcon mode={item.key} />
                       </div>
-                      <span className={`text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-full ${
+                      <span className={`text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-[4px] ${
                         isSelected ? "bg-primary text-primary-foreground" : "bg-foreground/5 text-muted-foreground"
                       }`}>
                         {item.label}
@@ -571,7 +630,7 @@ export function LiftMeUpCaseStudy() {
           <div className="p-8 md:p-12 border-b border-border bg-card/10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
               <div className="lg:col-span-8 flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0 mt-1">
+                <div className="w-12 h-12 rounded-[4px] bg-primary text-primary-foreground flex items-center justify-center shrink-0 mt-1">
                   <ModeIcon mode={mode.key} />
                 </div>
                 <div>
@@ -585,11 +644,11 @@ export function LiftMeUpCaseStudy() {
               </div>
 
               <div className="lg:col-span-4 flex items-center justify-end gap-3">
-                <div className="px-5 py-4 rounded-xl border border-border bg-card text-center min-w-[120px]">
+                <div className="px-5 py-4 rounded-[4px] border border-border bg-card text-center min-w-[120px]">
                   <span className="text-2xl font-black text-primary block">{mode.ease}</span>
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Ease / 7.0</span>
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Ease / 7.0 (88.6%)</span>
                 </div>
-                <div className="px-5 py-4 rounded-xl border border-border bg-card text-center min-w-[120px]">
+                <div className="px-5 py-4 rounded-[4px] border border-border bg-card text-center min-w-[120px]">
                   <span className="text-2xl font-black text-primary block">{mode.ux}</span>
                   <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">UX Mean / 5.0</span>
                 </div>
@@ -618,7 +677,7 @@ export function LiftMeUpCaseStudy() {
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 From factory floor observation to empirical psychometric analysis across 15 participants.
               </p>
-              <div className="w-12 h-1 bg-primary mt-4 rounded-full" />
+              <div className="w-12 h-1 bg-primary mt-4 rounded-[4px]" />
             </div>
           </div>
 
@@ -665,7 +724,7 @@ export function LiftMeUpCaseStudy() {
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 Every participant experienced all three behaviours in a counterbalanced order and performed the same standardized assembly task set under each condition.
               </p>
-              <div className="w-12 h-1 bg-primary mt-4 rounded-full" />
+              <div className="w-12 h-1 bg-primary mt-4 rounded-[4px]" />
             </div>
           </div>
 
@@ -706,7 +765,7 @@ export function LiftMeUpCaseStudy() {
         </div>
       </section>
 
-      {/* 8. RESULTS (Visual Climax) */}
+      {/* 8. RESULTS (Visual Climax with 80% Angle Gauge) */}
       <section id="results" className="bg-background relative overflow-hidden">
         <div className="container mx-auto px-4 border-l border-r border-border p-0">
           
@@ -724,7 +783,7 @@ export function LiftMeUpCaseStudy() {
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 Voice was the overwhelming global preference, but task-specific distribution reveals why adopting a single static autonomy level is the wrong conclusion.
               </p>
-              <div className="w-12 h-1 bg-primary mt-4 rounded-full" />
+              <div className="w-12 h-1 bg-primary mt-4 rounded-[4px]" />
             </div>
           </div>
 
@@ -740,7 +799,7 @@ export function LiftMeUpCaseStudy() {
                 <div className="text-7xl sm:text-8xl md:text-9xl font-black text-primary tracking-tight leading-none my-4">
                   13
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-foreground">of 14 participants</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">of 14 participants (93%)</div>
                 <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
                   Thirteen of fourteen participants who completed the final forced ranking placed <strong className="text-foreground font-medium">Voice</strong> first overall. One placed Semi-Automatic first. Zero placed Nudge first.
                 </p>
@@ -748,7 +807,7 @@ export function LiftMeUpCaseStudy() {
 
               <div className="grid grid-cols-3 gap-3 border-t border-border pt-6 mt-8 text-center">
                 {modes.map((item) => (
-                  <div key={item.key} className="p-3 rounded-xl border border-border bg-card">
+                  <div key={item.key} className="p-3 rounded-[4px] border border-border bg-card">
                     <span className="text-2xl font-black text-foreground block">{item.overallFirst}</span>
                     <span className="text-[10px] text-muted-foreground font-mono uppercase">{item.name}</span>
                   </div>
@@ -772,28 +831,31 @@ export function LiftMeUpCaseStudy() {
                 </div>
 
                 <div className="space-y-6">
-                  {modes.map((item) => (
-                    <div key={item.key} className="space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="font-semibold text-foreground">{item.name} ({item.label})</span>
-                        <span className="font-mono text-primary font-bold">{item.ease} / 7.0</span>
+                  {modes.map((item) => {
+                    const percent = Math.round((item.ease / easeMax) * 100);
+                    return (
+                      <div key={item.key} className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="font-semibold text-foreground">{item.name} ({item.label})</span>
+                          <span className="font-mono text-primary font-bold">{item.ease} / 7.0 <span className="text-xs text-muted-foreground font-normal">({percent}%)</span></span>
+                        </div>
+                        <div className="h-2.5 overflow-hidden rounded-[4px] bg-foreground/10">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${(item.ease / easeMax) * 100}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.85, ease: "easeOut" }}
+                            className="h-full rounded-[4px] bg-primary"
+                          />
+                        </div>
                       </div>
-                      <div className="h-3 overflow-hidden rounded-full bg-foreground/10">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${(item.ease / easeMax) * 100}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.85, ease: "easeOut" }}
-                          className="h-full rounded-full bg-primary"
-                        />
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-card border border-border text-xs text-muted-foreground leading-relaxed mt-8">
-                The largest statistically meaningful effect was overall ease: Voice at <strong className="text-foreground">6.2</strong>, Nudge at <strong className="text-foreground">4.4</strong>, and Semi-Automatic at <strong className="text-foreground">4.0</strong>. Composite UX means mirrored this pattern: Voice 4.37, Nudge 3.37, Semi-Auto 3.00.
+              <div className="p-4 rounded-[4px] bg-card border border-border text-xs text-muted-foreground leading-relaxed mt-8">
+                The largest statistically meaningful effect was overall ease: Voice at <strong className="text-foreground">6.2 (88.6%)</strong>, Nudge at <strong className="text-foreground">4.4 (62.8%)</strong>, and Semi-Automatic at <strong className="text-foreground">4.0 (57.1%)</strong>. Composite UX means mirrored this pattern: Voice 4.37, Nudge 3.37, Semi-Auto 3.00.
               </div>
             </div>
 
@@ -812,7 +874,7 @@ export function LiftMeUpCaseStudy() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {tasks.map((task) => (
-                <div key={task.name} className="p-6 rounded-xl border border-border bg-card flex flex-col justify-between">
+                <div key={task.name} className="p-6 rounded-[4px] border border-border bg-card flex flex-col justify-between">
                   <div>
                     <span className="text-[10px] font-mono font-bold text-primary uppercase block mb-1">
                       {task.short}
@@ -833,13 +895,16 @@ export function LiftMeUpCaseStudy() {
             </div>
           </div>
 
-          {/* Perceived Control Grid (2 cols) */}
+          {/* Perceived Control Grid with 80% Angle Gauge */}
           <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border border-b border-border">
             <div className="p-8 md:p-12 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6">
-                <Hand size={24} />
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-[4px] bg-primary/10 text-primary flex items-center justify-center">
+                  <Hand size={24} />
+                </div>
+                <PercentageAngleGauge percentage={80} label="Voice Control Majority" />
               </div>
-              <div className="text-5xl font-black text-primary tracking-tight mb-2">11 / 14</div>
+              <div className="text-5xl font-black text-primary tracking-tight mb-2">11 / 14 <span className="text-2xl font-mono text-muted-foreground font-normal">(~80%)</span></div>
               <h4 className="text-xl font-bold text-foreground mb-2">felt most in control with Voice</h4>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Workers value unconditional predictability. Direct commands create a transparent cause-and-effect relationship without unexpected machine movements.
@@ -847,10 +912,15 @@ export function LiftMeUpCaseStudy() {
             </div>
 
             <div className="p-8 md:p-12 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center mb-6">
-                <CircleStop size={24} />
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-[4px] bg-destructive/10 text-destructive flex items-center justify-center">
+                  <CircleStop size={24} />
+                </div>
+                <div className="px-3.5 py-1.5 rounded-[4px] border border-destructive/30 bg-destructive/10">
+                  <span className="font-mono text-xs font-bold text-destructive">71.4% LEAST CONTROL</span>
+                </div>
               </div>
-              <div className="text-5xl font-black text-destructive tracking-tight mb-2">10 / 14</div>
+              <div className="text-5xl font-black text-destructive tracking-tight mb-2">10 / 14 <span className="text-2xl font-mono text-muted-foreground font-normal">(71.4%)</span></div>
               <h4 className="text-xl font-bold text-foreground mb-2">felt least in control with Semi-Automatic</h4>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Proactive machine movements, even when objectively moving toward the golden zone, induced momentary anxiety when unannounced.
@@ -879,7 +949,7 @@ export function LiftMeUpCaseStudy() {
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 Five operational design principles derived directly from worker cadence, observation, and telemetry.
               </p>
-              <div className="w-12 h-1 bg-primary mt-4 rounded-full" />
+              <div className="w-12 h-1 bg-primary mt-4 rounded-[4px]" />
             </div>
           </div>
 
@@ -936,7 +1006,7 @@ export function LiftMeUpCaseStudy() {
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 Recognizing the boundaries of the experimental testbed and charting the path toward physical factory deployment.
               </p>
-              <div className="w-12 h-1 bg-primary mt-4 rounded-full" />
+              <div className="w-12 h-1 bg-primary mt-4 rounded-[4px]" />
             </div>
           </div>
 
@@ -944,7 +1014,7 @@ export function LiftMeUpCaseStudy() {
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border border-b border-border">
             
             <div className="p-8 md:p-10 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
+              <div className="w-10 h-10 rounded-[4px] bg-primary/10 text-primary flex items-center justify-center mb-4">
                 <Headphones size={20} />
               </div>
               <h4 className="text-lg font-bold text-foreground mb-2">Input Modalities Under Shop Noise</h4>
@@ -954,7 +1024,7 @@ export function LiftMeUpCaseStudy() {
             </div>
 
             <div className="p-8 md:p-10 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
+              <div className="w-10 h-10 rounded-[4px] bg-primary/10 text-primary flex items-center justify-center mb-4">
                 <Timer size={20} />
               </div>
               <h4 className="text-lg font-bold text-foreground mb-2">Engineer Situational Autonomy</h4>
@@ -964,14 +1034,14 @@ export function LiftMeUpCaseStudy() {
             </div>
 
             <div className="p-8 md:p-10 group hover:bg-foreground/[0.02] transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
+              <div className="w-10 h-10 rounded-[4px] bg-primary/10 text-primary flex items-center justify-center mb-4">
                 <ShieldCheck size={20} />
               </div>
               <h4 className="text-lg font-bold text-foreground mb-2">Boundaries of Evidence</h4>
               <div className="space-y-2 mt-3">
                 {limitations.map((lim, i) => (
                   <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 mt-1.5" />
+                    <span className="w-1.5 h-1.5 rounded-[4px] bg-primary shrink-0 mt-1.5" />
                     <span>{lim}</span>
                   </div>
                 ))}
@@ -997,7 +1067,7 @@ export function LiftMeUpCaseStudy() {
 
             <Link
               href="/#work"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-primary/20"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-[4px] bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-primary/20"
             >
               <span>Back to Portfolio</span>
               <ArrowUpRight size={14} />
