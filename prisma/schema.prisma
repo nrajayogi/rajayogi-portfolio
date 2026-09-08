@@ -41,9 +41,13 @@ model PageView {
   browser   String?
   os        String?
   referrer  String?
-  action    String?  // e.g. "Viewed Case Study", "Opened CV Dossier", "Downloaded PDF"
-  pageTitle String?  // Human readable title of accessed content
-  isp       String?  // Network / Organization / ISP
+  action          String?  // e.g. "Viewed Case Study", "Opened CV Dossier", "Downloaded PDF"
+  pageTitle       String?  // Human readable title of accessed content
+  isp             String?  // Network / Organization / ISP
+  company         String?  // Identified company or trackable application tag (e.g. ASML, Philips)
+  durationSeconds Int?     // Active reading time in seconds
+  scrollDepth     Int?     // Max percentage scrolled (0-100)
+  sessionId       String?  // Recruiter session identifier
 }
 
 model Image {

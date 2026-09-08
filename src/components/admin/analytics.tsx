@@ -28,7 +28,15 @@ import {
     Mail,
     Terminal,
     Zap,
-    Sparkles
+    Sparkles,
+    Building2,
+    Briefcase,
+    Copy,
+    Check,
+    Share2,
+    FileText,
+    TrendingUp,
+    Hourglass
 } from "lucide-react";
 import { Inbox } from "./inbox";
 
@@ -53,6 +61,23 @@ export interface VisitorLog {
     browserDisplay: string;
     osDisplay: string;
     isp?: string | null;
+    company?: string | null;
+    durationSeconds?: number;
+    scrollDepth?: number;
+    sessionId?: string | null;
+}
+
+export interface CompanyStat {
+    company: string;
+    totalViews: number;
+    totalDurationSeconds: number;
+    averageDurationSeconds: number;
+    maxScrollDepth: number;
+    pagesVisited: string[];
+    locations: string[];
+    firstSeen: string;
+    lastSeen: string;
+    engagementRating: "Deep Read" | "Reviewed" | "Quick Skim";
 }
 
 interface CountryStat {
@@ -82,6 +107,7 @@ interface AnalyticsPayload {
     viewsToday: number;
     topCountries: CountryStat[];
     topCities: CityStat[];
+    topCompanies?: CompanyStat[];
     recentVisitors: VisitorLog[];
     timeline?: TimelineItem[];
 }
@@ -103,6 +129,19 @@ interface DiagnosticResult {
     headersFound: Record<string, string>;
 }
 
+function formatDuration(seconds: number): string {
+    if (!seconds || seconds <= 0) return "0s";
+    if (seconds < 60) return `${seconds}s`;
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    if (mins < 60) {
+        return secs > 0 ? `${mins}m ${secs}s` : `${mins}m`;
+    }
+    const hrs = Math.floor(mins / 60);
+    const remMins = mins % 60;
+    return `${hrs}h ${remMins}m`;
+}
+
 function timeAgo(dateString: string): string {
     const diff = Math.max(0, Math.floor((Date.now() - new Date(dateString).getTime()) / 1000));
     if (diff < 10) return "Just now";
@@ -121,8 +160,8 @@ function projectCoords(lat: number | null | undefined, lng: number | null | unde
     return { x, y };
 }
 
-export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trace" | "traffic" | "messages" }) {
-    const [tab, setTab] = useState<"radar" | "trace" | "traffic" | "messages">(activeTab);
+export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "recruiters" | "trace" | "traffic" | "messages" }) {
+    const [tab, setTab] = useState<"radar" | "recruiters" | "trace" | "traffic" | "messages">(activeTab);
     const [data, setData] = useState<AnalyticsPayload | null>(null);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
@@ -132,6 +171,11 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
     const [selectedVisitor, setSelectedVisitor] = useState<VisitorLog | null>(null);
     const [hoveredPin, setHoveredPin] = useState<VisitorLog | null>(null);
     const [, startTransition] = useTransition();
+
+    // 1-Click Trackable Link Generator state
+    const [generatorCompany, setGeneratorCompany] = useState("");
+    const [generatorPath, setGeneratorPath] = useState("/");
+    const [copiedLink, setCopiedLink] = useState(false);
 
     // Diagnostic state
     const [diagnosticRunning, setDiagnosticRunning] = useState(false);
@@ -231,6 +275,28 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
     // Unique locations with coordinates for the radar map
     const mappedLocations = (data.recentVisitors || []).filter(v => v.latitude != null && v.longitude != null);
 
+    // Recruiter & Company Tracker Calculations
+    const origin = typeof window !== "undefined" ? window.location.origin : "https://rajayogi-portfolio.vercel.app";
+    const cleanCompanyInput = generatorCompany.trim();
+    const generatedTrackLink = `${origin}${generatorPath}${generatorPath.includes("?") ? "&" : "?"}c=${encodeURIComponent(cleanCompanyInput || "ASML")}`;
+    const presetCompanies = ["ASML", "Philips", "Booking.com", "Google", "Siemens", "Apple", "Uber", "Tesla", "Adyen", "Microsoft"];
+
+    const totalCompanies = data.topCompanies?.length || 0;
+    const totalCompanyReadingSeconds = (data.topCompanies || []).reduce((acc, c) => acc + (c.totalDurationSeconds || 0), 0);
+    const deepReadCompaniesCount = (data.topCompanies || []).filter(c => c.engagementRating === "Deep Read").length;
+    const deepReadRate = totalCompanies > 0 ? Math.round((deepReadCompaniesCount / totalCompanies) * 100) : 0;
+    const mostEngagedCompany = data.topCompanies && data.topCompanies.length > 0 ? data.topCompanies[0].company : null;
+
+    const recruiterVisits = (data.recentVisitors || []).filter(v => v.company && v.company.trim().length > 0);
+
+    const handleCopyLink = () => {
+        if (typeof navigator !== "undefined" && navigator.clipboard) {
+            navigator.clipboard.writeText(generatedTrackLink);
+            setCopiedLink(true);
+            setTimeout(() => setCopiedLink(false), 2000);
+        }
+    };
+
     return (
         <div className="h-full bg-slate-950 text-slate-100 overflow-y-auto p-6 sm:p-10 selection:bg-blue-600 selection:text-white font-sans relative">
             
@@ -267,6 +333,23 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                     >
                         <MapPin size={13} />
                         <span>Live Locations & Radar</span>
+                    </button>
+
+                    <button
+                        onClick={() => setTab("recruiters")}
+                        className={`px-3.5 py-1.5 rounded-[4px] text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+                            tab === "recruiters"
+                                ? "bg-blue-600 text-white shadow-sm"
+                                : "text-slate-400 hover:text-white"
+                        }`}
+                    >
+                        <Building2 size={13} />
+                        <span>Recruiter &amp; Company Tracker</span>
+                        {data?.topCompanies && data.topCompanies.length > 0 && (
+                            <span className="px-1.5 py-0.2 rounded-[4px] bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold">
+                                {data.topCompanies.length}
+                            </span>
+                        )}
                     </button>
 
                     <button
@@ -755,6 +838,443 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                 </div>
             )}
 
+            {/* TAB: RECRUITER & COMPANY TRACKER */}
+            {tab === "recruiters" && (
+                <div className="space-y-8 max-w-7xl mx-auto">
+
+                    {/* Section 1: Hero Banner */}
+                    <div className="p-6 sm:p-8 rounded-[4px] bg-[radial-gradient(80%_80%_at_50%_50%,rgba(37,99,235,0.14)_0%,transparent_100%)] bg-slate-900 border border-blue-500/30 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
+                        <div className="space-y-2 max-w-2xl">
+                            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">
+                                <Building2 size={16} className="text-blue-400" />
+                                <span>Recruiter Intelligence &amp; Active Dwell Time</span>
+                            </div>
+                            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                                Job Application &amp; Company Tracker
+                            </h2>
+                            <p className="text-sm text-slate-300 leading-relaxed">
+                                See which companies view your portfolio when you apply for jobs, how many minutes and seconds recruiters spend reading each case study, and how deep they scroll.
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                            <div className="p-3 rounded-[4px] bg-slate-950/80 border border-slate-800 text-xs font-mono flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-[4px] bg-emerald-400 animate-pulse" />
+                                <span className="text-slate-300">Detection Engine:</span>
+                                <span className="text-emerald-400 font-bold">Active &amp; Listening</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Section 2: 1-Click Trackable Link Generator */}
+                    <div className="p-6 sm:p-8 rounded-[4px] bg-slate-900 border border-slate-800 space-y-6">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <Share2 size={18} className="text-blue-400" />
+                                    <h3 className="text-lg font-bold text-white tracking-tight">
+                                        1-Click Trackable Link Generator
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-slate-400 mt-1">
+                                    Tag links before submitting applications on LinkedIn, company portals, or emails to recruiters.
+                                </p>
+                            </div>
+                            <span className="text-[11px] font-mono px-2.5 py-1 rounded-[4px] bg-blue-500/10 text-blue-400 border border-blue-500/20 self-start md:self-auto">
+                                Universal Session Attribution
+                            </span>
+                        </div>
+
+                        {/* Generator Controls */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block">
+                                    Company / Employer Name
+                                </label>
+                                <input
+                                    type="text"
+                                    value={generatorCompany}
+                                    onChange={(e) => setGeneratorCompany(e.target.value)}
+                                    placeholder="e.g., ASML, Philips, Booking.com, Google"
+                                    className="w-full px-3.5 py-2.5 rounded-[4px] bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors font-sans"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block">
+                                    Target Portfolio Destination
+                                </label>
+                                <select
+                                    value={generatorPath}
+                                    onChange={(e) => setGeneratorPath(e.target.value)}
+                                    className="w-full px-3.5 py-2.5 rounded-[4px] bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                                >
+                                    <option value="/">Portfolio Home Page (/)</option>
+                                    <option value="/projects">All Projects Index (/projects)</option>
+                                    <option value="/projects/oxal-power">Oxal Power EV Station (/projects/oxal-power)</option>
+                                    <option value="/projects/nadi-pulse">Nadi Pulse Clinical Portal (/projects/nadi-pulse)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Quick Presets */}
+                        <div className="space-y-2 pt-1">
+                            <span className="text-[11px] font-mono text-slate-400 block uppercase tracking-wider">
+                                Quick One-Click Presets:
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                                {presetCompanies.map((name) => (
+                                    <button
+                                        key={name}
+                                        onClick={() => setGeneratorCompany(name)}
+                                        className={`px-3 py-1 rounded-[4px] text-xs font-medium border transition-all cursor-pointer ${
+                                            cleanCompanyInput.toLowerCase() === name.toLowerCase()
+                                                ? "bg-blue-600 border-blue-500 text-white"
+                                                : "bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-600 hover:text-white"
+                                        }`}
+                                    >
+                                        + {name}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Output Link Box with Copy Button */}
+                        <div className="p-4 rounded-[4px] bg-slate-950 border border-slate-800 space-y-3">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
+                                    Generated Job Application Link
+                                </span>
+                                <span className="text-[10px] text-slate-500 font-mono">
+                                    Ready to paste into CV / application form
+                                </span>
+                            </div>
+                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                                <div className="flex-1 px-3 py-2 rounded-[4px] bg-slate-900 border border-slate-800 font-mono text-xs text-blue-400 break-all select-all">
+                                    {generatedTrackLink}
+                                </div>
+                                <button
+                                    onClick={handleCopyLink}
+                                    className={`px-4 py-2 rounded-[4px] text-xs font-bold font-mono uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0 ${
+                                        copiedLink
+                                            ? "bg-emerald-600 text-white border border-emerald-500"
+                                            : "bg-blue-600 hover:bg-blue-500 text-white border border-blue-500"
+                                    }`}
+                                >
+                                    {copiedLink ? (
+                                        <>
+                                            <Check size={14} />
+                                            <span>Copied to Clipboard!</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Copy size={14} />
+                                            <span>Copy Tracked Link</span>
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Feature Guide */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
+                            <div className="p-3.5 rounded-[4px] bg-slate-950/60 border border-slate-800/80 space-y-1">
+                                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-200">
+                                    <CheckCircle2 size={13} className="text-blue-400" />
+                                    <span>Session Persistence</span>
+                                </div>
+                                <p className="text-[11px] text-slate-400 leading-relaxed">
+                                    Once opened, company attribution locks into browser session storage across all subpages.
+                                </p>
+                            </div>
+
+                            <div className="p-3.5 rounded-[4px] bg-slate-950/60 border border-slate-800/80 space-y-1">
+                                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-200">
+                                    <Clock size={13} className="text-emerald-400" />
+                                    <span>Active Tab Focus</span>
+                                </div>
+                                <p className="text-[11px] text-slate-400 leading-relaxed">
+                                    Timer pauses automatically if the recruiter switches tabs or minimizes the browser.
+                                </p>
+                            </div>
+
+                            <div className="p-3.5 rounded-[4px] bg-slate-950/60 border border-slate-800/80 space-y-1">
+                                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-200">
+                                    <TrendingUp size={13} className="text-amber-400" />
+                                    <span>Scroll Depth Engine</span>
+                                </div>
+                                <p className="text-[11px] text-slate-400 leading-relaxed">
+                                    Measures how deep (0–100%) they scrolled down to verify if case study details were read.
+                                </p>
+                            </div>
+
+                            <div className="p-3.5 rounded-[4px] bg-slate-950/60 border border-slate-800/80 space-y-1">
+                                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-200">
+                                    <Building2 size={13} className="text-purple-400" />
+                                    <span>Enterprise ASN Lookup</span>
+                                </div>
+                                <p className="text-[11px] text-slate-400 leading-relaxed">
+                                    Corporate office network IPs (ASML, Philips, Booking, etc.) are auto-identified even without tagged links.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Section 3: Recruiter Performance Metrics */}
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="p-5 rounded-[4px] bg-slate-900 border border-slate-800 space-y-1">
+                            <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block">
+                                Identified Companies
+                            </span>
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-2xl sm:text-3xl font-black text-white font-mono">
+                                    {totalCompanies}
+                                </span>
+                                <span className="text-xs text-slate-400">organizations</span>
+                            </div>
+                        </div>
+
+                        <div className="p-5 rounded-[4px] bg-slate-900 border border-slate-800 space-y-1">
+                            <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block">
+                                Total Active Reading Time
+                            </span>
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">
+                                    {formatDuration(totalCompanyReadingSeconds)}
+                                </span>
+                                <span className="text-xs text-slate-400">focused</span>
+                            </div>
+                        </div>
+
+                        <div className="p-5 rounded-[4px] bg-slate-900 border border-slate-800 space-y-1">
+                            <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block">
+                                Deep Read Rate
+                            </span>
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-2xl sm:text-3xl font-black text-cyan-400 font-mono">
+                                    {deepReadRate}%
+                                </span>
+                                <span className="text-xs text-slate-400">&gt; 90s or 70% scroll</span>
+                            </div>
+                        </div>
+
+                        <div className="p-5 rounded-[4px] bg-slate-900 border border-slate-800 space-y-1">
+                            <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block">
+                                Most Engaged Company
+                            </span>
+                            <div className="flex items-baseline gap-2 truncate">
+                                <span className="text-lg sm:text-xl font-black text-amber-400 font-mono truncate">
+                                    {mostEngagedCompany || "None yet"}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Section 4: Company Engagement Leaderboard */}
+                    <div className="p-6 rounded-[4px] bg-slate-900 border border-slate-800 space-y-6">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <Briefcase size={18} className="text-emerald-400" />
+                                    <h3 className="text-lg font-bold text-white tracking-tight">
+                                        Company Engagement Leaderboard
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-slate-400 mt-1">
+                                    Ranked by total focused dwell time and case study scroll depth.
+                                </p>
+                            </div>
+                            <span className="text-xs font-mono text-slate-500">
+                                {totalCompanies} {totalCompanies === 1 ? "company" : "companies"} detected
+                            </span>
+                        </div>
+
+                        {totalCompanies === 0 ? (
+                            <div className="p-10 rounded-[4px] bg-slate-950 border border-dashed border-slate-800 text-center space-y-3">
+                                <Building2 size={36} className="text-slate-600 mx-auto" />
+                                <h4 className="text-sm font-bold text-slate-300">No Company Visits Recorded Yet</h4>
+                                <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+                                    Generate your first tracked link above and include it in your job application. The instant a recruiter opens your link or reads your case studies, their company and exact reading duration will appear here in real-time.
+                                </p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {(data.topCompanies || []).map((c) => (
+                                    <div
+                                        key={c.company}
+                                        className="p-5 rounded-[4px] bg-slate-950 border border-slate-800 hover:border-slate-700 transition-all space-y-4 shadow-sm"
+                                    >
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="w-9 h-9 rounded-[4px] bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+                                                    <Building2 size={18} />
+                                                </div>
+                                                <div>
+                                                    <h4 className="text-base font-bold text-white tracking-tight">
+                                                        {c.company}
+                                                    </h4>
+                                                    <p className="text-xs text-slate-400 font-mono">
+                                                        {c.locations.join(" • ") || "Direct Access"}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <span
+                                                className={`px-2.5 py-1 rounded-[4px] text-[10px] font-mono font-bold uppercase tracking-wider shrink-0 ${
+                                                    c.engagementRating === "Deep Read"
+                                                        ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                                        : c.engagementRating === "Reviewed"
+                                                        ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                                                        : "bg-slate-800 text-slate-400 border border-slate-700"
+                                                }`}
+                                            >
+                                                {c.engagementRating}
+                                            </span>
+                                        </div>
+
+                                        {/* Metrics Row */}
+                                        <div className="grid grid-cols-3 gap-2 p-3 rounded-[4px] bg-slate-900/80 border border-slate-800/80 text-center">
+                                            <div>
+                                                <span className="text-[10px] text-slate-500 block uppercase font-mono">Active Time</span>
+                                                <span className="text-sm font-bold font-mono text-emerald-400">
+                                                    {formatDuration(c.totalDurationSeconds)}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span className="text-[10px] text-slate-500 block uppercase font-mono">Max Scroll</span>
+                                                <span className="text-sm font-bold font-mono text-cyan-400">
+                                                    {c.maxScrollDepth}%
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span className="text-[10px] text-slate-500 block uppercase font-mono">Page Views</span>
+                                                <span className="text-sm font-bold font-mono text-white">
+                                                    {c.totalViews}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        {/* Scroll Depth Visual Bar */}
+                                        <div className="space-y-1">
+                                            <div className="flex justify-between text-[10px] font-mono text-slate-400">
+                                                <span>Case Study Reading Depth</span>
+                                                <span>{c.maxScrollDepth}% scrolled</span>
+                                            </div>
+                                            <div className="h-1.5 w-full rounded-[4px] bg-slate-900 overflow-hidden border border-slate-800">
+                                                <div
+                                                    className="h-full rounded-[4px] bg-gradient-to-r from-blue-500 to-emerald-400 transition-all duration-500"
+                                                    style={{ width: `${Math.min(100, Math.max(c.maxScrollDepth, 5))}%` }}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Pages Visited Chips */}
+                                        <div className="space-y-1.5 pt-1 border-t border-slate-800/60">
+                                            <span className="text-[10px] font-mono text-slate-500 block uppercase">
+                                                Case Studies &amp; Pages Explored:
+                                            </span>
+                                            <div className="flex flex-wrap gap-1.5">
+                                                {c.pagesVisited.map((p) => (
+                                                    <span
+                                                        key={p}
+                                                        className="px-2 py-0.5 rounded-[4px] bg-slate-900 border border-slate-800 text-[11px] font-mono text-slate-300"
+                                                    >
+                                                        {p}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-1">
+                                            <span>First seen: {timeAgo(c.firstSeen)}</span>
+                                            <span className="text-slate-400">Last active: {timeAgo(c.lastSeen)}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Section 5: Granular Recruiter Pageviews Log */}
+                    <div className="p-6 rounded-[4px] bg-slate-900 border border-slate-800 space-y-4">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <FileText size={18} className="text-blue-400" />
+                                <h3 className="text-base font-bold text-white tracking-tight">
+                                    Granular Recruiter Pageview Events
+                                </h3>
+                            </div>
+                            <span className="text-xs font-mono text-slate-500">
+                                {recruiterVisits.length} events logged
+                            </span>
+                        </div>
+
+                        {recruiterVisits.length === 0 ? (
+                            <div className="py-8 text-center text-xs text-slate-500 font-mono">
+                                No individual company pageviews recorded yet.
+                            </div>
+                        ) : (
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left text-xs">
+                                    <thead>
+                                        <tr className="border-b border-slate-800 text-slate-400 font-mono uppercase text-[10px]">
+                                            <th className="pb-3 font-semibold">Company</th>
+                                            <th className="pb-3 font-semibold">Page Route</th>
+                                            <th className="pb-3 font-semibold">Active Dwell Time</th>
+                                            <th className="pb-3 font-semibold">Scroll Depth</th>
+                                            <th className="pb-3 font-semibold">Location</th>
+                                            <th className="pb-3 font-semibold">Device</th>
+                                            <th className="pb-3 font-semibold">Timestamp</th>
+                                            <th className="pb-3 font-semibold text-right">Trace</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-800/60 font-sans">
+                                        {recruiterVisits.slice(0, 25).map((v) => (
+                                            <tr key={v.id} className="hover:bg-slate-800/30 transition-colors">
+                                                <td className="py-3 pr-3 font-bold text-emerald-400 font-mono">
+                                                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] bg-emerald-500/10 border border-emerald-500/20">
+                                                        <Building2 size={12} />
+                                                        <span>{v.company}</span>
+                                                    </span>
+                                                </td>
+                                                <td className="py-3 pr-3 font-mono text-blue-400">
+                                                    {v.path}
+                                                </td>
+                                                <td className="py-3 pr-3 font-mono font-bold text-white">
+                                                    {v.durationSeconds ? formatDuration(v.durationSeconds) : "Just arrived"}
+                                                </td>
+                                                <td className="py-3 pr-3 font-mono text-cyan-400">
+                                                    {v.scrollDepth != null ? `${v.scrollDepth}%` : "0%"}
+                                                </td>
+                                                <td className="py-3 pr-3 text-slate-300">
+                                                    <span className="mr-1.5">{v.flag}</span>
+                                                    <span>{v.cityDisplay}, {v.countryName}</span>
+                                                </td>
+                                                <td className="py-3 pr-3 text-slate-400 font-mono">
+                                                    {v.deviceDisplay}
+                                                </td>
+                                                <td className="py-3 pr-3 font-mono text-slate-500">
+                                                    {timeAgo(v.createdAt)}
+                                                </td>
+                                                <td className="py-3 text-right">
+                                                    <button
+                                                        onClick={() => setSelectedVisitor(v)}
+                                                        className="px-2.5 py-1 rounded-[4px] bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono cursor-pointer transition-colors"
+                                                    >
+                                                        Inspect
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </div>
+
+                </div>
+            )}
+
             {/* TAB 2: HOW IT IS TRACED (ARCHITECTURE & DIAGNOSTIC TESTER) */}
             {tab === "trace" && (
                 <div className="space-y-8 max-w-5xl mx-auto">
@@ -1155,6 +1675,27 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                                     3. User Session &amp; Interaction Trail
                                 </span>
                                 <div className="space-y-2 text-xs">
+                                    {selectedVisitor.company && (
+                                        <div className="flex justify-between border-b border-slate-800 pb-1.5 bg-emerald-950/20 px-2 py-1 rounded-[4px] border-emerald-500/20">
+                                            <span className="text-emerald-300 font-semibold flex items-center gap-1.5">
+                                                <Building2 size={13} className="text-emerald-400" />
+                                                <span>Identified Company:</span>
+                                            </span>
+                                            <span className="text-emerald-400 font-bold font-mono">{selectedVisitor.company}</span>
+                                        </div>
+                                    )}
+                                    <div className="flex justify-between border-b border-slate-800 pb-1.5">
+                                        <span className="text-slate-400">Active Reading Time:</span>
+                                        <span className="text-emerald-400 font-mono font-bold">
+                                            {selectedVisitor.durationSeconds ? formatDuration(selectedVisitor.durationSeconds) : "Just arrived"}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between border-b border-slate-800 pb-1.5">
+                                        <span className="text-slate-400">Scroll Depth:</span>
+                                        <span className="text-cyan-400 font-mono font-bold">
+                                            {selectedVisitor.scrollDepth ? `${selectedVisitor.scrollDepth}% read` : "0% (top of page)"}
+                                        </span>
+                                    </div>
                                     <div className="flex justify-between border-b border-slate-800 pb-1.5">
                                         <span className="text-slate-400">Page Route:</span>
                                         <span className="text-blue-400 font-mono font-bold">{selectedVisitor.path}</span>

@@ -21,6 +21,10 @@ export interface PageViewRecord {
     os?: string | null;
     referrer?: string | null;
     isp?: string | null;
+    company?: string | null;
+    durationSeconds?: number | null;
+    scrollDepth?: number | null;
+    sessionId?: string | null;
 }
 
 // Resilient in-memory store for serverless environments (Vercel)
@@ -56,7 +60,7 @@ function loadStore(): PageViewRecord[] {
 
 function persistStore() {
     try {
-        fs.writeFileSync(FALLBACK_FILE, JSON.stringify(memoryStore.slice(0, 200)), "utf-8");
+        fs.writeFileSync(FALLBACK_FILE, JSON.stringify(memoryStore.slice(0, 300)), "utf-8");
     } catch (_) {
         // Ephemeral in-memory fallback is safe
     }
@@ -66,6 +70,8 @@ export async function savePageView(record: Omit<PageViewRecord, "id" | "createdA
     const fullRecord: PageViewRecord = {
         id: `pv_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
         createdAt: new Date(),
+        durationSeconds: record.durationSeconds || 0,
+        scrollDepth: record.scrollDepth || 0,
         ...record
     };
 
@@ -73,6 +79,7 @@ export async function savePageView(record: Omit<PageViewRecord, "id" | "createdA
     try {
         await prisma.pageView.create({
             data: {
+                id: fullRecord.id,
                 path: fullRecord.path,
                 action: fullRecord.action,
                 pageTitle: fullRecord.pageTitle,
@@ -87,7 +94,11 @@ export async function savePageView(record: Omit<PageViewRecord, "id" | "createdA
                 browser: fullRecord.browser,
                 os: fullRecord.os,
                 referrer: fullRecord.referrer,
-                isp: fullRecord.isp
+                isp: fullRecord.isp,
+                company: fullRecord.company,
+                durationSeconds: fullRecord.durationSeconds,
+                scrollDepth: fullRecord.scrollDepth,
+                sessionId: fullRecord.sessionId
             }
         });
     } catch (err) {
@@ -97,10 +108,60 @@ export async function savePageView(record: Omit<PageViewRecord, "id" | "createdA
     // 2. Always maintain in memory store for instant zero-latency retrieval
     loadStore();
     memoryStore.unshift(fullRecord);
-    if (memoryStore.length > 300) memoryStore.pop();
+    if (memoryStore.length > 400) memoryStore.pop();
     persistStore();
 
     return fullRecord;
+}
+
+export async function updatePageViewEngagement(params: {
+    id?: string;
+    sessionId?: string;
+    path?: string;
+    durationSeconds: number;
+    scrollDepth?: number;
+}) {
+    loadStore();
+    const target = memoryStore.find(
+        r => (params.id && r.id === params.id) || 
+             (params.sessionId && r.sessionId === params.sessionId && r.path === params.path)
+    );
+
+    if (target) {
+        target.durationSeconds = Math.max(target.durationSeconds || 0, params.durationSeconds);
+        if (params.scrollDepth != null) {
+            target.scrollDepth = Math.max(target.scrollDepth || 0, params.scrollDepth);
+        }
+        persistStore();
+    }
+
+    try {
+        if (params.id) {
+            await prisma.pageView.update({
+                where: { id: params.id },
+                data: {
+                    durationSeconds: params.durationSeconds,
+                    ...(params.scrollDepth != null ? { scrollDepth: params.scrollDepth } : {})
+                }
+            });
+        } else if (params.sessionId && params.path) {
+            const match = await prisma.pageView.findFirst({
+                where: { sessionId: params.sessionId, path: params.path },
+                orderBy: { createdAt: "desc" }
+            });
+            if (match) {
+                await prisma.pageView.update({
+                    where: { id: match.id },
+                    data: {
+                        durationSeconds: Math.max(match.durationSeconds || 0, params.durationSeconds),
+                        ...(params.scrollDepth != null ? { scrollDepth: Math.max(match.scrollDepth || 0, params.scrollDepth) } : {})
+                    }
+                });
+            }
+        }
+    } catch (e) {
+        console.debug("Prisma engagement update non-fatal:", e);
+    }
 }
 
 export async function getAnalyticsData() {
@@ -137,7 +198,11 @@ export async function getAnalyticsData() {
                 browser: r.browser,
                 os: r.os,
                 referrer: r.referrer,
-                isp: r.isp
+                isp: r.isp,
+                company: r.company,
+                durationSeconds: r.durationSeconds,
+                scrollDepth: r.scrollDepth,
+                sessionId: r.sessionId
             }));
         }
     } catch (err) {
@@ -196,9 +261,66 @@ export async function getAnalyticsData() {
             deviceDisplay: v.device || "Desktop",
             browserDisplay: v.browser || "Unknown",
             osDisplay: v.os || "Unknown",
-            maskedIp: v.ipHash ? `v_${v.ipHash.slice(0, 8)}` : "anonymous"
+            maskedIp: v.ipHash ? `v_${v.ipHash.slice(0, 8)}` : "anonymous",
+            company: v.company || null,
+            durationSeconds: v.durationSeconds || 0,
+            scrollDepth: v.scrollDepth || 0,
+            sessionId: v.sessionId || null
         };
     });
+
+    // Top Companies Aggregation
+    const companyGroups: Record<string, PageViewRecord[]> = {};
+    records.forEach(r => {
+        if (r.company && r.company.trim() && r.company.trim().toLowerCase() !== "unknown") {
+            const key = r.company.trim();
+            if (!companyGroups[key]) companyGroups[key] = [];
+            companyGroups[key].push(r);
+        }
+    });
+
+    const topCompanies = Object.entries(companyGroups).map(([company, group]) => {
+        const totalDurationSeconds = group.reduce((acc, curr) => acc + (curr.durationSeconds || 0), 0);
+        const maxScrollDepth = Math.max(...group.map(curr => curr.scrollDepth || 0), 0);
+        const totalCompanyViews = group.length;
+        const avgDuration = Math.round(totalDurationSeconds / (totalCompanyViews || 1));
+        const pagesVisited = Array.from(new Set(group.map(curr => curr.path).filter(Boolean)));
+        
+        const locSet = new Set<string>();
+        group.forEach(curr => {
+            const cName = getCountryName(curr.country);
+            if (curr.city && curr.city !== "Unknown") {
+                locSet.add(`${curr.city}, ${cName}`);
+            } else if (cName && cName !== "Unknown") {
+                locSet.add(cName);
+            }
+        });
+
+        // Sorted timestamps
+        const timestamps = group.map(curr => new Date(curr.createdAt).getTime()).sort((a, b) => a - b);
+        const firstSeen = new Date(timestamps[0]).toISOString();
+        const lastSeen = new Date(timestamps[timestamps.length - 1]).toISOString();
+
+        let engagementRating: "Deep Read" | "Reviewed" | "Quick Skim" = "Quick Skim";
+        if (totalDurationSeconds >= 90 || maxScrollDepth >= 70) {
+            engagementRating = "Deep Read";
+        } else if (totalDurationSeconds >= 25 || maxScrollDepth >= 40) {
+            engagementRating = "Reviewed";
+        }
+
+        return {
+            company,
+            totalViews: totalCompanyViews,
+            totalDurationSeconds,
+            averageDurationSeconds: avgDuration,
+            maxScrollDepth,
+            pagesVisited,
+            locations: Array.from(locSet),
+            firstSeen,
+            lastSeen,
+            engagementRating
+        };
+    }).sort((a, b) => b.totalDurationSeconds - a.totalDurationSeconds || new Date(b.lastSeen).getTime() - new Date(a.lastSeen).getTime());
 
     // Top Countries aggregation
     const countryCounts: Record<string, number> = {};
@@ -299,6 +421,7 @@ export async function getAnalyticsData() {
         viewsLast30Days,
         topCountries,
         topCities,
+        topCompanies,
         devices,
         topPages,
         recentVisitors,
