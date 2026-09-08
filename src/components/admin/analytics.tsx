@@ -141,6 +141,10 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
         if (showIndicator) setRefreshing(true);
         try {
             const res = await fetch("/api/analytics/stats", { cache: "no-store" });
+            if (res.status === 401) {
+                window.location.href = "/admin/login";
+                return;
+            }
             if (!res.ok) throw new Error("API failed");
             const json: AnalyticsPayload = await res.json();
             startTransition(() => {
@@ -169,6 +173,10 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
         setDiagnosticRunning(true);
         try {
             const res = await fetch("/api/analytics/diagnose", { cache: "no-store" });
+            if (res.status === 401) {
+                window.location.href = "/admin/login";
+                return;
+            }
             if (res.ok) {
                 const json: DiagnosticResult = await res.json();
                 setDiagnosticData(json);
@@ -237,7 +245,7 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                         <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-2">
                             <span>Portfolio Command & Location Radar</span>
                         </h1>
-                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-bold flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-[4px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-bold flex items-center gap-1">
                             <Radio size={12} className="animate-pulse" />
                             <span>LIVE TELEMETRY</span>
                         </span>
@@ -724,9 +732,9 @@ export function Analytics({ activeTab = "radar" }: { activeTab?: "radar" | "trac
                                                     {c.count} accesses ({c.percentage}%)
                                                 </span>
                                             </div>
-                                            <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                                            <div className="w-full h-1.5 rounded-[4px] bg-slate-800 overflow-hidden">
                                                 <div 
-                                                    className="h-full rounded-full bg-blue-500"
+                                                    className="h-full rounded-[4px] bg-blue-500"
                                                     style={{ width: `${Math.max(c.percentage, 5)}%` }}
                                                 />
                                             </div>

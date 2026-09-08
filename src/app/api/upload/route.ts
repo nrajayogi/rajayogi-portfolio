@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { verifyAdminSession } from "@/lib/auth";
 
 const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
+    const session = await verifyAdminSession(request);
+    if (!session) {
+        return NextResponse.json(
+            { success: false, message: "Unauthorized: Admin session required" },
+            { status: 401 }
+        );
+    }
     const data = await request.formData();
     const file: File | null = data.get('file') as unknown as File;
 

@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCountryFlag, getCountryName } from "@/lib/geo-utils";
+import { verifyAdminSession } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
+    const session = await verifyAdminSession(request);
+    if (!session) {
+        return NextResponse.json(
+            { error: "Unauthorized access to telemetry diagnostics" },
+            { status: 401 }
+        );
+    }
+
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
                request.headers.get("x-real-ip") || 
                "127.0.0.1";

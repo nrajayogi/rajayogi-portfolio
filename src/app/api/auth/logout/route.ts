@@ -2,8 +2,20 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST() {
-    // Delete the session cookie server-side
-    (await cookies()).delete("session");
+    const cookieStore = await cookies();
+    cookieStore.delete({
+        name: "session",
+        path: "/",
+    });
 
-    return NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true });
+    response.cookies.set("session", "", {
+        path: "/",
+        maxAge: 0,
+        expires: new Date(0),
+        httpOnly: true,
+        sameSite: "strict",
+    });
+
+    return response;
 }

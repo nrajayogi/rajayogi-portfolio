@@ -38,7 +38,7 @@ export default function AdminPage() {
                         <div>
                             <div className="flex items-center gap-2">
                                 <h1 className="font-black text-sm text-white tracking-tight">RAJAYOGI NANDINA</h1>
-                                <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-mono font-bold flex items-center gap-1">
+                                <span className="px-2 py-0.5 rounded-[4px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-mono font-bold flex items-center gap-1">
                                     <Radio size={10} className="animate-pulse" />
                                     <span>LIVE GPS RADAR</span>
                                 </span>

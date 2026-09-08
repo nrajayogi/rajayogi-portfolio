@@ -21,7 +21,13 @@ export function Inbox() {
 
     useEffect(() => {
         fetch('/api/submissions')
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 401) {
+                    window.location.href = "/admin/login";
+                    return [];
+                }
+                return res.json();
+            })
             .then(data => {
                 if (Array.isArray(data)) {
                     setSubmissions(data);

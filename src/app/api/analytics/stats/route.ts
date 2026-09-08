@@ -1,9 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getAnalyticsData } from "@/lib/analytics-storage";
+import { verifyAdminSession } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+    const session = await verifyAdminSession(request);
+    if (!session) {
+        return NextResponse.json(
+            { error: "Unauthorized access to telemetry analytics" },
+            { status: 401 }
+        );
+    }
+
     try {
         const stats = await getAnalyticsData();
         return NextResponse.json(stats);

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PresentationSlide, createBlankSlide, createTextElement } from "@/lib/presentation-types";
+import { verifyAdminSession } from "@/lib/auth";
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -25,6 +26,13 @@ const pdfModule = require("pdf-parse/lib/pdf-parse.js");
 const pdf = pdfModule;
 
 export async function POST(req: NextRequest) {
+    const session = await verifyAdminSession(req);
+    if (!session) {
+        return NextResponse.json(
+            { success: false, message: "Unauthorized: Admin session required" },
+            { status: 401 }
+        );
+    }
     try {
         const formData = await req.formData();
         const file = formData.get("file") as File;

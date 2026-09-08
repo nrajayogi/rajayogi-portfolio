@@ -1,9 +1,18 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { verifyAdminSession } from '@/lib/auth';
 
 const prisma = new PrismaClient();
 
-export async function GET() {
+export async function GET(request: Request) {
+    const session = await verifyAdminSession(request);
+    if (!session) {
+        return NextResponse.json(
+            { error: "Unauthorized access to private contact messages" },
+            { status: 401 }
+        );
+    }
+
     try {
         const submissions = await prisma.contactSubmission.findMany({
             orderBy: {
