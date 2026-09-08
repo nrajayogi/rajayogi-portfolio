@@ -43,6 +43,28 @@ export default function LoginPage() {
         setError("");
     };
 
+    const handleInstantAccess = async () => {
+        setError("");
+        setLoading(true);
+        try {
+            const res = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: "rajayogi", password: "admin123" }),
+            });
+            const data = await res.json();
+            if (data.success) {
+                window.location.href = "/admin";
+            } else {
+                setError("Instant access failed.");
+                setLoading(false);
+            }
+        } catch {
+            setError("Connection error. Please try again.");
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 selection:bg-blue-600 selection:text-white font-sans">
             <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-[4px] p-8 shadow-2xl">
@@ -54,6 +76,23 @@ export default function LoginPage() {
                     </div>
                     <h1 className="text-xl font-black text-white tracking-tight">Admin Telemetry Portal</h1>
                     <p className="text-slate-400 text-xs mt-1">Rajayogi Nandina Portfolio Command</p>
+                </div>
+
+                {/* 1-Click Instant Owner Access Button */}
+                <button
+                    type="button"
+                    onClick={handleInstantAccess}
+                    disabled={loading}
+                    className="w-full mb-5 py-3 px-4 rounded-[4px] bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 transition-all cursor-pointer disabled:opacity-50"
+                >
+                    <ShieldCheck size={16} />
+                    <span>Instant Owner Access (1-Click)</span>
+                </button>
+
+                <div className="relative flex py-2 items-center mb-4">
+                    <div className="flex-grow border-t border-slate-800"></div>
+                    <span className="flex-shrink mx-3 text-[10px] uppercase font-mono text-slate-500">or sign in with password</span>
+                    <div className="flex-grow border-t border-slate-800"></div>
                 </div>
 
                 {/* Login Form */}
