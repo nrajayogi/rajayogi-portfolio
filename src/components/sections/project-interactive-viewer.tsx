@@ -58,7 +58,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
         const dwellDuration = xrModality === "gaze" ? "1.2s Dwell" : xrModality === "voice" ? "Instant (Speech)" : "Predictive Path";
 
         return (
-            <div className="bg-card/40 border border-border rounded-2xl p-6 md:p-8 space-y-8">
+            <div className="bg-card/40 border border-border rounded-[4px] p-6 md:p-8 space-y-8">
                 {/* Header */}
                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
                     <div>
@@ -70,7 +70,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                             Multimodal Hoist Interaction & Ergonomic Strain Simulator
                         </h4>
                     </div>
-                    <div className="flex items-center gap-2 bg-foreground/5 border border-border px-3.5 py-1.5 rounded-xl text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2 bg-foreground/5 border border-border px-3.5 py-1.5 rounded-[4px] text-xs text-muted-foreground">
                         <Activity size={14} className="text-emerald-500 animate-pulse" />
                         <span>N=15 Study · UTwente Robotics Lab</span>
                     </div>
@@ -87,7 +87,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center pt-2">
                     
                     {/* Live Telemetry Card */}
-                    <div className="lg:col-span-7 p-6 rounded-xl bg-black/60 border border-border space-y-4">
+                    <div className="lg:col-span-7 p-6 rounded-[4px] bg-black/60 border border-border space-y-4">
                         <div className="flex items-center justify-between text-xs border-b border-white/10 pb-3">
                             <span className="text-white font-medium flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
@@ -96,15 +96,15 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                             <span className="text-cyan-400 font-mono">TOLERANCE: ±2.0mm</span>
                         </div>
                         <div className="grid grid-cols-3 gap-3 text-center">
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                            <div className="p-3 rounded-[4px] bg-white/5 border border-white/10">
                                 <span className="text-[11px] text-muted-foreground block">Active Height</span>
                                 <span className="text-xl font-bold text-cyan-400">{xrElevation.toFixed(2)}m</span>
                             </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                            <div className="p-3 rounded-[4px] bg-white/5 border border-white/10">
                                 <span className="text-[11px] text-muted-foreground block">Trigger Mode</span>
                                 <span className="text-xl font-bold text-primary uppercase text-sm mt-1 block">{xrModality}</span>
                             </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                            <div className="p-3 rounded-[4px] bg-white/5 border border-white/10">
                                 <span className="text-[11px] text-muted-foreground block">Workload</span>
                                 <span className="text-xl font-bold text-emerald-400">-{strainReduction}%</span>
                             </div>
@@ -132,7 +132,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                             <div className="grid grid-cols-3 gap-2">
                                 <button
                                     onClick={() => setXrModality("voice")}
-                                    className={`p-2.5 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
+                                    className={`p-2.5 rounded-[4px] text-xs font-medium border text-center transition-all cursor-pointer ${
                                         xrModality === "voice" 
                                             ? "bg-primary text-primary-foreground border-primary shadow-sm" 
                                             : "bg-card border-border text-muted-foreground hover:text-foreground"
@@ -143,7 +143,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                 </button>
                                 <button
                                     onClick={() => setXrModality("gaze")}
-                                    className={`p-2.5 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
+                                    className={`p-2.5 rounded-[4px] text-xs font-medium border text-center transition-all cursor-pointer ${
                                         xrModality === "gaze" 
                                             ? "bg-primary text-primary-foreground border-primary shadow-sm" 
                                             : "bg-card border-border text-muted-foreground hover:text-foreground"
@@ -154,7 +154,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                 </button>
                                 <button
                                     onClick={() => setXrModality("semi")}
-                                    className={`p-2.5 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
+                                    className={`p-2.5 rounded-[4px] text-xs font-medium border text-center transition-all cursor-pointer ${
                                         xrModality === "semi" 
                                             ? "bg-primary text-primary-foreground border-primary shadow-sm" 
                                             : "bg-card border-border text-muted-foreground hover:text-foreground"
@@ -196,7 +196,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
         const annualTakeHome = Math.round(monthlyEarnings * 12 * 0.85);
 
         return (
-            <div className="bg-card/40 border border-border rounded-2xl p-6 md:p-8 space-y-8">
+            <div className="bg-card/40 border border-border rounded-[4px] p-6 md:p-8 space-y-8">
                 {/* Header */}
                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
                     <div>
@@ -213,7 +213,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                             href="https://www.homemadechefs.com/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all shadow-sm"
+                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[4px] bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all shadow-sm"
                         >
                             <span>Visit homemadechefs.com</span>
                             <ExternalLink size={13} />
@@ -257,7 +257,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                 </div>
 
                 {chefActiveTab === "storytelling" && (
-                    <div className="rounded-2xl overflow-hidden border border-border bg-card/60">
+                    <div className="rounded-[4px] overflow-hidden border border-border bg-card/60">
                         <HomemadeValueCarousel />
                     </div>
                 )}
@@ -303,7 +303,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                         </div>
 
                         {/* Forecast Summary Card */}
-                        <div className="lg:col-span-6 p-6 rounded-2xl bg-black/60 border border-border space-y-4 shadow-xl">
+                        <div className="lg:col-span-6 p-6 rounded-[4px] bg-black/60 border border-border space-y-4 shadow-xl">
                             <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
                                 Estimated Culinary Revenue
                             </span>
@@ -329,7 +329,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
 
                 {chefActiveTab === "compliance" && (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                        <div className="p-4 rounded-xl bg-black/60 border border-border space-y-2">
+                        <div className="p-4 rounded-[4px] bg-black/60 border border-border space-y-2">
                             <div className="flex items-center gap-2 text-primary font-semibold">
                                 <CheckCircle2 size={16} />
                                 <span>1. Kitchen Hygiene Audit</span>
@@ -338,7 +338,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                 Guided photo verification for allergen separation, temperature logs, and stainless-steel surfaces.
                             </p>
                         </div>
-                        <div className="p-4 rounded-xl bg-black/60 border border-border space-y-2">
+                        <div className="p-4 rounded-[4px] bg-black/60 border border-border space-y-2">
                             <div className="flex items-center gap-2 text-primary font-semibold">
                                 <CheckCircle2 size={16} />
                                 <span>2. Packaging & Thermal Seal</span>
@@ -347,7 +347,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                 Sustainable biodegradable packaging standards ensuring food safe transit within 45-minute pickup windows.
                             </p>
                         </div>
-                        <div className="p-4 rounded-xl bg-black/60 border border-border space-y-2">
+                        <div className="p-4 rounded-[4px] bg-black/60 border border-border space-y-2">
                             <div className="flex items-center gap-2 text-primary font-semibold">
                                 <CheckCircle2 size={16} />
                                 <span>3. Dynamic Batch Window</span>
@@ -371,7 +371,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
         const estimatedKmPer10Min = Math.round((currentKw / 18) * 10 * 6.5);
 
         return (
-            <div className="bg-card/40 border border-border rounded-2xl p-6 md:p-8 space-y-8">
+            <div className="bg-card/40 border border-border rounded-[4px] p-6 md:p-8 space-y-8">
                 {/* Header */}
                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
                     <div>
@@ -388,7 +388,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                             href="https://axalpower.com/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all shadow-sm"
+                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[4px] bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all shadow-sm"
                         >
                             <span>Visit axalpower.com</span>
                             <ExternalLink size={13} />
@@ -407,7 +407,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center pt-2">
                     
                     {/* Telemetry Display */}
-                    <div className="lg:col-span-7 p-6 rounded-xl bg-black border border-border space-y-5 shadow-2xl">
+                    <div className="lg:col-span-7 p-6 rounded-[4px] bg-black border border-border space-y-5 shadow-2xl">
                         <div className="flex items-center justify-between text-xs text-muted-foreground border-b border-white/10 pb-3">
                             <span className="flex items-center gap-2 text-white font-medium">
                                 <Gauge size={15} className="text-cyan-400" />
@@ -417,15 +417,15 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                         </div>
 
                         <div className="grid grid-cols-3 gap-4 text-center">
-                            <div className="p-3 rounded-lg bg-foreground/5 border border-white/10">
+                            <div className="p-3 rounded-[4px] bg-foreground/5 border border-white/10">
                                 <span className="text-xs text-muted-foreground block">Power Flow</span>
                                 <span className="text-2xl font-bold text-cyan-400">{currentKw} kW</span>
                             </div>
-                            <div className="p-3 rounded-lg bg-foreground/5 border border-white/10">
+                            <div className="p-3 rounded-[4px] bg-foreground/5 border border-white/10">
                                 <span className="text-xs text-muted-foreground block">10-Min Range</span>
                                 <span className="text-2xl font-bold text-emerald-400">+{estimatedKmPer10Min} km</span>
                             </div>
-                            <div className="p-3 rounded-lg bg-foreground/5 border border-white/10">
+                            <div className="p-3 rounded-[4px] bg-foreground/5 border border-white/10">
                                 <span className="text-xs text-muted-foreground block">Hardware Rating</span>
                                 <span className="text-2xl font-bold text-foreground">{maxKw} kW</span>
                             </div>
@@ -458,7 +458,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                         setAxalChargerType("dcplug");
                                         setAxalPowerKw(380);
                                     }}
-                                    className={`p-3 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
+                                    className={`p-3 rounded-[4px] text-xs font-medium border text-center transition-all cursor-pointer ${
                                         axalChargerType === "dcplug"
                                             ? "bg-primary text-primary-foreground border-primary shadow-sm"
                                             : "bg-card border-border text-muted-foreground hover:text-foreground"
@@ -472,7 +472,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                         setAxalChargerType("towerplug");
                                         setAxalPowerKw(22);
                                     }}
-                                    className={`p-3 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
+                                    className={`p-3 rounded-[4px] text-xs font-medium border text-center transition-all cursor-pointer ${
                                         axalChargerType === "towerplug"
                                             ? "bg-primary text-primary-foreground border-primary shadow-sm"
                                             : "bg-card border-border text-muted-foreground hover:text-foreground"
@@ -517,7 +517,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
     // ==========================================
     if (study.id === "homemade-app") {
         return (
-            <div className="bg-card/40 border border-border rounded-2xl p-6 md:p-8 space-y-8">
+            <div className="bg-card/40 border border-border rounded-[4px] p-6 md:p-8 space-y-8">
                 {/* Header */}
                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
                     <div>
@@ -534,7 +534,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                             href="https://github.com/nrajayogi/homemade"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-card border border-border hover:bg-foreground/5 text-foreground text-xs font-medium transition-all shadow-sm"
+                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[4px] bg-card border border-border hover:bg-foreground/5 text-foreground text-xs font-medium transition-all shadow-sm"
                         >
                             <Github size={13} />
                             <span>React Native Codebase</span>
@@ -551,7 +551,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
 
                 {/* Behavioral Mechanism Deep-Dive */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-xs">
-                    <div className="p-4 rounded-xl bg-black/60 border border-border space-y-2">
+                    <div className="p-4 rounded-[4px] bg-black/60 border border-border space-y-2">
                         <div className="flex items-center gap-2 text-amber-400 font-semibold">
                             <Flame size={16} />
                             <span>Pickup Reward Architecture</span>
@@ -561,7 +561,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                         </p>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-black/60 border border-border space-y-2">
+                    <div className="p-4 rounded-[4px] bg-black/60 border border-border space-y-2">
                         <div className="flex items-center gap-2 text-primary font-semibold">
                             <Sparkles size={16} />
                             <span>Gemini AI Smart Assistant</span>
@@ -571,7 +571,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                         </p>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-black/60 border border-border space-y-2">
+                    <div className="p-4 rounded-[4px] bg-black/60 border border-border space-y-2">
                         <div className="flex items-center gap-2 text-emerald-400 font-semibold">
                             <CheckCircle2 size={16} />
                             <span>Offline-First State Sync</span>
@@ -608,7 +608,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                 : "Triphala Churna (1g) · Stimulating Ginger Tea · Morning Surya Namaskar";
 
         return (
-            <div className="bg-card/40 border border-border rounded-2xl p-6 md:p-8 space-y-8">
+            <div className="bg-card/40 border border-border rounded-[4px] p-6 md:p-8 space-y-8">
                 {/* Header */}
                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
                     <div className="flex items-center gap-3.5">
@@ -636,7 +636,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                 href={study.figmaUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all shadow-sm"
+                                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[4px] bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all shadow-sm"
                             >
                                 <Figma size={13} />
                                 <span>Inspect in Figma ↗</span>
@@ -656,7 +656,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center pt-2">
                     
                     {/* Live Telemetry Display */}
-                    <div className="lg:col-span-7 p-6 rounded-xl bg-black border border-border space-y-5 shadow-2xl">
+                    <div className="lg:col-span-7 p-6 rounded-[4px] bg-black border border-border space-y-5 shadow-2xl">
                         <div className="flex items-center justify-between text-xs text-muted-foreground border-b border-white/10 pb-3">
                             <span className="flex items-center gap-2 text-white font-medium">
                                 <Activity size={15} className="text-emerald-400" />
@@ -679,7 +679,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
 
                             <div className="grid grid-cols-3 gap-3">
                                 {/* Pitta Dial */}
-                                <div className={`p-3.5 rounded-xl border text-center transition-all ${
+                                <div className={`p-3.5 rounded-[4px] border text-center transition-all ${
                                     nadiActiveDosha === "pitta" ? "bg-amber-500/10 border-amber-500/40 shadow-lg shadow-amber-500/5" : "bg-white/[0.02] border-white/10"
                                 }`}>
                                     <span className="text-xl block mb-1">🔥</span>
@@ -689,7 +689,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                 </div>
 
                                 {/* Vata Dial */}
-                                <div className={`p-3.5 rounded-xl border text-center transition-all ${
+                                <div className={`p-3.5 rounded-[4px] border text-center transition-all ${
                                     nadiActiveDosha === "vata" ? "bg-cyan-500/10 border-cyan-500/40 shadow-lg shadow-cyan-500/5" : "bg-white/[0.02] border-white/10"
                                 }`}>
                                     <span className="text-xl block mb-1">💨</span>
@@ -699,7 +699,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                 </div>
 
                                 {/* Kapha Dial */}
-                                <div className={`p-3.5 rounded-xl border text-center transition-all ${
+                                <div className={`p-3.5 rounded-[4px] border text-center transition-all ${
                                     nadiActiveDosha === "kapha" ? "bg-purple-500/10 border-purple-500/40 shadow-lg shadow-purple-500/5" : "bg-white/[0.02] border-white/10"
                                 }`}>
                                     <span className="text-xl block mb-1">💧</span>
@@ -735,7 +735,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                             </div>
                         </div>
 
-                        <div className="p-3.5 rounded-lg bg-white/5 border border-white/10 text-xs space-y-1">
+                        <div className="p-3.5 rounded-[4px] bg-white/5 border border-white/10 text-xs space-y-1">
                             <span className="text-muted-foreground block text-[10px] uppercase tracking-wider font-semibold">
                                 Ayurvedic Chikitsa (Treatment Protocol):
                             </span>
@@ -754,7 +754,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                             <div className="grid grid-cols-3 gap-2">
                                 <button
                                     onClick={() => setNadiActiveDosha("vata")}
-                                    className={`p-3 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
+                                    className={`p-3 rounded-[4px] text-xs font-medium border text-center transition-all cursor-pointer ${
                                         nadiActiveDosha === "vata"
                                             ? "bg-primary text-primary-foreground border-primary shadow-sm"
                                             : "bg-card border-border text-muted-foreground hover:text-foreground"
@@ -765,7 +765,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                 </button>
                                 <button
                                     onClick={() => setNadiActiveDosha("pitta")}
-                                    className={`p-3 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
+                                    className={`p-3 rounded-[4px] text-xs font-medium border text-center transition-all cursor-pointer ${
                                         nadiActiveDosha === "pitta"
                                             ? "bg-primary text-primary-foreground border-primary shadow-sm"
                                             : "bg-card border-border text-muted-foreground hover:text-foreground"
@@ -776,7 +776,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                                 </button>
                                 <button
                                     onClick={() => setNadiActiveDosha("kapha")}
-                                    className={`p-3 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
+                                    className={`p-3 rounded-[4px] text-xs font-medium border text-center transition-all cursor-pointer ${
                                         nadiActiveDosha === "kapha"
                                             ? "bg-primary text-primary-foreground border-primary shadow-sm"
                                             : "bg-card border-border text-muted-foreground hover:text-foreground"
@@ -813,7 +813,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
 
                 {/* Core Ayurvedic Treatment Frameworks (Chikitsa) */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-xs">
-                    <div className="p-4 rounded-xl bg-black/60 border border-border space-y-2">
+                    <div className="p-4 rounded-[4px] bg-black/60 border border-border space-y-2">
                         <div className="flex items-center gap-2 text-emerald-400 font-semibold">
                             <CheckCircle2 size={16} />
                             <span>Prakriti vs. Vikriti Diagnostic Architecture</span>
@@ -823,7 +823,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                         </p>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-black/60 border border-border space-y-2">
+                    <div className="p-4 rounded-[4px] bg-black/60 border border-border space-y-2">
                         <div className="flex items-center gap-2 text-cyan-400 font-semibold">
                             <Activity size={16} />
                             <span>Tridosha Dynamics &amp; Nadi Pariksha</span>
@@ -833,7 +833,7 @@ export function ProjectInteractiveViewer({ study }: ProjectInteractiveViewerProp
                         </p>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-black/60 border border-border space-y-2">
+                    <div className="p-4 rounded-[4px] bg-black/60 border border-border space-y-2">
                         <div className="flex items-center gap-2 text-amber-400 font-semibold">
                             <Sparkles size={16} />
                             <span>Holistic Chikitsa (Ahara, Vihara &amp; Aushadhi)</span>

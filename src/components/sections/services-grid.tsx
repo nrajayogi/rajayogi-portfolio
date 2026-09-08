@@ -74,11 +74,11 @@ export function ServicesGrid() {
                             href={`/services/${service.slug}`}
                             className="group relative block h-full"
                         >
-                            <div className="h-full p-8 rounded-3xl bg-zinc-900/30 border border-white/5 hover:border-white/10 hover:bg-zinc-900/50 transition-all duration-300 backdrop-blur-sm">
+                            <div className="h-full p-8 rounded-[4px] bg-zinc-900/30 border border-white/5 hover:border-white/10 hover:bg-zinc-900/50 transition-all duration-300 backdrop-blur-sm">
                                 <div className="flex flex-col h-full justify-between">
                                     <div>
                                         <div className="flex justify-between items-start mb-6">
-                                            <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+                                            <div className="w-12 h-12 rounded-[4px] bg-white/5 flex items-center justify-center text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                                                 <service.icon className="w-6 h-6" />
                                             </div>
                                             <ArrowUpRight className="w-5 h-5 text-white/20 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />

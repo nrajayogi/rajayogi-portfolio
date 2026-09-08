@@ -68,7 +68,7 @@ export function ImageCarousel() {
                 The Swiper 'coverflow' effect handles the positioning/scale 3D transform.
                 We just need to ensure the image fills the card beautifully.
               */}
-                            <div className="w-full h-full rounded-[20px] overflow-hidden relative bg-black">
+                            <div className="w-full h-full rounded-[4px] overflow-hidden relative bg-black">
                                 <EditableImage
                                     path={`imageCarousel.${index % images.length}`}
                                     src={src}

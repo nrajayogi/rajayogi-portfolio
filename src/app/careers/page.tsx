@@ -155,8 +155,8 @@ export default function CareersPage() {
                             {careers.benefits.map((benefit, i) => {
                                 const Icon = iconMap[benefit.icon] || Heart;
                                 return (
-                                    <div key={i} className="group p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-white/20 transition-all duration-300">
-                                        <div className="h-12 w-12 rounded-xl bg-white/10 flex items-center justify-center text-white mb-6 group-hover:bg-primary/20 group-hover:text-primary transition-colors">
+                                    <div key={i} className="group p-8 rounded-[4px] bg-white/5 border border-white/5 hover:border-white/20 transition-all duration-300">
+                                        <div className="h-12 w-12 rounded-[4px] bg-white/10 flex items-center justify-center text-white mb-6 group-hover:bg-primary/20 group-hover:text-primary transition-colors">
                                             <Icon className="h-6 w-6" />
                                         </div>
                                         <h3 className="text-lg font-semibold text-white mb-3">{benefit.title}</h3>
@@ -183,7 +183,7 @@ export default function CareersPage() {
                             </Button>
                         </div>
 
-                        <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden divide-y divide-white/10">
+                        <div className="bg-white/5 border border-white/10 rounded-[4px] overflow-hidden divide-y divide-white/10">
                             {careers.jobs.map((job, i) => (
                                 <div key={i} className="group flex flex-col md:flex-row md:items-center justify-between p-6 md:p-8 hover:bg-white/5 transition-colors cursor-pointer">
                                     <div className="mb-4 md:mb-0">

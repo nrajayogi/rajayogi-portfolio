@@ -84,7 +84,7 @@ export function Careers() {
                         const Icon = BenefitIconMap[benefit.icon] || Zap;
                         return (
                             <div key={index} className="p-10 md:p-12 hover:bg-foreground/5 transition-colors group">
-                                <div className="p-4 bg-primary/10 rounded-2xl w-fit mb-8 text-primary group-hover:scale-110 transition-transform">
+                                <div className="p-4 bg-primary/10 rounded-[4px] w-fit mb-8 text-primary group-hover:scale-110 transition-transform">
                                     <Icon size={32} />
                                 </div>
                                 <h4 className="text-xl font-medium mb-4 text-foreground">
@@ -103,7 +103,7 @@ export function Careers() {
                     <h3 className="text-4xl font-medium mb-12 text-foreground">Open Positions</h3>
                     <div className="space-y-4">
                         {(careers.jobs || []).map((job: any, index: number) => (
-                            <div key={index} className="flex flex-col md:flex-row md:items-center justify-between p-8 bg-slate-900/50 border border-border/50 rounded-2xl hover:border-primary/50 transition-all group">
+                            <div key={index} className="flex flex-col md:flex-row md:items-center justify-between p-8 bg-slate-900/50 border border-border/50 rounded-[4px] hover:border-primary/50 transition-all group">
                                 <div className="mb-6 md:mb-0">
                                     <h4 className="text-xl font-medium text-foreground mb-2">
                                         <EditableText path={`careers.jobs.${index}.title`} value={job.title || ""} />

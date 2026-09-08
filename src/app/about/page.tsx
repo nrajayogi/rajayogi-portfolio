@@ -33,7 +33,7 @@ function CountUp({ value, label, sub, icon: iconName }: { value: string, label: 
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={isInView ? { scale: 1, opacity: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="mb-4 inline-flex p-3 rounded-xl bg-white/5 text-primary group-hover:scale-110 transition-transform duration-500"
+                className="mb-4 inline-flex p-3 rounded-[4px] bg-white/5 text-primary group-hover:scale-110 transition-transform duration-500"
             >
                 <Icon className="w-6 h-6" />
             </motion.div>
@@ -219,10 +219,10 @@ export default function AboutPage() {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             {about.leadership.map((leader, i) => (
-                                <div key={i} className="group p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-white/20 transition-all duration-300 relative overflow-hidden backdrop-blur-sm">
+                                <div key={i} className="group p-8 rounded-[4px] bg-white/5 border border-white/5 hover:border-white/20 transition-all duration-300 relative overflow-hidden backdrop-blur-sm">
                                     <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-purple-500/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
 
-                                    <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border border-white/10 shadow-xl">
+                                    <div className="h-20 w-20 rounded-[4px] bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border border-white/10 shadow-xl">
                                         <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-white to-white/50">{leader.name.charAt(0)}</span>
                                     </div>
                                     <h3 className="text-lg font-semibold text-white mb-1 relative z-10">{leader.name}</h3>

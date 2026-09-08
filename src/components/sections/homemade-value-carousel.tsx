@@ -192,7 +192,7 @@ export function HomemadeValueCarousel() {
                     <p className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed mt-3 max-w-2xl font-sans font-light">
                         Bridging empirical cognitive research, spatial computing, and scalable production systems to engineer experiences that amplify human potential.
                     </p>
-                    <div className="w-14 h-1 bg-primary mt-5 rounded-full" />
+                    <div className="w-14 h-1 bg-primary mt-5 rounded-[4px]" />
                 </div>
 
                 {/* Interactive Navigation Arrows */}
@@ -200,14 +200,14 @@ export function HomemadeValueCarousel() {
                     <button
                         onClick={() => swiperRef.current?.slidePrev()}
                         aria-label="Previous Competency"
-                        className="w-12 h-12 rounded-full border border-border bg-card hover:bg-primary hover:text-white hover:border-primary text-foreground flex items-center justify-center transition-all cursor-pointer shadow-none"
+                        className="w-12 h-12 rounded-[4px] border border-border bg-card hover:bg-primary hover:text-white hover:border-primary text-foreground flex items-center justify-center transition-all cursor-pointer shadow-none"
                     >
                         <ArrowLeft size={18} />
                     </button>
                     <button
                         onClick={() => swiperRef.current?.slideNext()}
                         aria-label="Next Competency"
-                        className="w-12 h-12 rounded-full border border-border bg-card hover:bg-primary hover:text-white hover:border-primary text-foreground flex items-center justify-center transition-all cursor-pointer shadow-none"
+                        className="w-12 h-12 rounded-[4px] border border-border bg-card hover:bg-primary hover:text-white hover:border-primary text-foreground flex items-center justify-center transition-all cursor-pointer shadow-none"
                     >
                         <ArrowRight size={18} />
                     </button>
@@ -227,7 +227,7 @@ export function HomemadeValueCarousel() {
                                         swiperRef.current.slideToLoop(idx);
                                     }
                                 }}
-                                className={`px-4 py-2 rounded-full text-xs font-sans font-medium transition-all flex items-center gap-2 cursor-pointer shadow-none ${
+                                className={`px-4 py-2 rounded-[4px] text-xs font-sans font-medium transition-all flex items-center gap-2 cursor-pointer shadow-none ${
                                     isSelected
                                         ? "bg-primary text-white font-semibold"
                                         : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"

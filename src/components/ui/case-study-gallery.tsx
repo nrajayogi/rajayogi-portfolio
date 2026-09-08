@@ -20,7 +20,7 @@ export function CaseStudyGallery({ images, title, annotation }: CaseStudyGallery
     return (
         <div className="space-y-4">
             {/* Primary High-Resolution Viewport */}
-            <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden border border-border bg-black shadow-2xl group">
+            <div className="relative aspect-[16/9] w-full rounded-[4px] overflow-hidden border border-border bg-black shadow-2xl group">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={activeImage}
@@ -44,7 +44,7 @@ export function CaseStudyGallery({ images, title, annotation }: CaseStudyGallery
 
                 {/* Viewport Caption Bar */}
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                    <div className="bg-background/85 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-border text-xs text-foreground font-medium shadow-lg">
+                    <div className="bg-background/85 backdrop-blur-md px-3.5 py-1.5 rounded-[4px] border border-border text-xs text-foreground font-medium shadow-lg">
                         <span>{annotation || title}</span>
                         {images.length > 1 && (
                             <span className="text-muted-foreground ml-2 text-[11px]">
@@ -52,7 +52,7 @@ export function CaseStudyGallery({ images, title, annotation }: CaseStudyGallery
                             </span>
                         )}
                     </div>
-                    <div className="bg-background/85 backdrop-blur-md px-2.5 py-1.5 rounded-lg border border-border text-xs text-primary font-medium flex items-center gap-1.5 shadow-lg">
+                    <div className="bg-background/85 backdrop-blur-md px-2.5 py-1.5 rounded-[4px] border border-border text-xs text-primary font-medium flex items-center gap-1.5 shadow-lg">
                         <Sparkles size={12} />
                         <span>High-Res Master</span>
                     </div>
@@ -68,7 +68,7 @@ export function CaseStudyGallery({ images, title, annotation }: CaseStudyGallery
                             <button
                                 key={idx}
                                 onClick={() => setSelectedIndex(idx)}
-                                className={`relative w-28 h-16 rounded-xl overflow-hidden border-2 transition-all cursor-pointer shrink-0 bg-card ${
+                                className={`relative w-28 h-16 rounded-[4px] overflow-hidden border-2 transition-all cursor-pointer shrink-0 bg-card ${
                                     isSelected 
                                         ? "border-primary shadow-md scale-105" 
                                         : "border-border/60 opacity-60 hover:opacity-100 hover:border-foreground/30"
@@ -80,7 +80,7 @@ export function CaseStudyGallery({ images, title, annotation }: CaseStudyGallery
                                     fill
                                     className="object-cover"
                                 />
-                                <div className="absolute bottom-1 right-1 bg-black/70 text-[9px] text-white px-1.5 py-0.5 rounded font-mono">
+                                <div className="absolute bottom-1 right-1 bg-black/70 text-[9px] text-white px-1.5 py-0.5 rounded-[4px] font-mono">
                                     0{idx + 1}
                                 </div>
                             </button>

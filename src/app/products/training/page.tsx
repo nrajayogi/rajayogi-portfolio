@@ -161,7 +161,7 @@ export default function TrainingPage() {
                         ].map((course, i) => (
                             <div key={i} className="p-10 md:p-12 group hover:bg-foreground/5 transition-all duration-300">
                                 <div className="flex justify-between items-start mb-6">
-                                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-all">
+                                    <div className="w-12 h-12 rounded-[4px] bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-all">
                                         <BookOpen size={24} />
                                     </div>
                                     <span className="text-[10px] uppercase font-bold tracking-wider py-1 px-2 rounded bg-foreground/5 text-muted-foreground">{course.level}</span>
@@ -186,7 +186,7 @@ export default function TrainingPage() {
             <section className="bg-background border-t border-border relative overflow-hidden">
                 <div className="container px-4 mx-auto py-24 border-x border-border">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <div className="order-2 lg:order-1 relative rounded-2xl overflow-hidden border border-border shadow-2xl">
+                        <div className="order-2 lg:order-1 relative rounded-[4px] overflow-hidden border border-border shadow-2xl">
                             <Image src="/dashboard-preview.png" alt="Lab Interface" fill className="bg-muted object-cover grayscale hover:grayscale-0 transition-all duration-500" />
                             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20">
@@ -243,7 +243,7 @@ export default function TrainingPage() {
 
             {/* SECTION 5: FAQ & CTA */}
             <section className="bg-background border-t border-border py-24">
-                <div className="container mx-auto px-4 border-l border-r border-border border-y bg-foreground/5 rounded-3xl p-12 md:p-24 text-center">
+                <div className="container mx-auto px-4 border-l border-r border-border border-y bg-foreground/5 rounded-[4px] p-12 md:p-24 text-center">
                     <h2 className="text-4xl font-bold text-foreground mb-6">Ready to upgrade your team?</h2>
                     <p className="text-muted-foreground text-lg mb-10 max-w-2xl mx-auto">
                         Join 500+ engineers building the future of manufacturing.

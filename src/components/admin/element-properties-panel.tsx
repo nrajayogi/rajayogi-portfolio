@@ -381,7 +381,7 @@ function PropertySlider({
                 step={step}
                 value={value}
                 onChange={(e) => onChange(Number(e.target.value))}
-                className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                className="w-full h-2 bg-slate-700 rounded-[4px] appearance-none cursor-pointer accent-blue-500"
             />
         </div>
     );

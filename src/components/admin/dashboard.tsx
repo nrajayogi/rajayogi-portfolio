@@ -109,7 +109,7 @@ export function Dashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Main Chart: Lead Pulse */}
-                <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-[4px] p-6">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-lg font-bold flex items-center gap-2">
                             <Users size={18} className="text-blue-500" />
@@ -152,14 +152,14 @@ export function Dashboard() {
                 </div>
 
                 {/* Content Freshness / Recent Activity */}
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col">
+                <div className="bg-slate-900 border border-slate-800 rounded-[4px] p-6 flex flex-col">
                     <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
                         <Clock size={18} className="text-amber-500" />
                         Recent Inquiries
                     </h2>
                     <div className="flex-1 overflow-y-auto pr-2 space-y-4">
                         {recentSubmissions.length > 0 ? recentSubmissions.map((sub, i) => (
-                            <div key={i} className="flex gap-4 items-start p-3 rounded-lg hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-700">
+                            <div key={i} className="flex gap-4 items-start p-3 rounded-[4px] hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-700">
                                 <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-[10px] font-bold shrink-0">
                                     {sub.firstName?.[0]}{sub.lastName?.[0]}
                                 </div>
@@ -178,7 +178,7 @@ export function Dashboard() {
                             </div>
                         )}
                     </div>
-                    <button className="mt-4 w-full py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-medium transition-colors text-slate-300">
+                    <button className="mt-4 w-full py-2 bg-slate-800 hover:bg-slate-700 rounded-[4px] text-xs font-medium transition-colors text-slate-300">
                         View All In Inbox
                     </button>
                 </div>
@@ -189,7 +189,7 @@ export function Dashboard() {
                 <h2 className="text-lg font-bold mb-4">Content Status</h2>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                     {['Hero', 'Services', 'Partners', 'About', 'Contact'].map(section => (
-                        <div key={section} className="p-4 bg-slate-900/50 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors group cursor-pointer">
+                        <div key={section} className="p-4 bg-slate-900/50 border border-slate-800 rounded-[4px] hover:border-slate-700 transition-colors group cursor-pointer">
                             <div className="flex justify-between items-start mb-2">
                                 <span className="text-sm font-medium text-slate-300">{section}</span>
                                 <div className="w-2 h-2 rounded-full bg-emerald-500" />
@@ -214,9 +214,9 @@ interface HealthCardProps {
 
 function HealthCard({ icon: Icon, label, value, sub, color, bg }: HealthCardProps) {
     return (
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl hover:border-slate-700 transition-all group">
+        <div className="bg-slate-900 border border-slate-800 p-5 rounded-[4px] hover:border-slate-700 transition-all group">
             <div className="flex justify-between items-start mb-4">
-                <div className={`p-2 rounded-lg ${bg} ${color}`}>
+                <div className={`p-2 rounded-[4px] ${bg} ${color}`}>
                     <Icon size={20} />
                 </div>
                 {/* Pulse dot */}

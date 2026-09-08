@@ -232,7 +232,7 @@ export function CanvasWorkspace({
                 <div className="flex items-center justify-center h-full">
                     <div
                         ref={canvasRef}
-                        className="relative shadow-2xl border border-white/10 rounded-3xl backdrop-blur-xl"
+                        className="relative shadow-2xl border border-white/10 rounded-[4px] backdrop-blur-xl"
                         style={{
                             width: `${width}px`,
                             height: customHeight || `${height}px`,

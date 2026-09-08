@@ -40,7 +40,7 @@ export function Contact() {
                         <div className="relative z-10 space-y-8 mt-12">
                             {(contact.locations || []).map((loc, i) => (
                                 <div key={i} className="flex items-start gap-4 group/item">
-                                    <div className="p-3 bg-foreground/5 border border-border rounded-lg text-primary transition-colors group-hover/item:bg-foreground/10">
+                                    <div className="p-3 bg-foreground/5 border border-border rounded-[4px] text-primary transition-colors group-hover/item:bg-foreground/10">
                                         <MapPin size={24} />
                                     </div>
                                     <div>

@@ -48,7 +48,7 @@ export function AdminSidebar({ activeSection, onSelectSection, onLogout }: Admin
                 </div>
                 <button
                     onClick={() => setIsMobileOpen(!isMobileOpen)}
-                    className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white"
+                    className="p-1.5 rounded-[4px] bg-slate-800 text-slate-300 hover:text-white"
                 >
                     {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
                 </button>
@@ -62,7 +62,7 @@ export function AdminSidebar({ activeSection, onSelectSection, onLogout }: Admin
                 {/* Brand Header */}
                 <div className="p-6 border-b border-slate-800">
                     <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                        <div className="w-9 h-9 rounded-[4px] bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
                             <Shield size={18} />
                         </div>
                         <div>
@@ -89,7 +89,7 @@ export function AdminSidebar({ activeSection, onSelectSection, onLogout }: Admin
                                     setIsMobileOpen(false);
                                 }}
                                 className={cn(
-                                    "w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-left transition-all cursor-pointer group",
+                                    "w-full flex items-center gap-3 px-3.5 py-3 rounded-[4px] text-left transition-all cursor-pointer group",
                                     isActive
                                         ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25 font-semibold"
                                         : "text-slate-400 hover:bg-slate-800/80 hover:text-slate-200"
@@ -126,7 +126,7 @@ export function AdminSidebar({ activeSection, onSelectSection, onLogout }: Admin
                     <Link
                         href="/"
                         target="_blank"
-                        className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs text-slate-400 hover:text-white hover:bg-slate-800/60 border border-slate-800 transition-all group"
+                        className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-[4px] text-xs text-slate-400 hover:text-white hover:bg-slate-800/60 border border-slate-800 transition-all group"
                     >
                         <span className="flex items-center gap-2">
                             <span>View Public Site</span>
@@ -137,7 +137,7 @@ export function AdminSidebar({ activeSection, onSelectSection, onLogout }: Admin
                     {/* Logout Button */}
                     <button
                         onClick={onLogout}
-                        className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 border border-rose-500/20 transition-all cursor-pointer"
+                        className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-[4px] text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 border border-rose-500/20 transition-all cursor-pointer"
                     >
                         <LogOut size={14} />
                         <span>Sign Out</span>

@@ -58,7 +58,7 @@ export function ServiceDeliveryModel() {
                             transition={{ delay: index * 0.1, duration: 0.5 }}
                             className="relative z-10 bg-background pt-4 md:pt-0"
                         >
-                            <div className="w-20 h-20 bg-background border border-border rounded-2xl flex items-center justify-center mb-8 relative group hover:border-primary transition-colors">
+                            <div className="w-20 h-20 bg-background border border-border rounded-[4px] flex items-center justify-center mb-8 relative group hover:border-primary transition-colors">
                                 <step.icon className="w-8 h-8 text-foreground group-hover:text-primary transition-colors" />
                                 <div className="absolute -top-3 -right-3 w-8 h-8 bg-zinc-900 rounded-full flex items-center justify-center border border-border text-xs font-sans text-muted-foreground">
                                     {step.id}

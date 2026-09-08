@@ -32,7 +32,7 @@ export default function AdminPage() {
                 {/* Clean Top Navigation Bar */}
                 <header className="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-6 sm:px-10 shrink-0 z-20">
                     <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                        <div className="w-9 h-9 rounded-[4px] bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
                             <MapPin size={18} className="text-rose-400" />
                         </div>
                         <div>
@@ -51,7 +51,7 @@ export default function AdminPage() {
                         <Link
                             href="/"
                             target="_blank"
-                            className="hidden sm:flex items-center gap-1 text-xs text-slate-400 hover:text-white px-3.5 py-1.5 rounded-xl border border-slate-800 hover:bg-slate-800/60 transition-colors"
+                            className="hidden sm:flex items-center gap-1 text-xs text-slate-400 hover:text-white px-3.5 py-1.5 rounded-[4px] border border-slate-800 hover:bg-slate-800/60 transition-colors"
                         >
                             <span>Open Portfolio</span>
                             <ArrowUpRight size={13} />
@@ -59,7 +59,7 @@ export default function AdminPage() {
 
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 px-3.5 py-1.5 rounded-xl border border-rose-500/20 hover:bg-rose-500/10 transition-colors cursor-pointer"
+                            className="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 px-3.5 py-1.5 rounded-[4px] border border-rose-500/20 hover:bg-rose-500/10 transition-colors cursor-pointer"
                         >
                             <LogOut size={13} />
                             <span>Sign Out</span>

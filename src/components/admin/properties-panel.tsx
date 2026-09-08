@@ -211,28 +211,28 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({ selectedElemen
                     <div className="grid grid-cols-2 gap-3">
                         <button
                             onClick={() => onAddComponent('heading')}
-                            className="flex flex-col items-center justify-center gap-2 p-4 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 hover:border-slate-600 transition-all group"
+                            className="flex flex-col items-center justify-center gap-2 p-4 bg-slate-900 border border-slate-800 rounded-[4px] hover:bg-slate-800 hover:border-slate-600 transition-all group"
                         >
                             <Type size={20} className="text-slate-500 group-hover:text-blue-400" />
                             <span className="text-xs text-slate-400 group-hover:text-white font-medium">Heading</span>
                         </button>
                         <button
                             onClick={() => onAddComponent('paragraph')}
-                            className="flex flex-col items-center justify-center gap-2 p-4 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 hover:border-slate-600 transition-all group"
+                            className="flex flex-col items-center justify-center gap-2 p-4 bg-slate-900 border border-slate-800 rounded-[4px] hover:bg-slate-800 hover:border-slate-600 transition-all group"
                         >
                             <AlignLeft size={20} className="text-slate-500 group-hover:text-green-400" />
                             <span className="text-xs text-slate-400 group-hover:text-white font-medium">Text</span>
                         </button>
                         <button
                             onClick={() => onAddComponent('image')}
-                            className="flex flex-col items-center justify-center gap-2 p-4 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 hover:border-slate-600 transition-all group"
+                            className="flex flex-col items-center justify-center gap-2 p-4 bg-slate-900 border border-slate-800 rounded-[4px] hover:bg-slate-800 hover:border-slate-600 transition-all group"
                         >
                             <ImageIcon size={20} className="text-slate-500 group-hover:text-purple-400" />
                             <span className="text-xs text-slate-400 group-hover:text-white font-medium">Image</span>
                         </button>
                         <button
                             onClick={() => onAddComponent('video')}
-                            className="flex flex-col items-center justify-center gap-2 p-4 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 hover:border-slate-600 transition-all group"
+                            className="flex flex-col items-center justify-center gap-2 p-4 bg-slate-900 border border-slate-800 rounded-[4px] hover:bg-slate-800 hover:border-slate-600 transition-all group"
                         >
                             <Video size={20} className="text-slate-500 group-hover:text-red-400" />
                             <span className="text-xs text-slate-400 group-hover:text-white font-medium">Video</span>
@@ -284,7 +284,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({ selectedElemen
                         <textarea
                             value={values.textContent}
                             onChange={(e) => updateStyle('textContent', e.target.value)}
-                            className="w-full h-24 bg-slate-900 border border-slate-700 rounded-md p-2 text-xs text-slate-300 focus:outline-none focus:border-blue-500 font-sans resize-none"
+                            className="w-full h-24 bg-slate-900 border border-slate-700 rounded-[4px] p-2 text-xs text-slate-300 focus:outline-none focus:border-blue-500 font-sans resize-none"
                             placeholder="Edit text content..."
                         />
                         <div className="h-px bg-[#333] my-4" />

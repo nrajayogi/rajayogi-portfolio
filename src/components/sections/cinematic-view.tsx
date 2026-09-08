@@ -150,7 +150,7 @@ export function CinematicView({ slides, settings, editable, onSlideChange, onEle
                         className={`w-full h-full backdrop-blur-xl border border-white/10 flex flex-col justify-center overflow-y-auto ${getShadowClass(settings?.shadow)}`}
                         style={{
                             backgroundColor: settings?.backgroundColor || 'rgba(15, 23, 42, 0.5)', // Default slate-900/50
-                            borderRadius: settings?.cornerRadius || '24px' // Default rounded-3xl (1.5rem = 24px)
+                            borderRadius: settings?.cornerRadius || '24px' // Default rounded-[4px] (1.5rem = 24px)
                         }}
                     >
                         <div
@@ -158,10 +158,10 @@ export function CinematicView({ slides, settings, editable, onSlideChange, onEle
                             [&>h1]:text-4xl md:[&>h1]:text-6xl [&>h1]:font-bold [&>h1]:mb-6 md:[&>h1]:mb-10 
                             [&>h1]:bg-gradient-to-r [&>h1]:from-white [&>h1]:to-slate-400 [&>h1]:bg-clip-text [&>h1]:text-transparent
                             [&>ul]:text-left [&>ul]:inline-block [&>ul]:text-base md:[&>ul]:text-xl [&>ul]:space-y-2 md:[&>ul]:space-y-4
-                            prose-img:rounded-2xl prose-img:mx-auto prose-img:max-h-[40vh] prose-img:object-contain
+                            prose-img:rounded-[4px] prose-img:mx-auto prose-img:max-h-[40vh] prose-img:object-contain
                             prose-p:text-slate-300 prose-p:max-w-prose prose-p:mx-auto
                             swiper-no-swiping relative z-20
-                            ${editable ? 'cursor-default outline-none hover:bg-white/5 p-4 rounded-xl transition-colors' : ''}`}
+                            ${editable ? 'cursor-default outline-none hover:bg-white/5 p-4 rounded-[4px] transition-colors' : ''}`}
                             contentEditable={false} // Disable global edit, enable per-element
                             suppressContentEditableWarning={true}
                             dangerouslySetInnerHTML={{ __html: slideContent }}

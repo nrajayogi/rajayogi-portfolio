@@ -39,7 +39,7 @@ export function VisionStatement() {
                             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
                             className="flex items-center gap-4 md:gap-8"
                         >
-                            <div className="hidden md:flex items-center justify-center w-16 h-16 rounded-full border border-border text-primary shrink-0">
+                            <div className="hidden md:flex items-center justify-center w-16 h-16 rounded-[4px] border border-border text-primary shrink-0">
                                 <ArrowDownRight className="w-8 h-8" />
                             </div>
                             <h2 className={`${device === 'mobile' ? 'text-4xl' : device === 'tablet' ? 'text-6xl' : 'text-8xl'} font-medium tracking-tight text-foreground leading-none`}>

@@ -483,7 +483,7 @@ export function PresentationEditorNew() {
                         {slides.map((slide, index) => (
                             <div
                                 key={slide.id}
-                                className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all ${index === currentSlideIndex
+                                className={`relative group cursor-pointer rounded-[4px] overflow-hidden border-2 transition-all ${index === currentSlideIndex
                                     ? 'border-blue-500 shadow-lg'
                                     : 'border-slate-700 hover:border-slate-600'
                                     }`}

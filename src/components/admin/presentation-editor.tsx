@@ -75,7 +75,7 @@ function SlideEditor({ content, onChange }: { content: string, onChange: (newCon
                                     const data = await res.json();
 
                                     if (data.success && activeSlideIndex !== null) {
-                                        const newImageHtml = `<img src="${data.url}" alt="Slide Image" class="rounded-xl shadow-lg my-4" style="max-width: 100%; height: auto;" />`;
+                                        const newImageHtml = `<img src="${data.url}" alt="Slide Image" class="rounded-[4px] shadow-lg my-4" style="max-width: 100%; height: auto;" />`;
                                         const currentContent = slides[activeSlideIndex];
                                         updateSlideContent(activeSlideIndex, currentContent + newImageHtml);
                                     } else if (!data.success) {
@@ -134,7 +134,7 @@ function SlideEditor({ content, onChange }: { content: string, onChange: (newCon
 
             <div className="flex flex-col gap-4">
                 {slides.map((slide, index) => (
-                    <div key={index} className="w-full bg-slate-900 border border-slate-800 rounded-lg overflow-hidden flex flex-col hover:border-slate-700 transition-colors">
+                    <div key={index} className="w-full bg-slate-900 border border-slate-800 rounded-[4px] overflow-hidden flex flex-col hover:border-slate-700 transition-colors">
                         <div
                             className="p-3 border-b border-slate-800 flex justify-between items-center cursor-pointer hover:bg-slate-800 transition-colors bg-slate-900/50"
                             onClick={() => setActiveSlideIndex(activeSlideIndex === index ? null : index)}
@@ -167,7 +167,7 @@ function SlideEditor({ content, onChange }: { content: string, onChange: (newCon
                 ))}
 
                 {slides.length === 0 && (
-                    <div className="text-center py-8 border-2 border-dashed border-slate-800 rounded-xl text-slate-500 text-sm">
+                    <div className="text-center py-8 border-2 border-dashed border-slate-800 rounded-[4px] text-slate-500 text-sm">
                         No slides yet. Click &quot;Add Slide&quot; or Import to begin.
                     </div>
                 )}
@@ -355,7 +355,7 @@ export function PresentationEditor() {
             if (data.success) {
                 // Absolute positioning for image
                 const uid = "img-" + Math.random().toString(36).substr(2, 9);
-                const newHtml = `<img id="${uid}" src="${data.url}" alt="Image" class="rounded-xl shadow-lg" style="position: absolute; left: 200px; top: 150px; max-width: 400px; height: auto;" />`;
+                const newHtml = `<img id="${uid}" src="${data.url}" alt="Image" class="rounded-[4px] shadow-lg" style="position: absolute; left: 200px; top: 150px; max-width: 400px; height: auto;" />`;
                 const currentSlides = pageContent.split(/<hr\s*\/?>/i);
                 updateSlideByIndex(currentIndex, currentSlides[currentIndex] + newHtml);
             } else {
@@ -394,12 +394,12 @@ export function PresentationEditor() {
                         if (url.includes('v=')) videoId = url.split('v=')[1]?.split('&')[0];
                         else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1];
                         if (videoId) {
-                            newContent = `<div id="${uid}" style="position: absolute; left: 150px; top: 150px; width: 480px; height: 270px; pointer-events: none;" class="rounded-xl overflow-hidden shadow-lg"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+                            newContent = `<div id="${uid}" style="position: absolute; left: 150px; top: 150px; width: 480px; height: 270px; pointer-events: none;" class="rounded-[4px] overflow-hidden shadow-lg"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
                         } else {
                             alert("Invalid YouTube URL");
                         }
                     } else {
-                        newContent = `<video id="${uid}" src="${url}" controls style="position: absolute; left: 150px; top: 150px; width: 400px;" class="rounded-xl shadow-lg"></video>`;
+                        newContent = `<video id="${uid}" src="${url}" controls style="position: absolute; left: 150px; top: 150px; width: 400px;" class="rounded-[4px] shadow-lg"></video>`;
                     }
                 }
                 break;

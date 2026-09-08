@@ -40,7 +40,7 @@ export default function StoryCard({ story }: StoryCardProps) {
             {/* Top Identity Header Bar (Clean, Perfectly Aligned) */}
             <div className="w-full flex items-center justify-between z-10 pointer-events-none">
                 <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-neutral-900/80 px-2 py-0.5 rounded-md bg-black/10">
+                    <span className="font-mono text-xs font-bold text-neutral-900/80 px-2 py-0.5 rounded-[4px] bg-black/10">
                         {story.number}
                     </span>
                     <span className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900/85">

@@ -125,7 +125,7 @@ export function Analytics() {
                 <p className="text-rose-400">Failed to load location data.</p>
                 <button
                     onClick={() => fetchData(true)}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold uppercase tracking-wider hover:bg-blue-500 cursor-pointer"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-[4px] text-xs font-semibold uppercase tracking-wider hover:bg-blue-500 cursor-pointer"
                 >
                     Retry Connection
                 </button>
@@ -176,7 +176,7 @@ export function Analytics() {
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setAutoSync(!autoSync)}
-                        className={`px-3.5 py-1.5 rounded-xl border text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer ${
+                        className={`px-3.5 py-1.5 rounded-[4px] border text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer ${
                             autoSync 
                                 ? "bg-emerald-950/40 text-emerald-300 border-emerald-800/60" 
                                 : "bg-slate-900 text-slate-400 border-slate-800"
@@ -190,7 +190,7 @@ export function Analytics() {
                     <button
                         onClick={() => fetchData(true)}
                         disabled={refreshing}
-                        className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition-all text-xs font-semibold flex items-center gap-2 cursor-pointer disabled:opacity-50 shadow-md shadow-blue-600/20"
+                        className="px-4 py-2 rounded-[4px] bg-blue-600 hover:bg-blue-500 text-white transition-all text-xs font-semibold flex items-center gap-2 cursor-pointer disabled:opacity-50 shadow-md shadow-blue-600/20"
                     >
                         <RefreshCw size={13} className={refreshing ? "animate-spin" : ""} />
                         <span>Refresh</span>
@@ -200,7 +200,7 @@ export function Analytics() {
 
             {/* 1. LATEST LOCATION HERO CARD (Most Recent Access) */}
             {latest && (
-                <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-950/40 via-slate-900 to-slate-900 border border-blue-500/30 mb-8 shadow-2xl relative overflow-hidden">
+                <div className="p-6 rounded-[4px] bg-gradient-to-r from-blue-950/40 via-slate-900 to-slate-900 border border-blue-500/30 mb-8 shadow-2xl relative overflow-hidden">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
                         <div className="flex items-start gap-4">
                             <span className="text-4xl sm:text-5xl select-none leading-none">{latest.flag}</span>
@@ -227,7 +227,7 @@ export function Analytics() {
                                 href={`https://www.google.com/maps?q=${latest.latitude},${latest.longitude}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shrink-0 self-start md:self-center shadow-lg shadow-blue-600/30 cursor-pointer"
+                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[4px] bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shrink-0 self-start md:self-center shadow-lg shadow-blue-600/30 cursor-pointer"
                             >
                                 <Navigation size={14} />
                                 <span>Open Pin in Google Maps</span>
@@ -242,7 +242,7 @@ export function Analytics() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
                 
                 {/* Active Browsing Locations */}
-                <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800">
+                <div className="p-5 rounded-[4px] bg-slate-900 border border-slate-800">
                     <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
                         <span>Active Locations (5m)</span>
                         <Radio size={14} className="text-emerald-400 animate-pulse" />
@@ -256,7 +256,7 @@ export function Analytics() {
                 </div>
 
                 {/* Top Origin Country */}
-                <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800">
+                <div className="p-5 rounded-[4px] bg-slate-900 border border-slate-800">
                     <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
                         <span>Top Country</span>
                         <Globe size={14} className="text-blue-400" />
@@ -271,7 +271,7 @@ export function Analytics() {
                 </div>
 
                 {/* Top Origin City */}
-                <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800">
+                <div className="p-5 rounded-[4px] bg-slate-900 border border-slate-800">
                     <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
                         <span>Top City</span>
                         <MapPin size={14} className="text-amber-400" />
@@ -288,7 +288,7 @@ export function Analytics() {
             </div>
 
             {/* 3. LIVE LOCATION ACCESS FEED (Chronological Where Website Was Opened) */}
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 mb-8 shadow-xl">
+            <div className="p-6 rounded-[4px] bg-slate-900 border border-slate-800 mb-8 shadow-xl">
                 
                 {/* Search / Filter Bar */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-5 border-b border-slate-800/80">
@@ -309,7 +309,7 @@ export function Analytics() {
                             placeholder="Filter by city, region, or country..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
+                            className="w-full bg-slate-950 border border-slate-800 rounded-[4px] pl-9 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
                         />
                     </div>
                 </div>
@@ -355,7 +355,7 @@ export function Analytics() {
                                                         href={`https://www.google.com/maps?q=${v.latitude},${v.longitude}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 text-[11px] font-mono transition-colors"
+                                                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-[4px] bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 text-[11px] font-mono transition-colors"
                                                     >
                                                         <MapPin size={11} className="text-rose-400" />
                                                         <span>{v.latitude.toFixed(2)}, {v.longitude.toFixed(2)}</span>
@@ -411,7 +411,7 @@ export function Analytics() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8">
                 
                 {/* Top Cities */}
-                <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+                <div className="p-6 rounded-[4px] bg-slate-900 border border-slate-800">
                     <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
                         <MapPin size={15} className="text-rose-400" />
                         <span>Cities Opening Your Portfolio</span>
@@ -420,7 +420,7 @@ export function Analytics() {
                     <div className="space-y-2.5">
                         {data.topCities && data.topCities.length > 0 ? (
                             data.topCities.map((c, i) => (
-                                <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800/80">
+                                <div key={i} className="flex items-center justify-between p-3 rounded-[4px] bg-slate-950 border border-slate-800/80">
                                     <div className="flex items-center gap-2.5 text-xs font-semibold text-white">
                                         <span className="text-lg">{c.flag}</span>
                                         <span>{c.city}</span>
@@ -440,7 +440,7 @@ export function Analytics() {
                 </div>
 
                 {/* Top Countries */}
-                <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+                <div className="p-6 rounded-[4px] bg-slate-900 border border-slate-800">
                     <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
                         <Globe size={15} className="text-blue-400" />
                         <span>Countries Opening Your Portfolio</span>

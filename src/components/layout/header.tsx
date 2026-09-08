@@ -51,10 +51,10 @@ export function Header() {
                                     <ChevronDown className="h-4 w-4" />
                                 </button>
                                 <div className="absolute top-full left-0 pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0">
-                                    <div className="rounded-md border bg-popover p-2 shadow-md">
+                                    <div className="rounded-[4px] border bg-popover p-2 shadow-md">
                                         <Link
                                             href="/services"
-                                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                            className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                         >
                                             <div className="text-sm font-medium leading-none">Services Overview</div>
                                             <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
@@ -66,7 +66,7 @@ export function Header() {
                                             <Link
                                                 key={service.id}
                                                 href={`/services/${service.slug}`}
-                                                className="block rounded-sm px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                                                className="block rounded-[4px] px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
                                             >
                                                 {service.title}
                                             </Link>
@@ -87,13 +87,13 @@ export function Header() {
                                     <ChevronDown className="h-4 w-4" />
                                 </button>
                                 <div className="absolute top-full left-0 pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0">
-                                    <div className="rounded-md border bg-popover p-2 shadow-md">
+                                    <div className="rounded-[4px] border bg-popover p-2 shadow-md">
                                         <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
                                             Learning & Development
                                         </div>
                                         <Link
                                             href="/products/training"
-                                            className="block rounded-sm px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                                            className="block rounded-[4px] px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
                                         >
                                             Training Academy
                                         </Link>

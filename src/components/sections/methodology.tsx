@@ -55,7 +55,7 @@ export function Methodology() {
                                         <span className={`text-6xl font-light opacity-20 group-hover:opacity-40 transition-opacity ${color} font-sans`}>
                                             {step.id}
                                         </span>
-                                        <div className={`p-3 rounded-full bg-foreground/5 border border-border text-foreground opacity-50 group-hover:opacity-100 transition-opacity`}>
+                                        <div className={`p-3 rounded-[4px] bg-foreground/5 border border-border text-foreground opacity-50 group-hover:opacity-100 transition-opacity`}>
                                             <Icon size={24} />
                                         </div>
                                     </div>

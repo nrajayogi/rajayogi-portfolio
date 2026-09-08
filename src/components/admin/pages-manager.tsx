@@ -122,7 +122,7 @@ function SlideEditor({ content, onChange }: { content: string, onChange: (newCon
 
             <div className="flex flex-col gap-4 pb-4 pt-2 px-1 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
                 {slides.map((slide, index) => (
-                    <div key={index} className="flex-shrink-0 w-full bg-slate-900 border border-slate-800 rounded-lg overflow-hidden group flex flex-col hover:border-slate-700 transition-colors">
+                    <div key={index} className="flex-shrink-0 w-full bg-slate-900 border border-slate-800 rounded-[4px] overflow-hidden group flex flex-col hover:border-slate-700 transition-colors">
                         <div
                             className="p-3 border-b border-slate-800 flex justify-between items-center cursor-pointer hover:bg-slate-800 transition-colors bg-slate-900/50"
                             onClick={() => setActiveSlideIndex(activeSlideIndex === index ? null : index)}
@@ -149,7 +149,7 @@ function SlideEditor({ content, onChange }: { content: string, onChange: (newCon
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             const url = prompt("Enter Image URL:");
-                                            if (url) updateSlideContent(index, slide + `\n<img src="${url}" class="w-2/3 mx-auto rounded-xl shadow-lg my-4" />`);
+                                            if (url) updateSlideContent(index, slide + `\n<img src="${url}" class="w-2/3 mx-auto rounded-[4px] shadow-lg my-4" />`);
                                         }}
                                         className="text-[10px] bg-slate-800 text-slate-300 px-2 py-1 rounded hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-1"
                                     >
@@ -184,7 +184,7 @@ function SlideEditor({ content, onChange }: { content: string, onChange: (newCon
                 ))}
 
                 {slides.length === 0 && (
-                    <div className="flex-shrink-0 w-full h-40 flex items-center justify-center border border-dashed border-slate-800 rounded-lg text-slate-500 text-xs bg-slate-900/50">
+                    <div className="flex-shrink-0 w-full h-40 flex items-center justify-center border border-dashed border-slate-800 rounded-[4px] text-slate-500 text-xs bg-slate-900/50">
                         No slides yet. Click &quot;Add Slide&quot; to begin.
                     </div>
                 )}
@@ -624,7 +624,7 @@ export function PagesManager({ targetSlug }: PagesManagerProps) {
                                 step="0.05"
                                 value={previewScale}
                                 onChange={(e) => setPreviewScale(parseFloat(e.target.value))}
-                                className="w-24 accent-blue-500 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer"
+                                className="w-24 accent-blue-500 h-1 bg-slate-700 rounded-[4px] appearance-none cursor-pointer"
                             />
                         </div>
                     )}
@@ -792,7 +792,7 @@ export function PagesManager({ targetSlug }: PagesManagerProps) {
                             </div>
                             <button
                                 onClick={() => { resetForm(); setIsCreating(true); }}
-                                className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors font-bold"
+                                className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-[4px] flex items-center gap-2 transition-colors font-bold"
                             >
                                 <Plus size={18} />
                                 New Page
@@ -800,9 +800,9 @@ export function PagesManager({ targetSlug }: PagesManagerProps) {
                         </header>
                         <div className="grid gap-4">
                             {pages.length > 0 ? pages.map((page: Page) => (
-                                <div key={page.id} className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 transition-all">
+                                <div key={page.id} className="bg-slate-900 border border-slate-800 p-4 rounded-[4px] flex items-center justify-between group hover:border-slate-700 transition-all">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center text-slate-500">
+                                        <div className="w-10 h-10 bg-slate-800 rounded-[4px] flex items-center justify-center text-slate-500">
                                             {page.layout === 'cinematic' ? <Monitor size={18} /> : <FileUp size={18} />}
                                         </div>
                                         <div>

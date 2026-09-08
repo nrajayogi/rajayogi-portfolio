@@ -100,7 +100,7 @@ export function AllServicesGrid() {
                                     transition={{ delay: index * 0.05 }}
                                     className={`p-10 md:p-12 relative group hover:bg-foreground/5 transition-all duration-300 md:border-r border-border last:border-r-0 cursor-pointer`}
                                 >
-                                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:text-primary group-hover:bg-primary/20 transition-all">
+                                    <div className="w-12 h-12 rounded-[4px] bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:text-primary group-hover:bg-primary/20 transition-all">
                                         <Icon size={24} strokeWidth={1.5} />
                                     </div>
                                     <h3 className="text-xl font-medium mb-3 text-foreground flex items-center gap-2">

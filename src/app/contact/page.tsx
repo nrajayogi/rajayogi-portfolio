@@ -98,7 +98,7 @@ export default function ContactPage() {
                                 <div className="relative z-10 space-y-8 mt-12">
                                     {contact.locations.map((loc, i) => (
                                         <div key={i} className="flex items-start gap-4 group/item">
-                                            <div className="mt-1 flex-shrink-0 w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center text-xl group-hover/item:bg-white/10 transition-colors select-none">
+                                            <div className="mt-1 flex-shrink-0 w-10 h-10 bg-white/5 border border-white/10 rounded-[4px] flex items-center justify-center text-xl group-hover/item:bg-white/10 transition-colors select-none">
                                                 {loc.flag}
                                             </div>
                                             <div>

@@ -139,7 +139,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.94, y: 24 }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative w-full max-w-5xl max-h-[92vh] bg-[#0A0A0F] border border-white/15 rounded-2xl shadow-[0_25px_70px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col z-10 text-white"
+                    className="relative w-full max-w-5xl max-h-[92vh] bg-[#0A0A0F] border border-white/15 rounded-[4px] shadow-[0_25px_70px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col z-10 text-white"
                 >
                     {/* Header Bar */}
                     <div className="p-5 sm:p-6 border-b border-white/10 flex flex-wrap items-center justify-between gap-4 bg-[#12121A]/90 backdrop-blur-md sticky top-0 z-30">
@@ -148,7 +148,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                             <div>
                                 <h3 className="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2 font-sans">
                                     <span>RAJAYOGI NANDINA // OFFICIAL CV</span>
-                                    <span className="text-[10px] font-sans px-2 py-0.5 rounded bg-white/10 text-white/70 border border-white/10">
+                                    <span className="text-[10px] font-sans px-2 py-0.5 rounded-[4px] bg-white/10 text-white/70 border border-white/10">
                                         M.Sc. I-TECH
                                     </span>
                                 </h3>
@@ -161,10 +161,10 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                         {/* Top Controls */}
                         <div className="flex items-center gap-2 sm:gap-3 ml-auto">
                             {/* Toggle View Mode */}
-                            <div className="flex items-center p-1 rounded-lg bg-white/5 border border-white/10">
+                            <div className="flex items-center p-1 rounded-[4px] bg-white/5 border border-white/10">
                                 <button
                                     onClick={() => setViewMode("interactive")}
-                                    className={`px-2.5 py-1 rounded text-xs font-sans transition-all ${
+                                    className={`px-2.5 py-1 rounded-[4px] text-xs font-sans transition-all ${
                                         viewMode === "interactive" 
                                             ? "bg-[#CCFF00] text-black font-bold shadow-sm" 
                                             : "text-white/60 hover:text-white"
@@ -174,7 +174,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                 </button>
                                 <button
                                     onClick={() => setViewMode("original")}
-                                    className={`px-2.5 py-1 rounded text-xs font-sans transition-all ${
+                                    className={`px-2.5 py-1 rounded-[4px] text-xs font-sans transition-all ${
                                         viewMode === "original" 
                                             ? "bg-[#CCFF00] text-black font-bold shadow-sm" 
                                             : "text-white/60 hover:text-white"
@@ -190,7 +190,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                 download="Rajayogi_Nandina_Resume.pdf"
                                 data-track-action="DOWNLOAD_RESUME"
                                 data-track-title="Rajayogi_Nandina_Resume.pdf"
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-black hover:bg-[#CCFF00] text-xs font-sans font-bold tracking-wider transition-all shadow-md"
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] bg-white text-black hover:bg-[#CCFF00] text-xs font-sans font-bold tracking-wider transition-all shadow-md"
                             >
                                 <Download size={13} />
                                 <span className="hidden sm:inline">PDF</span>
@@ -203,7 +203,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                 rel="noopener noreferrer"
                                 data-track-action="CLICK_EXTERNAL_FIGMA"
                                 data-track-title="Figma Master Design System Canvas"
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-sans transition-all"
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-sans transition-all"
                                 title="Open Figma Source Portfolio"
                             >
                                 <Figma size={13} className="text-[#00F0FF]" />
@@ -214,7 +214,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                             {/* Close Button */}
                             <button
                                 onClick={onClose}
-                                className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-white/60 hover:text-white transition-colors cursor-pointer"
+                                className="p-1.5 rounded-[4px] bg-white/5 hover:bg-white/15 text-white/60 hover:text-white transition-colors cursor-pointer"
                                 aria-label="Close"
                             >
                                 <X size={18} />
@@ -228,14 +228,14 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                         {viewMode === "original" ? (
                             /* ORIGINAL DOCUMENT VIEW */
                             <div className="flex flex-col items-center w-full">
-                                <div className="w-full max-w-4xl h-[72vh] rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl bg-white hidden sm:block">
+                                <div className="w-full max-w-4xl h-[72vh] rounded-[4px] overflow-hidden border-2 border-white/20 shadow-2xl bg-white hidden sm:block">
                                     <iframe
                                         src="/Rajayogi_Nandina_Resume.pdf#view=FitH"
                                         className="w-full h-full border-0"
                                         title="Rajayogi Nandina Resume PDF"
                                     />
                                 </div>
-                                <div className="relative w-full max-w-2xl rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl bg-white sm:hidden">
+                                <div className="relative w-full max-w-2xl rounded-[4px] overflow-hidden border-2 border-white/20 shadow-2xl bg-white sm:hidden">
                                     <Image
                                         src="/images/resume-preview.png"
                                         alt="Rajayogi Nandina Resume"
@@ -249,7 +249,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                     <a
                                         href="/Rajayogi_Nandina_Resume.pdf"
                                         download="Rajayogi_Nandina_Resume.pdf"
-                                        className="px-6 py-2.5 rounded-xl bg-[#CCFF00] text-black font-bold text-xs font-sans uppercase tracking-widest hover:bg-white transition-all shadow-lg flex items-center gap-2"
+                                        className="px-6 py-2.5 rounded-[4px] bg-[#CCFF00] text-black font-bold text-xs font-sans uppercase tracking-widest hover:bg-white transition-all shadow-lg flex items-center gap-2"
                                     >
                                         <Download size={14} />
                                         <span>Download High-Res PDF (2.3MB)</span>
@@ -258,7 +258,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                         href="/Rajayogi_Nandina_Resume.pdf"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="px-6 py-2.5 rounded-xl bg-white/10 text-white font-bold text-xs font-sans uppercase tracking-widest hover:bg-white/20 transition-all border border-white/20 flex items-center gap-2"
+                                        className="px-6 py-2.5 rounded-[4px] bg-white/10 text-white font-bold text-xs font-sans uppercase tracking-widest hover:bg-white/20 transition-all border border-white/20 flex items-center gap-2"
                                     >
                                         <ExternalLink size={14} />
                                         <span>Open PDF In New Tab</span>
@@ -266,11 +266,11 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                 </div>
                             </div>
                         ) : (
-                            /* INTERACTIVE BRUTALIST DOSSIER VIEW */
                             <>
+                                {/* INTERACTIVE BRUTALIST DOSSIER VIEW */}
                                 {/* Identity & Quick Contact Matrix */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10 md:col-span-2 flex flex-col justify-between">
+                                    <div className="p-5 rounded-[4px] bg-white/[0.03] border border-white/10 md:col-span-2 flex flex-col justify-between">
                                         <div>
                                             <div className="text-[10px] font-sans uppercase text-[#00F0FF] tracking-widest mb-1">
                                                 CANDIDATE DOSSIER // DECLASSIFIED
@@ -296,7 +296,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                     </div>
 
                                     {/* Languages & Thesis Tag */}
-                                    <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col justify-between space-y-4">
+                                    <div className="p-5 rounded-[4px] bg-white/[0.03] border border-white/10 flex flex-col justify-between space-y-4">
                                         <div>
                                             <div className="text-[10px] font-sans uppercase text-[#CCFF00] tracking-widest mb-2 flex items-center gap-1.5">
                                                 <Languages size={13} />
@@ -338,11 +338,11 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                         {experiences.map((exp, i) => (
                                             <div
                                                 key={i}
-                                                className="p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 transition-colors flex flex-col justify-between"
+                                                className="p-4 rounded-[4px] bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 transition-colors flex flex-col justify-between"
                                             >
                                                 <div>
                                                     <div className="flex items-center justify-between mb-1.5">
-                                                        <span className="text-[9px] font-sans font-bold px-2 py-0.5 rounded bg-white/10 text-[#00F0FF]">
+                                                        <span className="text-[9px] font-sans font-bold px-2 py-0.5 rounded-[4px] bg-white/10 text-[#00F0FF]">
                                                             {exp.tag}
                                                         </span>
                                                         <span className="text-[10px] font-sans text-white/50">
@@ -391,10 +391,10 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         {ventures.map((v, i) => (
-                                            <div key={i} className="p-4 rounded-xl bg-white/[0.02] border border-white/10">
+                                            <div key={i} className="p-4 rounded-[4px] bg-white/[0.02] border border-white/10">
                                                 <div className="flex items-center justify-between">
                                                     <h5 className="font-bold text-sm text-white">{v.name}</h5>
-                                                    <span className="text-[10px] font-sans px-2 py-0.5 rounded bg-white/5 text-neutral-400">
+                                                    <span className="text-[10px] font-sans px-2 py-0.5 rounded-[4px] bg-white/5 text-neutral-400">
                                                         {v.status}
                                                     </span>
                                                 </div>
@@ -411,31 +411,31 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                         <span>Skills & Technologies</span>
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10">
+                                        <div className="p-4 rounded-[4px] bg-white/[0.02] border border-white/10">
                                             <div className="text-[10px] font-sans uppercase text-white/50 mb-2">Design Core</div>
                                             <div className="flex flex-wrap gap-1.5 text-xs">
                                                 {["Web Design", "Mobile Design", "User Experience", "Wireframing", "Prototyping", "Testing", "Design Systems"].map((s, idx) => (
-                                                    <span key={idx} className="px-2 py-1 rounded bg-white/5 text-neutral-300 text-[11px]">
+                                                    <span key={idx} className="px-2 py-1 rounded-[4px] bg-white/5 text-neutral-300 text-[11px]">
                                                         {s}
                                                     </span>
                                                 ))}
                                             </div>
                                         </div>
-                                        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10">
+                                        <div className="p-4 rounded-[4px] bg-white/[0.02] border border-white/10">
                                             <div className="text-[10px] font-sans uppercase text-white/50 mb-2">Development</div>
                                             <div className="flex flex-wrap gap-1.5 text-xs">
                                                 {["HTML5", "CSS3", "React JS", "Next.js", "React Native", "TypeScript"].map((s, idx) => (
-                                                    <span key={idx} className="px-2 py-1 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[11px]">
+                                                    <span key={idx} className="px-2 py-1 rounded-[4px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[11px]">
                                                         {s}
                                                     </span>
                                                 ))}
                                             </div>
                                         </div>
-                                        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10">
+                                        <div className="p-4 rounded-[4px] bg-white/[0.02] border border-white/10">
                                             <div className="text-[10px] font-sans uppercase text-white/50 mb-2">Tools & Modern AI</div>
                                             <div className="flex flex-wrap gap-1.5 text-xs">
                                                 {["Figma", "Unity", "Miro", "Anti Gravity", "Claude", "Cursor", "Adobe Suite"].map((s, idx) => (
-                                                    <span key={idx} className="px-2 py-1 rounded bg-[#CCFF00]/10 text-[#CCFF00] border border-[#CCFF00]/20 text-[11px]">
+                                                    <span key={idx} className="px-2 py-1 rounded-[4px] bg-[#CCFF00]/10 text-[#CCFF00] border border-[#CCFF00]/20 text-[11px]">
                                                         {s}
                                                     </span>
                                                 ))}
@@ -452,7 +452,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {education.map((edu, i) => (
-                                            <div key={i} className="p-4 rounded-xl bg-white/[0.02] border border-white/10">
+                                            <div key={i} className="p-4 rounded-[4px] bg-white/[0.02] border border-white/10">
                                                 <div className="flex items-center justify-between text-[10px] font-sans text-white/50 mb-1">
                                                     <span>{edu.period}</span>
                                                     {edu.grade && <span className="text-[#CCFF00] font-bold">{edu.grade}</span>}

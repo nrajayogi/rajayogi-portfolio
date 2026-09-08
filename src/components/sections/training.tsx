@@ -63,7 +63,7 @@ export function Training() {
                             className="p-10 md:p-12 group hover:bg-foreground/5 transition-all"
                         >
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-3 rounded-xl bg-primary/10 text-primary">
+                                <div className="p-3 rounded-[4px] bg-primary/10 text-primary">
                                     <GraduationCap size={24} />
                                 </div>
                                 <div className="flex flex-col">

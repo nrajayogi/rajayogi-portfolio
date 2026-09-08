@@ -48,7 +48,7 @@ export function DeliveryModel() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {steps.map((step, index) => (
-                            <div key={index} className="relative bg-background lg:bg-transparent p-6 lg:p-0 rounded-lg border lg:border-none shadow-sm lg:shadow-none">
+                            <div key={index} className="relative bg-background lg:bg-transparent p-6 lg:p-0 rounded-[4px] border lg:border-none shadow-sm lg:shadow-none">
                                 <div className="w-24 h-24 mx-auto bg-background rounded-full border-2 border-primary/20 flex items-center justify-center mb-6 shadow-sm relative z-10">
                                     <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                                         <step.icon className="w-8 h-8" />

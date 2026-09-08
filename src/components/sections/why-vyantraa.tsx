@@ -64,7 +64,7 @@ export function WhyVyantraa() {
 
                     {/* Visual / Image Placeholder */}
                     <div className="relative">
-                        <div className="aspect-square rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 border border-border p-8 flex items-center justify-center relative overflow-hidden">
+                        <div className="aspect-square rounded-[4px] bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 border border-border p-8 flex items-center justify-center relative overflow-hidden">
                             <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-400 via-transparent to-transparent"></div>
                             <div className="text-center max-w-xs relative z-10">
                                 <div className="text-5xl font-bold text-primary mb-2">100%</div>

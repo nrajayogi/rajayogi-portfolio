@@ -7,7 +7,7 @@ export const SpatialXRVector: React.FC = () => {
   const [activeNode, setActiveNode] = useState<string | null>("gaze");
 
   return (
-    <div className="relative w-full h-full min-h-[300px] sm:min-h-[360px] bg-neutral-950 text-white rounded-lg p-6 flex flex-col justify-between overflow-hidden select-none border border-neutral-800">
+    <div className="relative w-full h-full min-h-[300px] sm:min-h-[360px] bg-neutral-950 text-white rounded-[4px] p-6 flex flex-col justify-between overflow-hidden select-none border border-neutral-800">
       {/* Top Header */}
       <div className="flex items-center justify-between text-xs font-sans text-neutral-400 z-10">
         <span className="flex items-center gap-2">
@@ -167,7 +167,7 @@ export const BehavioralLoopVector: React.FC = () => {
   ];
 
   return (
-    <div className="relative w-full h-full min-h-[300px] sm:min-h-[360px] bg-neutral-950 text-white rounded-lg p-6 flex flex-col justify-between overflow-hidden select-none border border-neutral-800">
+    <div className="relative w-full h-full min-h-[300px] sm:min-h-[360px] bg-neutral-950 text-white rounded-[4px] p-6 flex flex-col justify-between overflow-hidden select-none border border-neutral-800">
       <div className="flex items-center justify-between text-xs font-sans text-neutral-400 z-10">
         <span className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -184,7 +184,7 @@ export const BehavioralLoopVector: React.FC = () => {
             <div
               key={step.num}
               onMouseEnter={() => setActiveStep(step.num)}
-              className={`p-4 rounded-md border transition-all cursor-pointer space-y-2 ${
+              className={`p-4 rounded-[4px] border transition-all cursor-pointer space-y-2 ${
                 isActive
                   ? "bg-neutral-900 border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
                   : "bg-neutral-950 border-neutral-800 hover:border-neutral-700"
@@ -218,7 +218,7 @@ export const BehavioralLoopVector: React.FC = () => {
 // Vector 03: Forensic Threat Graph Vector (C3iHub IIT Kanpur)
 export const ThreatGraphVector: React.FC = () => {
   return (
-    <div className="relative w-full h-full min-h-[300px] sm:min-h-[360px] bg-neutral-950 text-white rounded-lg p-6 flex flex-col justify-between overflow-hidden select-none border border-neutral-800">
+    <div className="relative w-full h-full min-h-[300px] sm:min-h-[360px] bg-neutral-950 text-white rounded-[4px] p-6 flex flex-col justify-between overflow-hidden select-none border border-neutral-800">
       <div className="flex items-center justify-between text-xs font-sans text-neutral-400 z-10">
         <span className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />

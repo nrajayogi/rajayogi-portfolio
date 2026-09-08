@@ -96,7 +96,7 @@ export function Inbox() {
                             <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
                                 <MessageSquare size={16} /> Message
                             </h3>
-                            <div className="text-slate-300 whitespace-pre-wrap leading-relaxed bg-slate-800/30 p-6 rounded-lg border border-slate-800">
+                            <div className="text-slate-300 whitespace-pre-wrap leading-relaxed bg-slate-800/30 p-6 rounded-[4px] border border-slate-800">
                                 {selectedSubmission.message}
                             </div>
                         </div>

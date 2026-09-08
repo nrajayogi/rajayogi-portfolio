@@ -161,7 +161,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
 
                             {service.process?.map((step, i) => (
                                 <div key={i} className="relative z-10 bg-background pt-4 md:pt-0">
-                                    <div className="w-20 h-20 bg-background border border-white/10 rounded-2xl flex items-center justify-center mb-8 relative group hover:border-primary transition-colors">
+                                    <div className="w-20 h-20 bg-background border border-white/10 rounded-[4px] flex items-center justify-center mb-8 relative group hover:border-primary transition-colors">
                                         <span className="text-2xl font-light text-white/50 group-hover:text-primary transition-colors">
                                             0{i + 1}
                                         </span>
@@ -211,7 +211,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
                                 </h3>
                                 <div className="space-y-6">
                                     {service.solutions?.map((solution, i) => (
-                                        <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
+                                        <div key={i} className="flex items-start gap-4 p-4 rounded-[4px] bg-emerald-500/5 border border-emerald-500/10">
                                             <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" />
                                             <p className="text-emerald-100/80 leading-relaxed">{solution}</p>
                                         </div>
@@ -305,10 +305,10 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 viewport={{ once: true }}
                                                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                                                className="p-8 border border-white/10 bg-white/5 rounded-2xl hover:bg-white/10 transition-colors"
+                                                className="p-8 border border-white/10 bg-white/5 rounded-[4px] hover:bg-white/10 transition-colors"
                                             >
                                                 <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-3">
-                                                    <div className="h-8 w-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+                                                    <div className="h-8 w-8 rounded-[4px] bg-primary/20 flex items-center justify-center text-primary">
                                                         <Icon className="h-4 w-4" />
                                                     </div>
                                                     {prop.title}
@@ -391,9 +391,9 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
                                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                     const RelatedIcon = (Icons as any)[related.iconName] || Icons.HelpCircle;
                                     return (
-                                        <Link key={i} href={`/services/${related.slug}`} className="group block p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all duration-300">
+                                        <Link key={i} href={`/services/${related.slug}`} className="group block p-8 rounded-[4px] bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all duration-300">
                                             <div className="flex justify-between items-start mb-6">
-                                                <div className="h-10 w-10 rounded-lg bg-white/10 flex items-center justify-center text-white group-hover:text-primary transition-colors">
+                                                <div className="h-10 w-10 rounded-[4px] bg-white/10 flex items-center justify-center text-white group-hover:text-primary transition-colors">
                                                     <RelatedIcon className="h-5 w-5" />
                                                 </div>
                                                 <ArrowUpRight className="h-5 w-5 text-white/20 group-hover:text-white transition-colors" />

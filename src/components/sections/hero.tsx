@@ -123,7 +123,7 @@ export function Hero() {
                         setAudioEnabled(next);
                         playSound("pop", next);
                     }}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all text-[10px] font-sans text-white/70 hover:text-white cursor-pointer"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-[4px] border border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all text-[10px] font-sans text-white/70 hover:text-white cursor-pointer"
                     title="Toggle tactile sound synthesis"
                 >
                     {audioEnabled ? <Volume2 size={12} className="text-[#CCFF00]" /> : <VolumeX size={12} />}
@@ -141,7 +141,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: -16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="mb-4 inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#CCFF00]/40 bg-[#CCFF00]/10 text-[#CCFF00] text-[10px] sm:text-xs font-sans tracking-widest uppercase shadow-[0_0_20px_rgba(204,255,0,0.15)]"
+                        className="mb-4 inline-flex items-center gap-2 px-3.5 py-1 rounded-[4px] border border-[#CCFF00]/40 bg-[#CCFF00]/10 text-[#CCFF00] text-[10px] sm:text-xs font-sans tracking-widest uppercase shadow-[0_0_20px_rgba(204,255,0,0.15)]"
                     >
                         <Sparkles className="w-3 h-3" />
                         <span>M.Sc. Interaction Tech · Spatial Systems & Industrial HRI</span>
@@ -184,7 +184,7 @@ export function Hero() {
                         <a
                             href="#work"
                             onClick={() => playSound("click", audioEnabled)}
-                            className="px-8 py-3.5 rounded-xl bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-[#CCFF00] hover:scale-105 transition-all shadow-xl shadow-white/10 flex items-center gap-2 group"
+                            className="px-8 py-3.5 rounded-[4px] bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-[#CCFF00] hover:scale-105 transition-all shadow-xl shadow-white/10 flex items-center gap-2 group"
                         >
                             <span>Explore Selected Works</span>
                             <ArrowDownRight className="w-4 h-4 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform" />
@@ -192,7 +192,7 @@ export function Hero() {
                         <a
                             href="#research"
                             onClick={() => playSound("click", audioEnabled)}
-                            className="px-8 py-3.5 rounded-xl bg-white/10 text-white font-medium text-xs uppercase tracking-widest border border-white/15 hover:bg-white/20 hover:scale-105 backdrop-blur-md transition-all"
+                            className="px-8 py-3.5 rounded-[4px] bg-white/10 text-white font-medium text-xs uppercase tracking-widest border border-white/15 hover:bg-white/20 hover:scale-105 backdrop-blur-md transition-all"
                         >
                             Research & Thesis
                         </a>
@@ -201,7 +201,7 @@ export function Hero() {
                                 setIsResumeOpen(true);
                                 playSound("chime", audioEnabled);
                             }}
-                            className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#CCFF00] via-emerald-400 to-[#00F0FF] text-black font-bold text-xs uppercase tracking-widest hover:brightness-110 hover:scale-105 transition-all shadow-xl shadow-[#CCFF00]/15 flex items-center gap-2 cursor-pointer"
+                            className="px-8 py-3.5 rounded-[4px] bg-gradient-to-r from-[#CCFF00] via-emerald-400 to-[#00F0FF] text-black font-bold text-xs uppercase tracking-widest hover:brightness-110 hover:scale-105 transition-all shadow-xl shadow-[#CCFF00]/15 flex items-center gap-2 cursor-pointer"
                         >
                             <FileText className="w-4 h-4" />
                             <span>Inspect CV / Resume</span>
@@ -237,13 +237,13 @@ export function Hero() {
                             whileHover={{ scale: 1.08, rotate: -2, zIndex: 50 }}
                             whileDrag={{ scale: 1.15, rotate: 0, zIndex: 60 }}
                             onDragStart={() => playSound("pop", audioEnabled)}
-                            className="relative lg:absolute lg:top-24 lg:left-6 xl:left-14 cursor-grab active:cursor-grabbing p-4 rounded-xl bg-gradient-to-br from-neutral-100 via-neutral-200 to-cyan-100 text-black border border-white/80 shadow-[0_20px_40px_rgba(0,240,255,0.25)] -rotate-6 lg:-rotate-8 select-none w-64 sm:w-72 shrink-0 z-20"
+                            className="relative lg:absolute lg:top-24 lg:left-6 xl:left-14 cursor-grab active:cursor-grabbing p-4 rounded-[4px] bg-gradient-to-br from-neutral-100 via-neutral-200 to-cyan-100 text-black border border-white/80 shadow-[0_20px_40px_rgba(0,240,255,0.25)] -rotate-6 lg:-rotate-8 select-none w-64 sm:w-72 shrink-0 z-20"
                         >
                             <div className="flex items-center justify-between border-b border-black/15 pb-2 mb-2">
                                 <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-black/70">
                                     UTWENTE // IT-LAB-2025
                                 </span>
-                                <span className="font-sans text-[9px] px-1.5 py-0.5 rounded bg-black text-white font-bold">
+                                <span className="font-sans text-[9px] px-1.5 py-0.5 rounded-[4px] bg-black text-white font-bold">
                                     M.Sc. THESIS
                                 </span>
                             </div>
@@ -276,7 +276,7 @@ export function Hero() {
                             whileHover={{ scale: 1.08, rotate: 2, zIndex: 50 }}
                             whileDrag={{ scale: 1.15, rotate: 0, zIndex: 60 }}
                             onDragStart={() => playSound("pop", audioEnabled)}
-                            className="relative lg:absolute lg:top-36 lg:right-6 xl:right-16 cursor-grab active:cursor-grabbing p-4 rounded-xl bg-[#0F0F14] text-white border-2 border-[#CCFF00] shadow-[0_15px_35px_rgba(204,255,0,0.3)] rotate-4 lg:rotate-6 select-none w-60 sm:w-68 shrink-0 z-20"
+                            className="relative lg:absolute lg:top-36 lg:right-6 xl:right-16 cursor-grab active:cursor-grabbing p-4 rounded-[4px] bg-[#0F0F14] text-white border-2 border-[#CCFF00] shadow-[0_15px_35px_rgba(204,255,0,0.3)] rotate-4 lg:rotate-6 select-none w-60 sm:w-68 shrink-0 z-20"
                         >
                             <div className="flex items-center justify-between text-[#CCFF00] mb-1 font-sans text-[10px] tracking-widest uppercase">
                                 <span>HOMEMADECHEFS.COM</span>
@@ -307,7 +307,7 @@ export function Hero() {
                             whileHover={{ scale: 1.08, rotate: -1, zIndex: 50 }}
                             whileDrag={{ scale: 1.15, rotate: 0, zIndex: 60 }}
                             onDragStart={() => playSound("pop", audioEnabled)}
-                            className="relative lg:absolute lg:bottom-28 lg:left-8 xl:left-20 cursor-grab active:cursor-grabbing p-4 rounded-xl bg-gradient-to-br from-[#00F0FF] via-[#3B82F6] to-[#8B5CF6] text-white shadow-[0_20px_40px_rgba(0,240,255,0.35)] -rotate-3 lg:-rotate-4 select-none w-60 sm:w-68 border border-white/30 shrink-0 z-20"
+                            className="relative lg:absolute lg:bottom-28 lg:left-8 xl:left-20 cursor-grab active:cursor-grabbing p-4 rounded-[4px] bg-gradient-to-br from-[#00F0FF] via-[#3B82F6] to-[#8B5CF6] text-white shadow-[0_20px_40px_rgba(0,240,255,0.35)] -rotate-3 lg:-rotate-4 select-none w-60 sm:w-68 border border-white/30 shrink-0 z-20"
                         >
                             <div className="flex items-center justify-between text-white/90 font-sans text-[10px] tracking-widest uppercase pb-1 mb-1 border-b border-white/20">
                                 <span>AXALPOWER.COM</span>
@@ -338,7 +338,7 @@ export function Hero() {
                             whileHover={{ scale: 1.08, rotate: 2, zIndex: 50 }}
                             whileDrag={{ scale: 1.15, rotate: 0, zIndex: 60 }}
                             onDragStart={() => playSound("pop", audioEnabled)}
-                            className="relative lg:absolute lg:bottom-32 lg:right-8 xl:right-20 cursor-grab active:cursor-grabbing p-4 rounded-xl bg-gradient-to-br from-amber-300 via-orange-400 to-amber-500 text-black shadow-[0_15px_35px_rgba(255,153,0,0.35)] rotate-5 lg:rotate-6 select-none w-56 sm:w-64 border border-amber-200 shrink-0 z-20"
+                            className="relative lg:absolute lg:bottom-32 lg:right-8 xl:right-20 cursor-grab active:cursor-grabbing p-4 rounded-[4px] bg-gradient-to-br from-amber-300 via-orange-400 to-amber-500 text-black shadow-[0_15px_35px_rgba(255,153,0,0.35)] rotate-5 lg:rotate-6 select-none w-56 sm:w-64 border border-amber-200 shrink-0 z-20"
                         >
                             <div className="font-sans text-[10px] font-bold tracking-widest uppercase text-black/60">
                                 REPOSITORIES & APPS
@@ -375,14 +375,14 @@ export function Hero() {
                                 }
                             }}
                             onDragStart={() => playSound("pop", audioEnabled)}
-                            className="relative lg:absolute lg:bottom-12 lg:left-1/2 lg:-translate-x-1/2 cursor-pointer active:cursor-grabbing p-4 rounded-xl bg-gradient-to-br from-emerald-500/20 via-[#0E0E14] to-cyan-500/20 text-white border-2 border-emerald-400 shadow-[0_20px_45px_rgba(16,185,129,0.35)] -rotate-5 lg:-rotate-2 select-none w-64 sm:w-72 group shrink-0 z-20"
+                            className="relative lg:absolute lg:bottom-12 lg:left-1/2 lg:-translate-x-1/2 cursor-pointer active:cursor-grabbing p-4 rounded-[4px] bg-gradient-to-br from-emerald-500/20 via-[#0E0E14] to-cyan-500/20 text-white border-2 border-emerald-400 shadow-[0_20px_45px_rgba(16,185,129,0.35)] -rotate-5 lg:-rotate-2 select-none w-64 sm:w-72 group shrink-0 z-20"
                         >
                             <div className="flex items-center justify-between border-b border-emerald-400/20 pb-1.5 mb-1.5">
                                 <span className="font-sans text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
                                     CV DOSSIER // DECLASSIFIED
                                 </span>
-                                <span className="text-[9px] font-sans px-1.5 py-0.5 rounded bg-emerald-400 text-black font-bold">
+                                <span className="text-[9px] font-sans px-1.5 py-0.5 rounded-[4px] bg-emerald-400 text-black font-bold">
                                     OPEN
                                 </span>
                             </div>

@@ -60,7 +60,7 @@ export function ServicePitchValue() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                                className="p-8 border border-border bg-foreground/5 rounded-2xl hover:bg-foreground/10 transition-colors"
+                                className="p-8 border border-border bg-foreground/5 rounded-[4px] hover:bg-foreground/10 transition-colors"
                             >
                                 <h3 className="text-xl font-semibold text-foreground mb-3 flex items-center gap-2">
                                     <div className="w-2 h-2 rounded-full bg-primary" />

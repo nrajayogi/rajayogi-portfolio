@@ -36,7 +36,7 @@ export function IndustriesGrid() {
 
                     <div className="w-full md:w-2/3 grid grid-cols-2 sm:grid-cols-3 gap-4">
                         {industries.map((industry, index) => (
-                            <div key={index} className="aspect-[4/3] flex items-center justify-center p-4 bg-muted/30 rounded-lg border hover:border-primary/50 hover:bg-muted transition-all cursor-default group">
+                            <div key={index} className="aspect-[4/3] flex items-center justify-center p-4 bg-muted/30 rounded-[4px] border hover:border-primary/50 hover:bg-muted transition-all cursor-default group">
                                 <span className="font-semibold text-center text-foreground/80 group-hover:text-primary transition-colors">{industry}</span>
                             </div>
                         ))}

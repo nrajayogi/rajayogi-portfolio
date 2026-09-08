@@ -53,7 +53,7 @@ export default async function WorkPage({ params }: PageProps) {
                                 href={study.liveUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all"
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all"
                             >
                                 <Globe size={13} />
                                 <span>Live Website ↗</span>
@@ -64,7 +64,7 @@ export default async function WorkPage({ params }: PageProps) {
                                 href={study.figmaUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold shadow-sm transition-all"
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold shadow-sm transition-all"
                             >
                                 <Figma size={13} />
                                 <span>Inspect in Figma ↗</span>
@@ -75,7 +75,7 @@ export default async function WorkPage({ params }: PageProps) {
                                 href={study.githubUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all"
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all"
                             >
                                 <Github size={13} />
                                 <span>Source Code ↗</span>
@@ -116,13 +116,13 @@ export default async function WorkPage({ params }: PageProps) {
                     </p>
 
                     <div className="flex flex-wrap gap-3 mt-6">
-                        <div className="px-3.5 py-1.5 rounded-lg bg-foreground/5 border border-border text-xs text-muted-foreground">
+                        <div className="px-3.5 py-1.5 rounded-[4px] bg-foreground/5 border border-border text-xs text-muted-foreground">
                             Role: <strong className="text-foreground font-medium">{study.role}</strong>
                         </div>
-                        <div className="px-3.5 py-1.5 rounded-lg bg-foreground/5 border border-border text-xs text-muted-foreground">
+                        <div className="px-3.5 py-1.5 rounded-[4px] bg-foreground/5 border border-border text-xs text-muted-foreground">
                             Institution: <strong className="text-foreground font-medium">{study.domain}</strong>
                         </div>
-                        <div className="px-3.5 py-1.5 rounded-lg bg-foreground/5 border border-border text-xs text-muted-foreground">
+                        <div className="px-3.5 py-1.5 rounded-[4px] bg-foreground/5 border border-border text-xs text-muted-foreground">
                             Timeline: <strong className="text-foreground font-medium">{study.duration}</strong>
                         </div>
                     </div>
@@ -157,7 +157,7 @@ export default async function WorkPage({ params }: PageProps) {
                     
                     {/* The Problem & In-situ Observation */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="p-6 rounded-2xl bg-card border border-border space-y-3">
+                        <div className="p-6 rounded-[4px] bg-card border border-border space-y-3">
                             <span className="text-xs font-semibold uppercase tracking-wider text-destructive">
                                 Operational Problem
                             </span>
@@ -167,7 +167,7 @@ export default async function WorkPage({ params }: PageProps) {
                             </p>
                         </div>
 
-                        <div className="p-6 rounded-2xl bg-card border border-border space-y-3">
+                        <div className="p-6 rounded-[4px] bg-card border border-border space-y-3">
                             <span className="text-xs font-semibold uppercase tracking-wider text-primary">
                                 In-Situ Field Observation
                             </span>
@@ -179,7 +179,7 @@ export default async function WorkPage({ params }: PageProps) {
                     </div>
 
                     {/* Prototype System */}
-                    <div className="p-8 rounded-2xl bg-foreground/[0.02] border border-border space-y-4">
+                    <div className="p-8 rounded-[4px] bg-foreground/[0.02] border border-border space-y-4">
                         <span className="text-xs font-semibold uppercase tracking-wider text-primary">
                             System Architecture
                         </span>
@@ -191,7 +191,7 @@ export default async function WorkPage({ params }: PageProps) {
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                             {study.exploration.map((exp, i) => (
-                                <div key={i} className="p-3.5 rounded-xl bg-card border border-border text-xs text-muted-foreground flex items-start gap-2">
+                                <div key={i} className="p-3.5 rounded-[4px] bg-card border border-border text-xs text-muted-foreground flex items-start gap-2">
                                     <span className="text-primary font-bold">0{i + 1}.</span>
                                     <span>{exp}</span>
                                 </div>
@@ -219,7 +219,7 @@ export default async function WorkPage({ params }: PageProps) {
                         {study.specMetrics && study.specMetrics.length > 0 && (
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
                                 {study.specMetrics.map((metric, idx) => (
-                                    <div key={idx} className="p-4 rounded-xl bg-card border border-border space-y-1">
+                                    <div key={idx} className="p-4 rounded-[4px] bg-card border border-border space-y-1">
                                         <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold block">
                                             {metric.label}
                                         </span>
@@ -237,11 +237,11 @@ export default async function WorkPage({ params }: PageProps) {
                         {/* Tech Stack Categories */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {study.techStack?.map((cat, idx) => (
-                                <div key={idx} className="p-5 rounded-2xl bg-card border border-border space-y-3">
+                                <div key={idx} className="p-5 rounded-[4px] bg-card border border-border space-y-3">
                                     <h4 className="text-sm font-semibold text-foreground">{cat.title}</h4>
                                     <div className="space-y-2 text-xs text-muted-foreground">
                                         {cat.items.map((item, itemIdx) => (
-                                            <div key={itemIdx} className="p-2 rounded-lg bg-foreground/5 border border-border/50 flex items-center gap-2">
+                                            <div key={itemIdx} className="p-2 rounded-[4px] bg-foreground/5 border border-border/50 flex items-center gap-2">
                                                 <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
                                                 <span className="text-foreground/90">{item}</span>
                                             </div>
@@ -265,7 +265,7 @@ export default async function WorkPage({ params }: PageProps) {
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             {study.results.map((res, i) => (
-                                <div key={i} className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-foreground flex items-start gap-2.5">
+                                <div key={i} className="p-4 rounded-[4px] bg-emerald-500/10 border border-emerald-500/20 text-xs text-foreground flex items-start gap-2.5">
                                     <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                                     <span>{res}</span>
                                 </div>
@@ -277,7 +277,7 @@ export default async function WorkPage({ params }: PageProps) {
                     <div className="pt-8 border-t border-border flex justify-between items-center">
                         <Link
                             href="/#work"
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:opacity-90 transition-all shadow-sm"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-[4px] bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:opacity-90 transition-all shadow-sm"
                         >
                             <ArrowLeft size={14} />
                             <span>Return to Portfolio</span>

@@ -74,7 +74,7 @@ export function EditableImage({
 
     return (
         <div
-            className={cn("relative group transition-all", isEditing && "cursor-pointer hover:ring-4 ring-blue-500/50 rounded-lg overflow-hidden")}
+            className={cn("relative group transition-all", isEditing && "cursor-pointer hover:ring-4 ring-blue-500/50 rounded-[4px] overflow-hidden")}
             onClick={handleClick}
              
             style={{ width: props.fill ? '100%' : props.width, height: props.fill ? '100%' : props.height }}

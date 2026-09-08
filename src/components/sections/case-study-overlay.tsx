@@ -65,7 +65,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.96, y: 20 }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative w-full max-w-6xl h-[92vh] bg-background border border-border rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col z-10"
+                    className="relative w-full max-w-6xl h-[92vh] bg-background border border-border rounded-[4px] shadow-[0_25px_80px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col z-10"
                 >
                     {/* Header Bar */}
                     <div className="p-4 sm:p-6 border-b border-border flex flex-wrap items-center justify-between gap-4 bg-card/60 backdrop-blur-md sticky top-0 z-30">
@@ -98,10 +98,10 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                         {/* Top Controls & Navigation */}
                         <div className="flex items-center gap-2 sm:gap-3 ml-auto">
                             {/* Tab Switcher */}
-                            <div className="flex items-center p-1 rounded-xl bg-foreground/5 border border-border">
+                            <div className="flex items-center p-1 rounded-[4px] bg-foreground/5 border border-border">
                                 <button
                                     onClick={() => setActiveTab("interactive")}
-                                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
+                                    className={`px-3 py-1.5 rounded-[4px] text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
                                         activeTab === "interactive"
                                             ? "bg-primary text-primary-foreground shadow-sm"
                                             : "text-muted-foreground hover:text-foreground"
@@ -112,7 +112,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                 </button>
                                 <button
                                     onClick={() => setActiveTab("narrative")}
-                                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
+                                    className={`px-3 py-1.5 rounded-[4px] text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
                                         activeTab === "narrative"
                                             ? "bg-primary text-primary-foreground shadow-sm"
                                             : "text-muted-foreground hover:text-foreground"
@@ -123,7 +123,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                 </button>
                                 <button
                                     onClick={() => setActiveTab("architecture")}
-                                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
+                                    className={`px-3 py-1.5 rounded-[4px] text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
                                         activeTab === "architecture"
                                             ? "bg-primary text-primary-foreground shadow-sm"
                                             : "text-muted-foreground hover:text-foreground"
@@ -140,7 +140,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                     href={study.liveUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all shadow-sm"
+                                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all shadow-sm"
                                 >
                                     <Globe size={13} className="text-primary" />
                                     <span>Live Site</span>
@@ -153,7 +153,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                     href={study.githubUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all shadow-sm"
+                                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all shadow-sm"
                                 >
                                     <Github size={13} />
                                     <span>GitHub</span>
@@ -166,7 +166,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                     href={study.figmaUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all shadow-sm"
+                                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] border border-border bg-card hover:bg-foreground/5 text-foreground text-xs font-medium transition-all shadow-sm"
                                 >
                                     <Figma size={13} className="text-purple-400" />
                                     <span>Figma</span>
@@ -177,7 +177,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                             {/* Close Button */}
                             <button
                                 onClick={onClose}
-                                className="p-2 rounded-xl bg-foreground/5 hover:bg-foreground/10 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                                className="p-2 rounded-[4px] bg-foreground/5 hover:bg-foreground/10 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                                 aria-label="Close"
                             >
                                 <X size={18} />
@@ -195,21 +195,21 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
 
                                 {/* Highlights Quick Grid */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                                    <div className="p-5 rounded-2xl bg-card border border-border space-y-1.5">
+                                    <div className="p-5 rounded-[4px] bg-card border border-border space-y-1.5">
                                         <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
                                             Role & Contribution
                                         </span>
                                         <div className="text-sm font-semibold text-foreground">{study.role}</div>
                                         <p className="text-xs text-muted-foreground">{study.domain}</p>
                                     </div>
-                                    <div className="p-5 rounded-2xl bg-card border border-border space-y-1.5">
+                                    <div className="p-5 rounded-[4px] bg-card border border-border space-y-1.5">
                                         <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
                                             Primary Empirical Impact
                                         </span>
                                         <div className="text-sm font-semibold text-emerald-500">{study.results[0]}</div>
                                         <p className="text-xs text-muted-foreground">Rigorous validation across task metrics</p>
                                     </div>
-                                    <div className="p-5 rounded-2xl bg-card border border-border space-y-1.5">
+                                    <div className="p-5 rounded-[4px] bg-card border border-border space-y-1.5">
                                         <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
                                             Direct Artifacts
                                         </span>
@@ -271,7 +271,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
 
                                 {/* Problem vs In-Situ Observation */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="p-6 rounded-2xl bg-card border border-border space-y-3">
+                                    <div className="p-6 rounded-[4px] bg-card border border-border space-y-3">
                                         <div className="flex items-center gap-2 text-destructive font-semibold text-xs uppercase tracking-wider">
                                             <span>The Core Friction</span>
                                         </div>
@@ -281,7 +281,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                         </p>
                                     </div>
 
-                                    <div className="p-6 rounded-2xl bg-card border border-border space-y-3">
+                                    <div className="p-6 rounded-[4px] bg-card border border-border space-y-3">
                                         <div className="flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider">
                                             <span>In-Situ Field Finding</span>
                                         </div>
@@ -293,7 +293,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                 </div>
 
                                 {/* Design Explorations & System Architecture */}
-                                <div className="p-8 rounded-2xl bg-foreground/[0.02] border border-border space-y-4">
+                                <div className="p-8 rounded-[4px] bg-foreground/[0.02] border border-border space-y-4">
                                     <span className="text-xs uppercase tracking-wider text-primary font-semibold">
                                         Interaction Exploration & Prototypes
                                     </span>
@@ -305,7 +305,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                     </p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                                         {study.exploration.map((exp, i) => (
-                                            <div key={i} className="p-3.5 rounded-xl bg-card border border-border text-xs text-muted-foreground flex items-start gap-2">
+                                            <div key={i} className="p-3.5 rounded-[4px] bg-card border border-border text-xs text-muted-foreground flex items-start gap-2">
                                                 <span className="text-primary font-bold">0{i + 1}.</span>
                                                 <span>{exp}</span>
                                             </div>
@@ -326,7 +326,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                     </p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         {study.results.map((res, i) => (
-                                            <div key={i} className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-foreground flex items-start gap-2.5">
+                                            <div key={i} className="p-4 rounded-[4px] bg-emerald-500/10 border border-emerald-500/20 text-xs text-foreground flex items-start gap-2.5">
                                                 <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                                                 <span>{res}</span>
                                             </div>
@@ -378,7 +378,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                 {study.specMetrics && study.specMetrics.length > 0 && (
                                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
                                         {study.specMetrics.map((metric, idx) => (
-                                            <div key={idx} className="p-4 rounded-xl bg-card border border-border space-y-1">
+                                            <div key={idx} className="p-4 rounded-[4px] bg-card border border-border space-y-1">
                                                 <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold block">
                                                     {metric.label}
                                                 </span>
@@ -395,11 +395,11 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     {study.techStack?.map((cat, idx) => (
-                                        <div key={idx} className="p-6 rounded-2xl bg-card border border-border space-y-3">
+                                        <div key={idx} className="p-6 rounded-[4px] bg-card border border-border space-y-3">
                                             <h4 className="text-sm font-semibold text-foreground">{cat.title}</h4>
                                             <div className="space-y-2 text-xs text-muted-foreground">
                                                 {cat.items.map((item, itemIdx) => (
-                                                    <div key={itemIdx} className="p-2.5 rounded-lg bg-foreground/5 border border-border/50 flex items-center gap-2">
+                                                    <div key={itemIdx} className="p-2.5 rounded-[4px] bg-foreground/5 border border-border/50 flex items-center gap-2">
                                                         <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                                                         <span className="text-foreground/90">{item}</span>
                                                     </div>
@@ -410,7 +410,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                 </div>
 
                                 {(study.liveUrl || study.githubUrl || study.figmaUrl) && (
-                                    <div className="p-6 rounded-2xl bg-primary/10 border border-primary/20 flex flex-wrap items-center justify-between gap-4">
+                                    <div className="p-6 rounded-[4px] bg-primary/10 border border-primary/20 flex flex-wrap items-center justify-between gap-4">
                                         <div>
                                             <h4 className="text-sm font-semibold text-foreground">Inspect Live Artifacts &amp; Research</h4>
                                             <p className="text-xs text-muted-foreground mt-0.5">Explore the interactive deployment, inspect the Figma canvas, or browse code.</p>
@@ -421,7 +421,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                                     href={study.figmaUrl}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold shadow-sm flex items-center gap-1.5 transition-colors"
+                                                    className="px-4 py-2 rounded-[4px] bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold shadow-sm flex items-center gap-1.5 transition-colors"
                                                 >
                                                     <Figma size={13} />
                                                     <span>Open in Figma</span>
@@ -432,7 +432,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                                     href={study.liveUrl}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-semibold shadow-sm flex items-center gap-1.5"
+                                                    className="px-4 py-2 rounded-[4px] bg-primary text-primary-foreground text-xs font-semibold shadow-sm flex items-center gap-1.5"
                                                 >
                                                     <span>Open Live Platform</span>
                                                     <ExternalLink size={13} />
@@ -443,7 +443,7 @@ export function CaseStudyOverlay({ study, isOpen, onClose }: CaseStudyOverlayPro
                                                     href={study.githubUrl}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="px-4 py-2 rounded-xl bg-card border border-border text-foreground text-xs font-medium flex items-center gap-1.5"
+                                                    className="px-4 py-2 rounded-[4px] bg-card border border-border text-foreground text-xs font-medium flex items-center gap-1.5"
                                                 >
                                                     <Github size={13} />
                                                     <span>Browse Codebase</span>

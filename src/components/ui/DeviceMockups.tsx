@@ -6,7 +6,7 @@ import { Eye, Mic, Shield, Sparkles, Activity, CheckCircle, Flame, Clock, Bot, A
 // Mockup 01: Vision Pro Spatial XR Headset Frame
 export const SpatialXRMockup: React.FC<{ imageSrc?: string }> = ({ imageSrc }) => {
   return (
-    <div className="relative w-full aspect-[16/10] bg-[#0A0A0A] rounded-2xl md:rounded-3xl p-3 md:p-5 border border-white/15 shadow-2xl overflow-hidden flex flex-col justify-between select-none">
+    <div className="relative w-full aspect-[16/10] bg-[#0A0A0A] rounded-[4px] md:rounded-[4px] p-3 md:p-5 border border-white/15 shadow-2xl overflow-hidden flex flex-col justify-between select-none">
       {/* Vision Pro Top Sensor Array */}
       <div className="flex items-center justify-between z-20 text-[11px] font-sans text-white/60 pb-2 border-b border-white/10">
         <div className="flex items-center gap-2">
@@ -20,7 +20,7 @@ export const SpatialXRMockup: React.FC<{ imageSrc?: string }> = ({ imageSrc }) =
       </div>
 
       {/* Center 3D Simulation Layer */}
-      <div className="relative flex-1 my-2 rounded-xl overflow-hidden bg-neutral-900 border border-white/10 flex items-center justify-center">
+      <div className="relative flex-1 my-2 rounded-[4px] overflow-hidden bg-neutral-900 border border-white/10 flex items-center justify-center">
         {imageSrc ? (
           <img
             src={imageSrc}
@@ -32,7 +32,7 @@ export const SpatialXRMockup: React.FC<{ imageSrc?: string }> = ({ imageSrc }) =
         )}
 
         {/* Floating Spatial HUD Overlay Glass */}
-        <div className="absolute top-4 left-4 p-3.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/20 text-white space-y-1.5 shadow-xl max-w-[220px] hidden sm:block">
+        <div className="absolute top-4 left-4 p-3.5 rounded-[4px] bg-black/60 backdrop-blur-md border border-white/20 text-white space-y-1.5 shadow-xl max-w-[220px] hidden sm:block">
           <div className="flex items-center justify-between text-[10px] font-sans text-blue-400">
             <span>TARGET ALIGNMENT</span>
             <span>HOIST-01</span>
@@ -70,7 +70,7 @@ export const TabletKitchenMockup: React.FC<{ view?: "logo" | "rewards" | "ai" }>
   const [activeTab, setActiveTab] = useState<"logo" | "rewards" | "ai">(view);
 
   return (
-    <div className="relative w-full aspect-[16/10] bg-[#121110] rounded-2xl md:rounded-3xl p-3 md:p-5 border border-neutral-700/80 shadow-2xl overflow-hidden flex flex-col justify-between select-none">
+    <div className="relative w-full aspect-[16/10] bg-[#121110] rounded-[4px] md:rounded-[4px] p-3 md:p-5 border border-neutral-700/80 shadow-2xl overflow-hidden flex flex-col justify-between select-none">
       {/* Top Header Navigation Tabs */}
       <div className="flex items-center justify-between z-20 text-[11px] font-sans text-neutral-400 pb-2 border-b border-neutral-800">
         <div className="flex items-center gap-2">
@@ -108,7 +108,7 @@ export const TabletKitchenMockup: React.FC<{ view?: "logo" | "rewards" | "ai" }>
       </div>
 
       {/* Screen Frame Content */}
-      <div className="relative flex-1 my-2 rounded-xl overflow-hidden bg-[#EA580C] flex items-center justify-center shadow-inner">
+      <div className="relative flex-1 my-2 rounded-[4px] overflow-hidden bg-[#EA580C] flex items-center justify-center shadow-inner">
         {/* VIEW 1: Official Logo */}
         {activeTab === "logo" && (
           <div className="w-full h-full bg-[#EA580C] flex flex-col items-center justify-center p-6 animate-fadeIn">
@@ -129,7 +129,7 @@ export const TabletKitchenMockup: React.FC<{ view?: "logo" | "rewards" | "ai" }>
             <img
               src="/images/homemade/homemade-rewards-dashboard.png"
               alt="Homemade Rewards Program"
-              className="max-h-[190px] md:max-h-[220px] object-contain rounded-lg shadow-lg"
+              className="max-h-[190px] md:max-h-[220px] object-contain rounded-[4px] shadow-lg"
             />
           </div>
         )}
@@ -140,7 +140,7 @@ export const TabletKitchenMockup: React.FC<{ view?: "logo" | "rewards" | "ai" }>
             <img
               src="/images/homemade/homemade-chatbot.png"
               alt="Homemade AI Chatbot Sanne"
-              className="max-h-[190px] md:max-h-[220px] object-contain rounded-lg shadow-lg"
+              className="max-h-[190px] md:max-h-[220px] object-contain rounded-[4px] shadow-lg"
             />
           </div>
         )}
@@ -158,7 +158,7 @@ export const TabletKitchenMockup: React.FC<{ view?: "logo" | "rewards" | "ai" }>
 // Mockup 03: Multi-Pane Cyber Workbench Frame (C3iHub IIT Kanpur)
 export const CyberWorkbenchMockup: React.FC = () => {
   return (
-    <div className="relative w-full aspect-[16/10] bg-[#0E1117] rounded-2xl md:rounded-3xl p-3 md:p-5 border border-slate-800 shadow-2xl overflow-hidden flex flex-col justify-between select-none">
+    <div className="relative w-full aspect-[16/10] bg-[#0E1117] rounded-[4px] md:rounded-[4px] p-3 md:p-5 border border-slate-800 shadow-2xl overflow-hidden flex flex-col justify-between select-none">
       {/* Workbench Browser Header */}
       <div className="flex items-center justify-between z-20 text-[11px] font-sans text-slate-400 pb-2 border-b border-slate-800">
         <div className="flex items-center gap-2">
@@ -173,9 +173,9 @@ export const CyberWorkbenchMockup: React.FC = () => {
       </div>
 
       {/* Multi-Pane Workbench Content */}
-      <div className="flex-1 my-2 rounded-xl bg-[#090D14] border border-slate-800 p-3 grid grid-cols-12 gap-3 overflow-hidden">
+      <div className="flex-1 my-2 rounded-[4px] bg-[#090D14] border border-slate-800 p-3 grid grid-cols-12 gap-3 overflow-hidden">
         {/* Left: Entity Inspector */}
-        <div className="col-span-4 bg-slate-900/60 rounded-lg p-3 border border-slate-800/80 space-y-2 text-xs">
+        <div className="col-span-4 bg-slate-900/60 rounded-[4px] p-3 border border-slate-800/80 space-y-2 text-xs">
           <span className="text-[10px] font-sans text-rose-400 uppercase">THREAT ENTITY</span>
           <div className="text-xs font-semibold text-white">194.26.29.112</div>
           <div className="space-y-1 text-[10px] font-sans text-slate-400 pt-1 border-t border-slate-800">
@@ -186,7 +186,7 @@ export const CyberWorkbenchMockup: React.FC = () => {
         </div>
 
         {/* Right: Threat Graph Canvas */}
-        <div className="col-span-8 bg-slate-900/40 rounded-lg p-3 border border-slate-800/80 flex flex-col justify-between">
+        <div className="col-span-8 bg-slate-900/40 rounded-[4px] p-3 border border-slate-800/80 flex flex-col justify-between">
           <div className="flex items-center justify-between text-[10px] font-sans text-slate-400">
             <span>RELATIONAL TOPOLOGY CANVAS</span>
             <span className="text-rose-400 font-bold">12 CONNECTED CLUSTERS</span>

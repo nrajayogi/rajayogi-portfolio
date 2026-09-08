@@ -27,7 +27,7 @@ export function About() {
 
                     {/* Left Panel: Content */}
                     <div className="p-10 md:p-20 flex flex-col justify-center">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8 border border-primary/20 w-fit">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-primary/10 text-primary text-sm font-medium mb-8 border border-primary/20 w-fit">
                             <Award size={16} />
                             <span className="uppercase tracking-wide text-xs">M.Sc. Interaction Tech · UTwente</span>
                         </div>
@@ -54,7 +54,7 @@ export function About() {
                             ))}
                         </div>
 
-                        <Button asChild size="lg" className="rounded-xl w-fit px-8 h-12 text-xs uppercase tracking-widest font-semibold">
+                        <Button asChild size="lg" className="rounded-[4px] w-fit px-8 h-12 text-xs uppercase tracking-widest font-semibold">
                             <a href="#contact">Connect with Me</a>
                         </Button>
                     </div>
