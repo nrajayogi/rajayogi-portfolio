@@ -1,30 +1,9 @@
-<!-- BEGIN:nextjs-agent-rules -->
-
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
-
----
-
 # Mandatory Guidelines: Design System & Production Deployment
 
 ## 1. Strict 4px Corner Radius (`rounded-[4px]`) Everywhere
 - **Every single element** with a corner radius must strictly be `rounded-[4px]`.
 - Absolutely **NO** `rounded-xl`, `rounded-2xl`, `rounded-3xl`, `rounded-lg`, `rounded-md`, or `rounded-sm`.
 - Applies to all buttons, cards, image containers, modal windows, draggable stickers, tags, chips, input fields, and audio toggles.
-- In `src/app/globals.css`:
-  - `--radius: 4px;` in `:root` and `@theme inline`
-  - Global CSS override:
-    ```css
-    [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"],
-    [class*="rounded-lg"], [class*="rounded-md"], [class*="rounded-sm"] {
-      border-radius: 4px !important;
-    }
-    ```
 
 ## 2. 80% Percentage Angle Gauge
 - The radial gauge and primary empirical outcome metrics must maintain the **80% percentage angle** (288° sweep / ~80% perceived operator agency baseline from N=14 empirical study).
@@ -37,9 +16,9 @@ Whenever the user requests a deployment or asks to push to production:
 2. **Commit & Push to GitHub**:
    - Stage all changes: `git add -A`
    - Commit with descriptive message: `git commit -m "..."`
-   - Push to main branch: `git push origin main` (with `BypassSandbox: true`).
+   - Push to main branch: `git push origin main`.
 3. **Deploy Directly to Production on Vercel**:
-   - Run: `npx -y vercel deploy --temporary --yes` (with `BypassSandbox: true`).
+   - Run: `npx -y vercel deploy --temporary --yes`.
    - Confirm it builds and links to production alias: `https://rajayogi-portfolio.vercel.app`.
    - Never leave deployment pending or rely solely on unverified auto-deploy webhooks.
 4. **Live Verification**:
